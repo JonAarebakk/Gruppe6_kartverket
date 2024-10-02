@@ -1,6 +1,8 @@
-﻿//import * as map1 "ol/Map";
+﻿/*
+*  A test file for troubleshooting maps
+*/
 
-const key = 'fZSqzvs0JljaDaoMhFNh';
+const key = 'INSERT_API_KEY_HERE';
 const source = new ol.source.TileJSON({
     url: `https://api.maptiler.com/maps/streets-v2/tiles.json?key=${key}`,
     tileSize: 512,
@@ -22,6 +24,6 @@ const map = new ol.Map({
     view: new ol.View({
         constrainResolution: true,
         center: ol.proj.fromLonLat([16.62662018, 49.2125578]),
-        zoom: 14
+        zoom: 8
     })
 });
