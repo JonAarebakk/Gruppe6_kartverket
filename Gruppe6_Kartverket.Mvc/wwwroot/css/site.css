@@ -24,10 +24,8 @@ body {
 }
 
 #map {
-    position: absolute;
-    top: 100px;
-    bottom: 100px;
-    width: 100%;
+    position: static;
+    width: 600px;
     height: 400px;
 }
     

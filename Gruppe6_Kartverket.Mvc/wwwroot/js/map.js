@@ -1,4 +1,4 @@
-﻿//Puts OpenStrretMap attribution in the bottom right corner
+﻿//Sets the attribution to non-collapsible
 const attribution = new ol.control.Attribution({
     collapsible: false,
 });
@@ -10,11 +10,10 @@ const map = new ol.Map({
         })
     ],
     view: new ol.View({
+        projection: 'EPSG:4326',
         constrainResolution: true,
-        center: ol.proj.fromLonLat([7.995611, 58.146722]),
-        zoom: 14
+        center: [8.002189, 58.163703, 0], // [lon, lat]
+        zoom: 10
     }),
     target: 'map'
 });
-
-console.log(2);

@@ -1,8 +1,8 @@
-using Gruppe6_Kartverket.Models;
+using Gruppe6_Kartverket.Mvc.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace Gruppe6_Kartverket.Controllers;
+namespace Gruppe6_Kartverket.Mvc.Controllers;
 
 public class HomeController : Controller
 {
@@ -19,11 +19,6 @@ public class HomeController : Controller
     }
 
     public IActionResult Privacy()
-    {
-        return View();
-    }
-
-    public IActionResult MapTest()
     {
         return View();
     }

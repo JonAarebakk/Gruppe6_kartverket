@@ -1,5 +1,6 @@
 ﻿/*
 *  A test file for troubleshooting maps
+*  Don't think it works
 */
 
 // Map views always need a projection.  Here we just want to map image

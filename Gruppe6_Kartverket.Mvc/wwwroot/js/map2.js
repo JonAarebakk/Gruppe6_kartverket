@@ -1,5 +1,6 @@
 ﻿/*
 *  A test file for troubleshooting maps
+*  Needs the API key to work
 */
 
 const key = 'INSERT_API_KEY_HERE';
