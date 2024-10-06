@@ -24,8 +24,17 @@ body {
 }
 
 #map {
-    position: static;
+    position: relative;
     width: 600px;
     height: 400px;
 }
-    
+
+.map-buttons {
+    position: absolute;
+    top: 60px;
+    left: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    z-index: 500;
+}
