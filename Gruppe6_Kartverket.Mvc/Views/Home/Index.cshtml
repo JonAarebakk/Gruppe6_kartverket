@@ -5,31 +5,8 @@
 }
 
 <p>@Model.Message</p>
-<div id="map">
-    <div class="map-buttons">
-        <button class="map-button" data-select="LineString">Lin</button>
-        <button class="map-button" data-select="Point">Poi</button>
-        <button class="map-button" data-select="Polygon">Pol</button>
-        <button class="map-button" data-select="Circle">Cir</button>
-    </div>
-</div>
-<div style="display: none;">
-    <div id="popup"></div>
-</div>
-<div class="row">
-    <div class="col-auto">
-        <span class="input-group">
-            <label class="input-group-text" for="type">Geometry type:</label>
-            <select class="form-select" id="type">
-                <option value="None">None</option>
-                <option value="LineString">LineString</option>
-                <option value="Polygon">Polygon</option>
-                <option value="Circle">Circle</option>
-                <option value="Point">Point</option>
-            </select>
-        </span>
-    </div>
-</div>
+<div id="map"></div>
+
 <form asp-controller="Home" asp-action="Index" method="post" id="mapInputForm">
     @Html.ValidationSummary()
     @Html.DisplayNameFor(x => x.NewMessage)
@@ -40,10 +17,49 @@
     <input type="button" value="Send" onclick="submitForm()"/>
 </form>
 
+<p>@Model.MapData</p>
+
 @section Scripts {
-    <script type="module" src="~/js/map.js"></script>
-    <script type="module">
-        import { submitForm } from './../js/map.js';
-        window.submitForm = submitForm; // Make the function accessible in the global scope
+    <script>
+        
+        //https://leafletjs.com/reference.html
+        //https://www.geoman.io/docs/
+
+        function submitForm() {
+            var responseObject = {
+                points :[],
+                lines :[]
+            };
+            var markers = L.PM.Utils.findLayers(map);
+            markers.forEach((x) => {
+                if (x.options.pane === 'markerPane') { 
+                    responseObject.points.push(x._latlng);
+                }
+                if (x.options.pane === 'overlayPane') { 
+                    responseObject.lines.push(x._latlngs);
+                }
+            });
+
+            var jsonValue = JSON.stringify(responseObject);
+
+            document.getElementById("hiddenField").value = jsonValue;
+            document.getElementById("mapInputForm").submit();
+        }        
+            
+        
+        var map = L.map('map').setView([58.164048, 8.004007], 13); //initial location (can this be fetched from device? )
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+        map.pm.addControls({
+            position: 'topleft',
+            drawCircleMarker: false,
+            rotateMode: false,
+            cutPolygon: false,
+            drawText: false
+
+        });
+
+
     </script>
 }

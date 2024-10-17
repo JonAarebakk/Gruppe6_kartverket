@@ -9,12 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="leaflet" Version="0.7.3" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Api\" />
-    <Folder Include="Models\ApiModels\" />
   </ItemGroup>
 
 </Project>

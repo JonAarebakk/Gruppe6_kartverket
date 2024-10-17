@@ -9,7 +9,7 @@ const raster = new ol.layer.Tile({
 });
 
 //Array with all the cords from the drawn objects
-export let drawCoords = [];
+let drawCoords = [];
 
 //The source for the vector layer that will be drawn on the map
 const source = new ol.source.Vector();

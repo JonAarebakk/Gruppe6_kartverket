@@ -9,6 +9,8 @@ public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
 
+    private static List<MapData> mapDataList = new List<MapData>();
+
     public HomeController(ILogger<HomeController> logger)
     {
         _logger = logger;
@@ -30,6 +32,7 @@ public class HomeController : Controller
         if (model.Hidden != null)
         {
             var mapData = JsonSerializer.Deserialize<MapData>(model.Hidden, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            mapDataList.Add(mapData);
         }
         model.Message = model.NewMessage;
         model.NewMessage = null;
@@ -50,9 +53,8 @@ public class HomeController : Controller
 
 public class MapData
 {
-    public List<LatLng> Point { get; set; }
-    public List<List<LatLng>> LineString { get; set; }
-    public List<List<List<LatLng>>> Polygon { get; set; }
+    public List<LatLng> Points { get; set; }
+    public List<List<LatLng>> Lines { get; set; }
 }
 
 public class LatLng

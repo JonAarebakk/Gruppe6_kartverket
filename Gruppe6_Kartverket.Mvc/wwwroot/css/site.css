@@ -38,3 +38,7 @@ body {
     gap: 5px;
     z-index: 500;
 }
+
+.field-validation-error {
+    color: red
+}
