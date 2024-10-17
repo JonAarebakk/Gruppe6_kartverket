@@ -7,8 +7,10 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Gruppe6_Kartverket.Mvc.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/lib/ol/ol.css" asp-append-version="true" />
-    <script src="~/lib/ol/dist/ol.js"></script>
+    <link rel="stylesheet" href="~/lib/leaflet/leaflet.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/leaflet/leaflet-geoman.css" asp-append-version="true" />
+    <!--  USED FOR OPEN LAYERS WHICH IS CURRENTLY NOT BEING USED
+    <link rel="stylesheet" href="~/lib/ol/ol.css" asp-append-version="true" />  -->
 </head>
 <body>
     <header>
@@ -26,6 +28,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="WorkingWithJs" asp-action="Index">WorkingWithJs</a>
                         </li>
                     </ul>
                 </div>
@@ -46,6 +51,10 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/leaflet/leaflet.js"></script>
+    <script src="~/lib/leaflet/leaflet-geoman.js"></script>
+    <!--  USED FOR OPEN LAYERS WHICH IS CURRENTLY NOT BEING USED
+    <script src="~/lib/ol/dist/ol.js"></script> -->
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

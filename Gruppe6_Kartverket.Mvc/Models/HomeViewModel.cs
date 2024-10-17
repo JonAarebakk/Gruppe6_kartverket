@@ -14,4 +14,6 @@ public class HomeViewModel
 
 
     public string Hidden { get; set; }
+
+    public string? MapData { get; set; }
 }
