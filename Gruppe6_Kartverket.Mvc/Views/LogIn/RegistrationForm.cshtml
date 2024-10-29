@@ -1,0 +1,36 @@
+﻿@model Gruppe6_Kartverket.Mvc.Models.RegistrationFormModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<html>
+    <body>
+    <h1>Registration Form</h1>
+
+    <form asp-action="RegistrationForm" method="post">
+        <div>
+            <label asp-for="Email">Email:</label>
+            <input asp-for="Email" />
+        </div>
+        <div>
+            <label asp-for="FirstName">First Name:</label>
+            <input asp-for="FirstName" />
+        </div>
+        <div>
+            <label asp-for="LastName">Last Name:</label>
+            <input asp-for="LastName" />
+        </div>
+        <div>
+            <label asp-for="PhoneNumber">Phone number:</label>
+            <input asp-for="PhoneNumber" />
+        </div>
+        <div>
+            <label asp-for="Gender">Gender:</label>
+            <input asp-for="Gender" />
+        </div>
+        @* Skal vi referere til RegistrationDate og UserStatus (i UserInfo.cs) her? *@
+        <button type="submit" class="btn btn-primary">Create User</button>
+    </form>
+    </body>
+</html>
