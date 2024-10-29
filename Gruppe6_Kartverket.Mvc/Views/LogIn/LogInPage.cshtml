@@ -1,14 +1,22 @@
-﻿@model Gruppe6_Kartverket.Mvc.Models.RegistrationFormModel
+﻿
 
-@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logg inn</title>
+    <!-- Link til CSS-filen -->
+    <link rel="stylesheet" href="~/css/login.css">
+</head>
 
-<html>
-    <header>
-                <title>Login</title
-    </header>
 <body>
-    <h1>Enter login information:</h1>
+<div class="login-wrapper">
+    <div class="login-container">
+        <h1>Logg inn</h1>
+        <input type="text" placeholder="Brukernavn" class="input-field">
+        <input type="password" placeholder="Passord" class="input-field">
+        <button class="login-button">Logg inn</button>
+        <a href="#" class="reset-link">Glemt passord?</a>
+    </div>
+</div>
 </body>
-</html>
+

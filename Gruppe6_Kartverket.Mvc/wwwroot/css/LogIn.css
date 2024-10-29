@@ -1,0 +1,83 @@
+/* Sentraliserings-styling for login-wrapper */
+.login-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 1rem;
+    background-color: #f3f4f6; /* Lys grå bakgrunn for hele siden */
+}
+
+/* Wrapper for innloggingsskjemaet */
+.login-container {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+}
+
+/* Tittelstil */
+.login-container h1 {
+    font-size: 1.5rem;
+    color: #00538a; /* Kartverket blå */
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+/* Input-felt */
+.input-field {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    font-size: 1rem;
+    color: #333;
+}
+
+.input-field:focus {
+    border-color: #156630; /* Grønn kant ved fokus */
+    outline: none;
+}
+
+/* Logg inn-knappen */
+.login-button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #156630;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+    background-color: #0f4c29; /* Mørkere grønn ved hover */
+}
+
+/* Tilbakestill passord-lenke */
+.reset-link {
+    display: block;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    text-align: center;
+    color: #00538a;
+    text-decoration: none;
+}
+
+.reset-link:hover {
+    text-decoration: underline;
+}
+
+/* Responsiv tilpasning */
+@media (max-width: 500px) {
+    .login-container {
+        padding: 1.5rem;
+        margin: 0 1rem;
+    }
+}
