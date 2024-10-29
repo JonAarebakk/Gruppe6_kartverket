@@ -42,3 +42,22 @@ body {
 .field-validation-error {
     color: red
 }
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: white; /* eller en annen farge */
+    z-index: 1000; /* Sørg for at den ligger øverst i lag */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Gir en svak skygge under */
+    padding: 1rem;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+} 
