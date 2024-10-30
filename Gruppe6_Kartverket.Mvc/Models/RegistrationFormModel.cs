@@ -7,6 +7,8 @@
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }
         public string? Gender { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
         public DateOnly RegistrationDate { get; set; }
         public Boolean UserStatus { get; set; }
 
