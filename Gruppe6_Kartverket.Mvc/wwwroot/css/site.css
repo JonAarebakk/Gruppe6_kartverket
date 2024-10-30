@@ -20,7 +20,11 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
 }
 
 #map {
@@ -54,10 +58,25 @@ body {
     padding: 1rem;
 }
 
-body {
+
+/* Existing styles... */
+
+/* Style for the logo container */
+#logoContainer {
     display: flex;
     align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    margin: 0;
-} 
+    margin-right: 20px;
+}
+
+/* Style for the logo component */
+#logoContainer .kvib-logo {
+    height: 40px;   /* Adjust height as needed */
+    width: auto;    /* Maintain aspect ratio */
+}
+
+/* Optional: Adjust navbar height for better alignment */
+.navbar {
+    padding: 0.5rem 1rem;  /* Adjust padding for the navbar */
+}
+
+/* Other existing styles... */

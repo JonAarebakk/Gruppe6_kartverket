@@ -11,54 +11,48 @@
     <link rel="stylesheet" href="~/Gruppe6_Kartverket.Mvc.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/leaflet/leaflet.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/leaflet/leaflet-geoman.css" asp-append-version="true" />
-    <!--  USED FOR OPEN LAYERS WHICH IS CURRENTLY NOT BEING USED
-    <link rel="stylesheet" href="~/lib/ol/ol.css" asp-append-version="true" />  -->
 
     <!-- Legg til landingpage.css -->
     <link rel="stylesheet" href="~/css/landingpage.css" asp-append-version="true" />
+
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 </head>
 <body>
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-        <div class="container-fluid">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Gruppe6_Kartverket.Mvc</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="WorkingWithJs" asp-action="Index">WorkingWithJs</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="LogIn" asp-action="LogInPage">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="LogIn" asp-action="RegistrationForm">Registration</a>
-                    </li>
-                </ul>
-            </div>
+        <div class="container-fluid" style="display: flex; align-items: center;">
+
+            <!-- Logo Placeholder -->
+            <div id="logoContainer" style="margin-right: 20px;"></div>
+
+            <!-- Search Box -->
+            <form action="@Url.Action("Index", "Home")" method="get" class="d-flex" style="flex-grow: 1;">
+                <input type="text" name="search" placeholder="Søk etter frukt" aria-label="Søk" class="form-control me-2" style="width: 100%; max-width: 300px;" />
+                <button type="submit" class="btn" style="background-color: #156630; color: white;">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+
+            <!-- Log In Button -->
+            <a href="@Url.Action("LogIn", "LogIn")" class="btn btn-outline-secondary ms-3">
+                Log in
+            </a>
+
+            <!-- Settings Icon -->
+            <a href="@Url.Action("Settings", "Settings")" class="ms-3" style="color: #555; font-size: 24px;">
+                <i class="fas fa-cog"></i>
+            </a>
+            
         </div>
     </nav>
 </header>
+
 <div class="container">
     <main role="main" class="pb-3">
         @RenderBody()
     </main>
 </div>
-
-<footer class="border-top footer text-muted">
-    <div class="container">
-        &copy; 2024 - Gruppe6_Kartverket.Mvc - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-    </div>
-</footer>
 
 <!-- JavaScript-filer -->
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -66,8 +60,19 @@
 <script src="~/js/site.js" asp-append-version="true"></script>
 <script src="~/lib/leaflet/leaflet.js"></script>
 <script src="~/lib/leaflet/leaflet-geoman.js"></script>
-<!--  USED FOR OPEN LAYERS WHICH IS CURRENTLY NOT BEING USED
-<script src="~/lib/ol/dist/ol.js"></script> -->
+
+<!-- Include React and the React App JavaScript -->
+<script src="https://unpkg.com/react/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom/umd/react-dom.development.js" crossorigin></script>
+<script src="~/js/ReactApp.js"></script>
+<!--
+<script>
+    // Render the logo component
+    import {renderLogoComponent} from "../../wwwroot/js/ReactApp";
+
+    renderLogoComponent();
+</script>
+-->
 @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

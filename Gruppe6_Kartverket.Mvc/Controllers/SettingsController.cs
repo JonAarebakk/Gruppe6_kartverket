@@ -5,7 +5,7 @@ namespace Gruppe6_Kartverket.Mvc.Controllers;
 public class SettingsController : Controller
 {
     // GET
-    public IActionResult Index()
+    public IActionResult Settings()
     {
         return View();
     }
