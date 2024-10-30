@@ -7,7 +7,7 @@ namespace Gruppe6_Kartverket.Mvc.Controllers;
 public class LogInController : Controller
 {
     [HttpGet]
-    public IActionResult LogInPage()
+    public IActionResult LogIn()
     {
         return View();
     }
