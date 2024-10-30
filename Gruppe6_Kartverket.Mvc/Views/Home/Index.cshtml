@@ -51,14 +51,22 @@
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
-        map.pm.addControls({
-            position: 'topleft',
-            drawCircleMarker: false,
-            rotateMode: false,
-            cutPolygon: false,
-            drawText: false
 
+        // Creates the drawing controls on the left hand side
+        // The drawing control enables drawing of markers, polygons, and polylines
+        var drawControl = new L.Control.Draw({
+            draw: {
+                polygon: true,
+                polyline: true,
+                marker: true,
+                circle: false, // Disable circle drawing
+                rectangle: true
+            },
+            edit: {
+                featureGroup: drawnItems
+            }
         });
+        map.addControl(drawControl);
 
 
     </script>
