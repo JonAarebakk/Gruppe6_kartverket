@@ -5,32 +5,75 @@
 }
 
 <html>
-    <body>
-    <h1>Registration Form</h1>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logg inn</title>
+    <!-- Link til CSS-filen -->
+    <link rel="stylesheet" href="~/css/login.css">
+</head>
 
-    <form asp-action="RegistrationForm" method="post">
-        <div>
+    <body>
+        <hr />
+            <h1>Create account</h1>
+        <hr />
+
+     <form asp-action="RegistrationForm" method="post">
+        <p>
+         <div>
             <label asp-for="Email">Email:</label>
-            <input asp-for="Email" />
-        </div>
-        <div>
+            <input asp-for="Email" placeholder="epost"/>
+         </div>
+        </p>
+        <p>
+         <div>
             <label asp-for="FirstName">First Name:</label>
-            <input asp-for="FirstName" />
-        </div>
-        <div>
+            <input asp-for="FirstName" placeholder="fornavn"/>
+         </div>
+        </p>
+        <p>
+         <div>
             <label asp-for="LastName">Last Name:</label>
-            <input asp-for="LastName" />
-        </div>
-        <div>
+            <input asp-for="LastName" placeholder="etternavn"/>
+         </div>
+        </p>
+        <p>
+         <div>
             <label asp-for="PhoneNumber">Phone number:</label>
-            <input asp-for="PhoneNumber" />
-        </div>
-        <div>
-            <label asp-for="Gender">Gender:</label>
-            <input asp-for="Gender" />
-        </div>
-        @* Skal vi referere til RegistrationDate og UserStatus (i UserInfo.cs) her? *@
+            <input asp-for="PhoneNumber" placeholder="telefon-nummer"/>
+         </div>
+        </p>
+        <p>
+          <div>
+                <label asp-for="Gender">Gender:</label>
+                <select asp-for="Gender">
+                    <option value="Man">Man</option>
+                    <option value="Woman">Woman</option>
+                    <option value="Other">Other</option>
+                </select>
+          </div>
+        </p>
+        <hr />
+        <p>
+            <div>
+                <label asp-for="Username">Username:</label>
+                <input asp-for="Username" placeholder="brukernavn"/>
+            </div>
+        </p>
+        <p>
+            <div>
+                <label asp-for="Password">Password:</label>
+                <input asp-for="Password" placeholder="passord"type="password" />
+            </div>
+        </p>
+        <p>
+            <div>
+                <label asp-for="Password">Repeat password:</label>
+                <input asp-for="Password" placeholder="gjenta passord" type="password" />
+            </div>
+        </p>
         <button type="submit" class="btn btn-primary">Create User</button>
+        <hr />
     </form>
     </body>
 </html>
