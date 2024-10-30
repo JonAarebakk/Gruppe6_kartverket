@@ -1,0 +1,37 @@
+/* landingpage.css */
+.landing-page {
+    text-align: center;
+    padding: 2rem;
+    background-color: #D0ECD6; /* Lys grønn bakgrunnsfarge */
+}
+
+.landing-page h1 {
+    font-size: 2rem;
+    color: #156630; /* Mørk grønn */
+    margin-bottom: 1rem;
+}
+
+.landing-page p {
+    font-size: 1.1rem;
+    color: #333; /* Nøytral tekstfarge for kontrast */
+    margin-bottom: 2rem;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.button {
+    background-color: #156630; /* Mørk grønn */
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #439CCD; /* Blå mellomlys for hover-effekt */
+}
