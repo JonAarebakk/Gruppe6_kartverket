@@ -5,7 +5,7 @@ namespace Gruppe6_Kartverket.Mvc.Controllers;
 public class CaseWorkerController : Controller
 {
     // GET
-    public IActionResult Index()
+    public IActionResult CaseWorkerPage()
     {
         return View();
     }
