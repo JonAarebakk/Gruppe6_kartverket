@@ -20,11 +20,13 @@ html {
 }
 
 body {
-    margin-bottom: 60px;
+    position: relative;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
     min-height: 100vh;
+    margin: 0;
+    margin-top: 60px;
+  
 }
 
 #map {
@@ -55,8 +57,9 @@ body {
     background-color: white; /* eller en annen farge */
     z-index: 1000; /* Sørg for at den ligger øverst i lag */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Gir en svak skygge under */
-    padding: 1rem;
+    padding: 0.5rem 1rem;
 }
+
 
 
 /* Existing styles... */
@@ -74,9 +77,5 @@ body {
     width: auto;    /* Maintain aspect ratio */
 }
 
-/* Optional: Adjust navbar height for better alignment */
-.navbar {
-    padding: 0.5rem 1rem;  /* Adjust padding for the navbar */
-}
 
 /* Other existing styles... */

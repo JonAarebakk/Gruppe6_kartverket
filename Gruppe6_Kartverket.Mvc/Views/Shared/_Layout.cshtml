@@ -14,6 +14,7 @@
     <!--  USED FOR OPEN LAYERS WHICH IS CURRENTLY NOT BEING USED
     <link rel="stylesheet" href="~/lib/ol/ol.css" asp-append-version="true" />  -->
 
+    @RenderSection("HeadContent", required: false)
 
     <!-- Legg til landingpage.css -->
     <link rel="stylesheet" href="~/css/landingpage.css" asp-append-version="true" />
@@ -23,7 +24,7 @@
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <nav id="navigation-bar" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
         <div class="container-fluid" style="display: flex; align-items: center;">
 
             <!-- Logo Placeholder -->
