@@ -1,8 +1,15 @@
-@{
-    Layout = "_Layout";
+@section HeadContent {
+    <!-- Link til CSS-filen -->
+    <link rel="stylesheet" href="~/css/login.css">
 }
 
-
 <div>
-      
+    <h1>@Model.Title</h1>
+     <p><strong>Status:</strong> @Model.Status</p>
+      <p><strong>Date:</strong> @Model.Date.ToShortDateString()</p>
+    
+       <div class="location-description">
+            <p><strong>Location:</strong> @Model.Location</p>
+            <p><strong>Description:</strong> @Model.Description</p>
+        </div>
 </div>

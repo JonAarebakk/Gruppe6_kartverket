@@ -5,5 +5,46 @@
 }
 
 <div>
-      
+    <div class="sidebar">
+        <button onclick="location.href='@Url.Action("Settings")'">Settings</button>
+        <button onclick="location.href='@Url.Action("Profile")'">Profile</button>
+        <button onclick="location.href='@Url.Action("Logout")'">Log Out</button>
+    </div>
+
+    <div class="content">
+        <div class="header">
+            <img src="/path/to/logo.png" alt="Logo" class="logo"/>
+            <button onclick="location.href='@Url.Action("Inbox")'">Inbox (@Model.NewMessagesCount)</button>
+        </div>
+
+        <div class="cases-section">
+            @if (Model.Cases.Count > 0)
+            {
+            <table>
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var caseItem in Model.Cases)
+                {
+                <tr>
+                    <td>@caseItem.Title</td>
+                    <td>@caseItem.Date.ToShortDateString()</td>
+                    <td>@caseItem.Status</td>
+                </tr>
+                }
+                </tbody>
+            </table>
+            }
+            else
+            {
+            <p>No Cases</p>
+            }
+        </div>
+    </div>
+
 </div>
