@@ -32,7 +32,10 @@
         <div class="container-fluid" style="display: flex; align-items: center;">
 
             <!-- Logo Placeholder -->
-            <div id="logoContainer" style="margin-right: 20px;"></div>
+
+            <a href="@Url.Action("LandingPage", "LandingPage")" >
+                <img src="~/images/logo.svg" id="logoContainer" />
+            </a>
 
             <!-- Search Box -->
             <form action="@Url.Action("Index", "Home")" method="get" class="d-flex ms-auto" style="flex-grow: 1; max-width: 300px;">
@@ -47,7 +50,7 @@
                Log in</a>
 
             <!-- Settings Icon -->
-            <a href="/Settings" class="ms-3" style="color: #555; font-size: 24px;">
+            <a href="@Url.Action("Settings", "Settings")" class="ms-3" style="color: #555; font-size: 24px;">
                 <i class="fas fa-cog"></i>
             </a>
         </div>
