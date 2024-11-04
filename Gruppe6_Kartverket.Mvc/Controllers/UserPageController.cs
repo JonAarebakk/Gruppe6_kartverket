@@ -6,7 +6,9 @@ namespace Gruppe6_Kartverket.Mvc.Controllers;
 
 public class UserPageController : Controller
 {
-    public IActionResult Index()
+
+    // GET
+    public IActionResult UserPage()
     {
         var model = new UserPageModel
         {
