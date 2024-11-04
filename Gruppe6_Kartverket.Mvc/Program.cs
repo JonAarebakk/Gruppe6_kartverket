@@ -1,7 +1,15 @@
+using Microsoft.EntityFrameworkCore;
+using Gruppe6_Kartverket.Mvc.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Configure Entity Framework with MariaDB
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
+    new MySqlServerVersion(new Version(10, 5, 9))));
 
 //  The JSON serializer will use the exact property names as defined in your C# classes
 builder.Services.AddControllers()
