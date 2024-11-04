@@ -25,6 +25,7 @@ body {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
+    background-color: #D0ECD6; /* Set the background color to green */
 }
 
 #map {
@@ -58,20 +59,13 @@ body {
     padding: 1rem;
 }
 
-
-/* Existing styles... */
-
-/* Style for the logo container */
-#logoContainer {
-    display: flex;
-    align-items: center;
-    margin-right: 20px;
-}
-
 /* Style for the logo component */
-#logoContainer .kvib-logo {
-    height: 40px;   /* Adjust height as needed */
-    width: auto;    /* Maintain aspect ratio */
+#logoContainer  {
+    height: 91px;   /* Adjust height as needed */
+    width: 125px;    /* Maintain aspect ratio */
+    background-image: url('../Images/Logo.svg'); /* Corrected path */
+    background-size: contain; /* Ensure the image fits within the element */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
 }
 
 /* Optional: Adjust navbar height for better alignment */
@@ -79,4 +73,3 @@ body {
     padding: 0.5rem 1rem;  /* Adjust padding for the navbar */
 }
 
-/* Other existing styles... */
