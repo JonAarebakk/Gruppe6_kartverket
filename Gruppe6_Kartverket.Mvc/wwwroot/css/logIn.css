@@ -82,7 +82,6 @@
         margin: 0 1rem;
     }
 }
-
 /* Registrationform specific css */
 .RFwrapper {
     display: flex;
@@ -90,7 +89,7 @@
     justify-content: center;
     min-height: calc(100vh - 60px); /* Subtract nav-bar height */
     padding: 1rem;
-    background-color: #f3f4f6; /* Light gray background for the whole page */
+    background-color: #D0ECD6; /* Set the background color to green */
 }
 
 .RFcontainer {
