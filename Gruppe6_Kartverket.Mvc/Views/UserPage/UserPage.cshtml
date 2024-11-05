@@ -1,50 +1,46 @@
-
 @section HeadContent {
 <!-- Link til CSS-filen -->
 <link rel="stylesheet" href="~/css/login.css">
 }
 
-<div>
-    <div class="sidebar">
-        <button onclick="location.href='@Url.Action("Settings")'">Settings</button>
-        <button onclick="location.href='@Url.Action("Profile")'">Profile</button>
-        <button onclick="location.href='@Url.Action("Logout")'">Log Out</button>
-    </div>
 
-    <div class="content">
-        <div class="header">
-            <img src="/path/to/logo.png" alt="Logo" class="logo"/>
-            <button onclick="location.href='@Url.Action("Inbox")'">Inbox (@Model.NewMessagesCount)</button>
-        </div>
+@model Gruppe6_Kartverket.Mvc.Models.UserPageModel
 
-        <div class="cases-section">
-            @if (Model.Cases.Count > 0)
-            {
-            <table>
-                <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Date</th>
-                    <th>Status</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach (var caseItem in Model.Cases)
-                {
-                <tr>
-                    <td>@caseItem.Title</td>
-                    <td>@caseItem.Date.ToShortDateString()</td>
-                    <td>@caseItem.Status</td>
-                </tr>
-                }
-                </tbody>
-            </table>
-            }
-            else
-            {
-            <p>No Cases</p>
-            }
-        </div>
-    </div>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Page</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+<div class="sidebar">
+    <a href="@Url.Action("Map", "Map")">Go to map/Register a new case</a>
+    <a href="@Url.Action("Profile", "UserPage")">Profile information</a>
+    <a href="@Url.Action("Settings", "UserPage")">Settings</a>
+    <a href="@Url.Action("Logout", "UserPage")">Log out</a>
 </div>
+
+<div class="content">
+    <h2>@Model.UserName's Inbox</h2>
+    <div class="inbox-header">
+        <span>User</span>
+        <span>User-Id</span>
+        <span>Registration-date</span>
+        <span>Issue-type</span>
+        <span>Description</span>
+    </div>
+    @foreach (var userCase in Model.Cases)
+    {
+    <div class="inbox-item">
+        <span>@Model.UserName</span>
+        <span>@Model.UserId</span>
+        <span>@Model.RegistrationDate.ToShortDateString()</span>
+        <span>@userCase.IssueType</span>
+        <span>@userCase.Description</span>
+    </div>
+    }
+</div>
+</body>
+</html>
+    

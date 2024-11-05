@@ -17,7 +17,9 @@ html {
 .btn:active:focus,
 .btn-link.nav-link:focus,
 .form-control:focus,
-.form-check-input:focus {
+.form-check-input:focus,
+.headertoplinks .btn-outline-secondary:focus,
+a.btn-outline-secondary.ms-3:focus {
     box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
@@ -48,6 +50,8 @@ html {
     margin: 0; /* Ensure no default margin */
 
 }
+
+
 
 body {
     position: relative;
@@ -140,12 +144,47 @@ body {
     color: #258cfb;               /* Hover color for links */
 }
 
+/* Style for the UserPage */
+ .sidebar {
+     width: 200px;
+     position: fixed;
+     top: 60px; /* Adjust based on your navbar height */
+     left: 0;
+     height: 100%;
+     background-color: #f8f9fa;
+     padding-top: 20px;
+ }
+.sidebar a {
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #333;
+    display: block;
+}
+.sidebar a:hover {
+    background-color: #ddd;
+}
+.content {
+    margin-left: 220px; /* Same as the sidebar width + some margin */
+    padding: 20px;
+}
+.inbox-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #e9ecef;
+    border-bottom: 1px solid #ddd;
+}
+.inbox-item {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
 /* Responsive behavior for smaller screens */
 @media (max-width: 768px) {
     .sitefooter {
         grid-template-columns: 1fr; /* Stacks columns on small screens */
         text-align: center; /* Center text alignment */
     }
-
     
 }
