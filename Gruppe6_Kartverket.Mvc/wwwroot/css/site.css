@@ -3,6 +3,8 @@
 /* Set the base font size for the entire HTML document */
 html {
     font-size: 14px;
+    position: relative;
+    min-height: 100%;
 }
 
 /* Increase the base font size for screens wider than 768px */
@@ -12,29 +14,15 @@ html {
     }
 }
 
-/* Add a box shadow to various elements when they are focused */
-.btn:focus,
-.btn:active:focus,
-.btn-link.nav-link:focus,
-.form-control:focus,
-.form-check-input:focus,
-.headertoplinks .btn-outline-secondary:focus,
-a.btn-outline-secondary.ms-3:focus {
-    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-/* Ensure the HTML element takes up at least the full height of the viewport */
-html {
+body {
     position: relative;
-    min-height: 100%;
-}
-
-
-/* Style for the logo component */
-#logoContainer {
-    height: 91px; /* Adjust height as needed */
-    width: 125px; /* Maintain aspect ratio */
-    margin-right: 20px; /* Adjust margin as needed */
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding-top: 60px; /* Same as navbar height */
+    background-color: #D0ECD6; /* Set the background color to green */
 }
 
 .navbar {
@@ -51,15 +39,22 @@ html {
 
 }
 
+/* Add a box shadow to various elements when they are focused */
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus,
+.headertoplinks .btn-outline-secondary:focus,
+a.btn-outline-secondary.ms-3:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
 
-
-body {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    padding-top: 60px; /* Same as navbar height */
-    background-color: #D0ECD6; /* Set the background color to green */
+/* Style for the logo component */
+#logoContainer {
+    height: 91px; /* Adjust height as needed */
+    width: 125px; /* Maintain aspect ratio */
+    margin-right: 20px; /* Adjust margin as needed */
 }
 
 .topicpageheading {
@@ -72,8 +67,9 @@ body {
     top: 70px; /* Increased space from 50px to 70px */
 } 
 
+
 /* Style for the map container inside an element with class 'container' */
-.container
+.container,
 #map {
     position: relative; /* Position relative to its normal position */
     width: 600px;       /* Set the width of the map */
@@ -97,22 +93,21 @@ body {
 }
 
 
-
-
+.container {
+    flex: 1;                          /* Makes the container a flex item that grows to fill the available space within its flex container */
+}
 
 /* Style for the site footer */
 .sitefooter {
-    position: relative;           /* Positioned relative to its normal position */
-    background-color: #ffffff;    /* White background */
-    padding: 2rem;                /* Padding inside the footer */
-    margin-top: auto;             /* Pushes the footer to the bottom of the page */
-    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1); /* Adds a shadow to the top of the footer */
-    width: 100%;                  /* Full width of the container */
-    bottom: 0;                    /* Positioned at the bottom */
-    display: grid;                /* Uses CSS Grid layout */
-    grid-template-columns: repeat(4, 1fr); /* Four equal columns */
-    gap: 1rem;                    /* Space between columns */
-    align-items: start;           /* Aligns items at the start (top) */
+    background-color: #ffffff;        /* Sets the background color to white */
+    padding: 2rem;                    /* Adds padding of 2 rem units inside the footer */
+    margin-top: auto;                 /* Pushes the footer to the bottom of the page if there is extra space */
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1); /* Adds a shadow effect above the footer */
+    width: 100%;                      /* Ensures the footer takes up the full width of its container */
+    display: grid;                    /* Uses CSS Grid layout for the footer content */
+    grid-template-columns: repeat(4, 1fr); /* Divides the footer into 4 equal-width columns */
+    gap: 1rem;                        /* Adds a gap of 1 rem unit between the columns */
+    align-items: start;               /* Aligns the items at the start of each column */
 }
 
 /* Style for each column in the footer */
@@ -143,6 +138,9 @@ body {
 .sitefooter-column a:hover {
     color: #258cfb;               /* Hover color for links */
 }
+
+
+
 
 /* Style for the UserPage */
  .sidebar {
