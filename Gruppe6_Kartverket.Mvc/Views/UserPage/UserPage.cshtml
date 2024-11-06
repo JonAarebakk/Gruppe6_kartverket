@@ -1,19 +1,10 @@
+@model Gruppe6_Kartverket.Mvc.Models.UserPageModel
+
 @section HeadContent {
 <!-- Link til CSS-filen -->
 <link rel="stylesheet" href="~/css/login.css">
 }
 
-
-@model Gruppe6_Kartverket.Mvc.Models.UserPageModel
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>User Page</title>
-    <link rel="stylesheet" href="~/css/site.css" />
-</head>
-<body>
 <div class="sidebar">
     <a href="@Url.Action("Map", "Map")">Go to map/Register a new case</a>
     <a href="@Url.Action("Profile", "UserPage")">Profile information</a>
@@ -40,7 +31,4 @@
         <span>@userCase.Description</span>
     </div>
     }
-</div>
-</body>
-</html>
-    
+</div>   
