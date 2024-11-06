@@ -40,3 +40,4 @@ app.MapControllerRoute(
     pattern: "{controller=LandingPage}/{action=LandingPage}/{id?}");
 
 app.Run();
+
