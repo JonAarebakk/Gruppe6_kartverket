@@ -68,12 +68,14 @@
           @RenderBody()
          </main>
     </div>
-
+    
+@if (ViewBag.HideFooter == null || ViewBag.HideFooter == false)
+{
     <footer class="sitefooter">
         <!-- First Column: Logo -->
         <div class="sitefooter-column">
             <a href="/" class="sitefooter-logolink" title="Gå til forsiden">
-                <img src="~/images/logo.svg" id="logoContainer" />
+                <img src="~/images/logo.svg" id="logoContainer"/>
             </a>
         </div>
 
@@ -84,7 +86,7 @@
             <p>E-post: <a href="mailto:post@kartverket.no">post@kartverket.no</a></p>
             <p><a href="/om-kartverket/kontakt-oss">Kontaktinfo og adresser</a></p>
         </div>
-                
+
         <!-- Third Column: Help Links -->
         <div class="sitefooter-column">
             <h4>Hjelp</h4>
@@ -103,7 +105,9 @@
             <a href="https://vimeo.com/kartverket/videos" rel="noopener nofollow">Video</a>
         </div>
     </footer>
-    <!-- JavaScript-filer -->
+}
+
+<!-- JavaScript-filer -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
