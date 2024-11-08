@@ -5,6 +5,15 @@
     background-color: #D0ECD6; /* Light green background color */
 }
 
+/* Wrapper for centering content on the page */
+.landingPage-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 1rem;
+}
+
 .landing-page h1 {
     font-size: 2rem;
     color: #156630; /* Dark green */
@@ -17,15 +26,6 @@
     margin-bottom: 2rem;
 }
 
-/* Wrapper for centering content on the page */
-.login-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 1rem;
-    background-color: #f3f4f6;
-}
 
 /* Horizontal card layout container */
 .cards-container {

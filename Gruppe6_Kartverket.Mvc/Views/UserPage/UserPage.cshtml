@@ -1,16 +1,17 @@
 @model Gruppe6_Kartverket.Mvc.Models.UserPageModel
 
 @section HeadContent {
-<!-- Link til CSS-filen -->
-<link rel="stylesheet" href="~/css/login.css">
+<link rel="stylesheet" href="~/css/userPage.css">
 }
 
-<div class="sidebar">
-    <a href="@Url.Action("Map", "Map")">Go to map/Register a new case</a>
+<div class="sidebar" id="sidebar">
+    <a href="@Url.Action("MapPage", "MapPage")">Go to map/Register a new case</a>
     <a href="@Url.Action("Profile", "UserPage")">Profile information</a>
     <a href="@Url.Action("Settings", "UserPage")">Settings</a>
     <a href="@Url.Action("Logout", "UserPage")">Log out</a>
 </div>
+
+<div class="menu-icon" id="menuIcon" onclick="toggleSidebar()">☰</div>
 
 <div class="content">
     <h2>@Model.UserName's Inbox</h2>
@@ -31,4 +32,74 @@
         <span>@userCase.Description</span>
     </div>
     }
-</div>   
+</div>
+
+<a href="#UP-filterMenu" class="UP-filter-button">Filter</a>
+
+<div class="UP-filter-menu" id="UP-filterMenu">
+    <a href="#" class="close-button">&times;</a>
+
+    <h3>Filter Options</h3>
+    <div class="form-group">
+        <label for="categorySelect">Category</label>
+        <select class="form-control" id="categorySelect">
+            <option>Category 1</option>
+            <option>Category 2</option>
+            <option>Category 3</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Options</label>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="option1">
+            <label class="form-check-label" for="option1">
+                Option 1
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="option2">
+            <label class="form-check-label" for="option2">
+                Option 2
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="option3">
+            <label class="form-check-label" for="option3">
+                Option 3
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="rangeInput">Range</label>
+        <input type="range" class="form-control-range" id="rangeInput">
+    </div>
+    <div class="UP-button-container">
+        <button class="UP-reset-button" onclick="resetFilters()">Reset Filters</button>
+        <button class="UP-apply-button" onclick="applyChanges()">Apply Changes</button>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    function toggleSidebar() {
+        var sidebar = document.getElementById("sidebar");
+        sidebar.classList.toggle("active");
+    }
+
+    function applyChanges() {
+        var filterMenu = document.getElementById("UP-filterMenu");
+        filterMenu.classList.remove("open");
+        document.removeEventListener("click", closeFilterMenuOnClickOutside);
+        // Add any additional logic for applying changes here.....
+    }
+
+    function resetFilters() {
+        document.getElementById("categorySelect").selectedIndex = 0;
+        document.getElementById("option1").checked = false;
+        document.getElementById("option2").checked = false;
+        document.getElementById("option3").checked = false;
+        document.getElementById("rangeInput").value = document.getElementById("rangeInput").min;
+    }
+</script>
+}

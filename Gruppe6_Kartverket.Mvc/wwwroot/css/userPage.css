@@ -1,0 +1,52 @@
+.UP-filter-button {
+    position: fixed;
+    top: 70px; /* Adjust this value based on the height of your navbar */
+    right: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    z-index: 1000; /* Ensure it stays on top */
+}
+
+.UP-filter-menu {
+    position: fixed;
+    top: 91px; /* Adjust this value based on the height of your nav-bar */
+    right: -300px;
+    width: 300px;
+    height: calc(100vh - 99px); /* Adjust this value based on the height of your nav-bar */
+    background-color: #f8f9fa;
+    transition: right 0.3s ease;
+    padding: 30px;
+    box-sizing: border-box;
+    z-index: 999; /* Ensure this is higher than the nav-bar's z-index */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.UP-filter-menu.open {
+    right: 0;
+}
+
+.UP-button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.UP-apply-button, .UP-reset-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    flex: 1;
+    margin: 0 5px;
+    text-align: center;
+}
+
+.UP-reset-button {
+    background-color: #dc3545;
+}

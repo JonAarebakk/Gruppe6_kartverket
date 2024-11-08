@@ -1,5 +1,5 @@
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_CaseWorkerLayout.cshtml";
     ViewData["Title"] = "Caseworker-page";
 }
 
@@ -11,21 +11,26 @@
     @* The left menu column *@
     <div class="CWP_menu">
         <ul class="nav flex-column">
+
             <li class="nav-item">
                 <a class="nav-link" href="@Url.Action("Profile", "CaseWorker")">Profile</a>
             </li>
+            
             <li class="nav-item">
                 <a class="nav-link" href="@Url.Action("Inbox", "CaseWorker")">Inbox</a>
             </li>
+            
             <li class="nav-item">
                 <a class="nav-link" href="@Url.Action("Settings", "CaseWorker")">Settings</a>
             </li>
+            
             <li class="nav-item">
                 <a class="nav-link" href="@Url.Action("LandingPage", "LandingPage")">Log out</a>
             </li>
+            
         </ul>
     </div>
-        
+
     @* The main display of the CWP *@
     <div class="CWP_main">
         <p>display-screen</p>
@@ -106,6 +111,7 @@
                     document.getElementById("option3").checked = false;
                     document.getElementById("rangeInput").value = document.getElementById("rangeInput").min;
                 }
-            </script> }
+            </script>
+        }
     </div>
 </div>

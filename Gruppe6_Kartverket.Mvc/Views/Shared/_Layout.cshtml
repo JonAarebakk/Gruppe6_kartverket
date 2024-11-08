@@ -8,14 +8,13 @@
     <!-- Standard CSS og biblioteker -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <!--<link rel="stylesheet" href="~/Gruppe6_Kartverket.Mvc.styles.css" asp-append-version="true" />-->
     <link rel="stylesheet" href="~/lib/leaflet/leaflet.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/leaflet/leaflet-geoman.css" asp-append-version="true" />
     <!--  USED FOR OPEN LAYERS WHICH IS CURRENTLY NOT BEING USED -->
     <link rel="stylesheet" href="~/lib/ol/ol.css" asp-append-version="true" />  
 
     @await RenderSectionAsync("HeadContent", required: false)
-    
+
     <!-- Legg til landingpage.css -->
 
     <link rel="stylesheet" href="~/css/landingPage.css" asp-append-version="true" />
@@ -23,45 +22,45 @@
 
     <!-- FontAwesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    
+
 </head>
 
 <body>
-    <header>
-        <nav id="navigation-bar" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid" style="display: flex; align-items: center;">
+<header>
+    <nav id="navigation-bar" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container-fluid" style="display: flex; align-items: center;">
 
-                <!-- Logo Placeholder -->
+            <!-- Logo Placeholder -->
 
-                <a href="@Url.Action("LandingPage", "LandingPage")" >
-                    <img src="~/images/logo.svg" id="logoContainer" />
-                </a>
+            <a href="@Url.Action("LandingPage", "LandingPage")" >
+                <img src="~/images/logo.svg" id="logoContainer" />
+            </a>
 
-                <!-- Search Box -->
-                <form action="@Url.Action("Index", "Home")" method="get" class="d-flex ms-auto" style="flex-grow: 1; max-width: 300px;">
-                    <input type="text" name="search" placeholder="Søk" aria-label="Søk" class="form-control me-2" style="width: 100%;" />
-                    <button type="submit" class="btn" style="background-color: #156630; color: white;">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </form>
-                
-                <div class="headertoplinks">
-                    <a href="@Url.Action("ContactUs", "ContactUs")" class="btn btn-outline-secondary ms-3">
-                        Contact Us
-                    </a>
-                </div>
-                
-                <!-- Log In Button -->
-                <a href="@Url.Action("LogIn", "LogIn")" class="btn btn-outline-secondary ms-3">
-                    Log in</a>
+            <!-- Search Box -->
+            <form action="@Url.Action("Index", "Home")" method="get" class="d-flex ms-auto" style="flex-grow: 1; max-width: 300px;">
+                <input type="text" name="search" placeholder="Søk" aria-label="Søk" class="form-control me-2" style="width: 100%;" />
+                <button type="submit" class="btn" style="background-color: #156630; color: white;">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
 
-                <!-- Settings Icon -->
-                <a href="@Url.Action("Settings", "Settings")" class="ms-3" style="color: #555; font-size: 24px;">
-                    <i class="fas fa-cog"></i>
+            <div class="headertoplinks">
+                <a href="@Url.Action("ContactUs", "ContactUs")" class="btn btn-outline-secondary ms-3">
+                    Contact Us
                 </a>
             </div>
-        </nav>
-    </header>
+
+            <!-- Log In Button -->
+            <a href="@Url.Action("LogIn", "LogIn")" class="btn btn-outline-secondary ms-3">
+                Log in</a>
+
+            <!-- Settings Icon -->
+            <a href="@Url.Action("Settings", "Settings")" class="ms-3" style="color: #555; font-size: 24px;">
+                <i class="fas fa-cog"></i>
+            </a>
+        </div>
+    </nav>
+</header>
 
     <div class="container">
          <main role="main" class="pb-3">
@@ -117,6 +116,6 @@
     <!--  USED FOR OPEN LAYERS WHICH IS CURRENTLY NOT BEING USED -->
     <script src="~/lib/ol/dist/ol.js"></script>
 
-    @await RenderSectionAsync("Scripts", required: false)
+@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

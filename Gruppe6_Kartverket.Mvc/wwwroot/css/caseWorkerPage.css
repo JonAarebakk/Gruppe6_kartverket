@@ -1,18 +1,53 @@
-﻿.CWP_menu {
-    float: left;
+﻿/*css for CaseWorkerPage*/
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden; /* Remove scroll function */
+}
+
+#CWP_body {
+    position: relative;
     height: 100vh;
+}
+
+.CWP_menu, .CWP_main {
+    position: absolute;
+    padding-top: 99px; /* Adjust based on the height of the nav-bar */
+    bottom: 0;
+}
+
+.CWP_menu {
+    left: 0;
     width: 20%;
     background-color: azure;
     box-sizing: border-box;
+    z-index: 1; /* Ensure menu is below main content */
 }
 
+.nav-item {
+    border: 1px solid #ccc; /* Light gray border */
+    padding: 10px; /* Add some padding for better spacing */
+    margin-bottom: 10px; /* Add some space between items */
+    border-radius: 5px; /* Optional: Add rounded corners */
+}
+
+.nav-item .nav-link {
+    color: #000; /* Optional: Set the text color */
+    text-decoration: none; /* Optional: Remove underline from links */
+    }
+
+.nav-item .nav-link:hover {
+    color: #007bff; /* Optional: Change text color on hover */
+        }
+
 .CWP_main {
-    float: right;
-    height: 100vh;
-    width: 80%;
+    right: 0;
+    left: 20%;
     background-color: white;
     box-sizing: border-box;
-    position: relative;
+    z-index: 2; /* Ensure main content is above menu */
 }
 
 .CWP-filter-button {
@@ -24,6 +59,7 @@
     border: none;
     padding: 10px 20px;
     cursor: pointer;
+    z-index: 2000; /* Ensure button is above other elements */
 }
 
 .CWP-filter-menu {
@@ -31,7 +67,7 @@
     top: 91px; /* Adjust this value based on the height of your nav-bar */
     right: -300px;
     width: 300px;
-    height: calc(100vh - 99px); /* Adjust this value based on the height of your nav-bar */
+    height: calc(100vh - 91px); /* Adjust this value based on the height of your nav-bar */
     background-color: #f8f9fa;
     transition: right 0.3s ease;
     padding: 30px;
@@ -66,3 +102,4 @@
 .CWP-reset-button {
     background-color: #dc3545;
 }
+
