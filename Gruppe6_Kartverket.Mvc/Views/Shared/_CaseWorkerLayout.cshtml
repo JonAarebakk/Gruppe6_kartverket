@@ -8,7 +8,6 @@
     <!-- Standard CSS og biblioteker -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Gruppe6_Kartverket.Mvc.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/leaflet/leaflet.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/leaflet/leaflet-geoman.css" asp-append-version="true" />
     <!--  USED FOR OPEN LAYERS WHICH IS CURRENTLY NOT BEING USED
@@ -26,7 +25,7 @@
     
 </head>
 
-<body id="CWP_body">
+<body>
     <header>
         <nav id="navigation-bar" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
 
@@ -51,9 +50,9 @@
         </nav>
     </header>
 
-    <div class="display_under_navigation-bar">
+    <div class="renderBody-div">
          <main role="main" class="pb-3">
-          @RenderBody()
+            @RenderBody()
          </main>
     </div>
 

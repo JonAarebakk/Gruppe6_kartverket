@@ -75,43 +75,44 @@
                 <button class="CWP-reset-button" onclick="resetFilters()">Reset Filters</button>
                 <button class="CWP-apply-button" onclick="applyChanges()">Apply Changes</button>
             </div>
-        </div>
-
-        @section Scripts {
-            <script>
-                function toggleFilterMenu() {
-                    var filterMenu = document.getElementById("CWP-filterMenu");
-                    filterMenu.classList.toggle("open");
-                    if (filterMenu.classList.contains("open")) {
-                        document.addEventListener("click", closeFilterMenuOnClickOutside);
-                    } else {
-                        document.removeEventListener("click", closeFilterMenuOnClickOutside);
-                    }
-                }
-
-                function closeFilterMenuOnClickOutside(event) {
-                    var filterMenu = document.getElementById("CWP-filterMenu");
-                    if (!filterMenu.contains(event.target) && !event.target.matches('.CWP-filter-button')) {
-                        filterMenu.classList.remove("open");
-                        document.removeEventListener("click", closeFilterMenuOnClickOutside);
-                    }
-                }
-
-                function applyChanges() {
-                    var filterMenu = document.getElementById("CWP-filterMenu");
-                    filterMenu.classList.remove("open");
-                    document.removeEventListener("click", closeFilterMenuOnClickOutside);
-                    // Add any additional logic for applying changes here.....
-                }
-
-                function resetFilters() {
-                    document.getElementById("categorySelect").selectedIndex = 0;
-                    document.getElementById("option1").checked = false;
-                    document.getElementById("option2").checked = false;
-                    document.getElementById("option3").checked = false;
-                    document.getElementById("rangeInput").value = document.getElementById("rangeInput").min;
-                }
-            </script>
-        }
+        </div>  
     </div>
 </div>
+
+
+@section Scripts {
+    <script>
+        function toggleFilterMenu() {
+            var filterMenu = document.getElementById("CWP-filterMenu");
+            filterMenu.classList.toggle("open");
+            if (filterMenu.classList.contains("open")) {
+                document.addEventListener("click", closeFilterMenuOnClickOutside);
+            } else {
+                document.removeEventListener("click", closeFilterMenuOnClickOutside);
+            }
+        }
+
+        function closeFilterMenuOnClickOutside(event) {
+            var filterMenu = document.getElementById("CWP-filterMenu");
+            if (!filterMenu.contains(event.target) && !event.target.matches('.CWP-filter-button')) {
+                filterMenu.classList.remove("open");
+                document.removeEventListener("click", closeFilterMenuOnClickOutside);
+            }
+        }
+
+        function applyChanges() {
+            var filterMenu = document.getElementById("CWP-filterMenu");
+            filterMenu.classList.remove("open");
+            document.removeEventListener("click", closeFilterMenuOnClickOutside);
+            // Add any additional logic for applying changes here.....
+        }
+
+        function resetFilters() {
+            document.getElementById("categorySelect").selectedIndex = 0;
+            document.getElementById("option1").checked = false;
+            document.getElementById("option2").checked = false;
+            document.getElementById("option3").checked = false;
+            document.getElementById("rangeInput").value = document.getElementById("rangeInput").min;
+        }
+    </script>
+}
