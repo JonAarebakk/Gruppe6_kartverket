@@ -1,10 +1,12 @@
-﻿@model HomeViewModel
-
-@{
+﻿@{
     ViewData["Title"] = "Home Page";
 }
 
-<p>@Model.Message</p>
+@section HeadContent {
+    <!-- Link to CSS file -->
+    <link rel="stylesheet" href="~/css/mapPage.css" asp-append-version="true" />
+}
+
 <div id="map">
     <div class="map-buttons">
         <button class="map-button" data-select="LineString">Lin</button>
@@ -13,9 +15,11 @@
         <button class="map-button" data-select="Circle">Cir</button>
     </div>
 </div>
+
 <div style="display: none;">
     <div id="popup"></div>
 </div>
+
 <div class="row">
     <div class="col-auto">
         <span class="input-group">
@@ -30,20 +34,12 @@
         </span>
     </div>
 </div>
-<form asp-controller="Home" asp-action="Index" method="post" id="mapInputForm">
-    @Html.ValidationSummary()
-    @Html.DisplayNameFor(x => x.NewMessage)
-    @Html.ValidationMessageFor(x => x.NewMessage)
-    @Html.TextBoxFor(x => x.NewMessage, new { @class = "form-control" })
 
-    @Html.HiddenFor(x => x.Hidden, new { @id = "hiddenField" })
-    <input type="button" value="Send" onclick="submitForm()"/>
-</form>
+<div>
+    <button class="delete-feature">Delete next feature</button>
+</div>
+
 
 @section Scripts {
-    <script type="module" src="~/js/ol_map.js"></script>
-    <script type="module">
-        import { submitForm } from './../js/map.js';
-        window.submitForm = submitForm; // Make the function accessible in the global scope
-    </script>
+    <script type="module" src="~/js/ol_map4.js"></script>
 }

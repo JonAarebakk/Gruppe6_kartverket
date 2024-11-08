@@ -55,11 +55,12 @@ html {
 
 body {
     position: relative;
-    display: flex;
-    flex-direction: column;
     min-height: 100vh;
-    padding-top: 60px; /* Same as navbar height */
     background-color: #D0ECD6; /* Set the background color to green */
+}
+
+.container {
+    padding-top: 60px;
 }
 
 .topicpageheading {
@@ -72,24 +73,7 @@ body {
     top: 70px; /* Increased space from 50px to 70px */
 } 
 
-/* Style for the map container inside an element with class 'container' */
-.container
-#map {
-    position: relative; /* Position relative to its normal position */
-    width: 600px;       /* Set the width of the map */
-    height: 400px;      /* Set the height of the map */
-}
 
-/* Style for buttons inside the map */
-.map-buttons {
-    position: absolute;    /* Position absolutely within the nearest positioned ancestor */
-    top: 60px;             /* 60px from the top of the container */
-    left: 10px;            /* 10px from the left of the container */
-    display: flex;         /* Use flexbox layout */
-    flex-direction: column; /* Arrange children in a column */
-    gap: 5px;              /* 5px gap between children */
-    z-index: 500;          /* Stack order of the element */
-}
 
 /* Style for field validation error messages */
 .field-validation-error {

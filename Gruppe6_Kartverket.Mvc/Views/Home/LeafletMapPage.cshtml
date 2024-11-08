@@ -1,0 +1,57 @@
+﻿@{
+    ViewData["Title"] = "Map Page";
+}
+
+@section HeadContent {
+    <!-- Link to CSS file -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
+}
+
+<div id="map"></div>
+
+
+@section Scripts {
+
+    <script src="~/lib/leaflet-draw/leaflet.draw.js"></script>
+
+    <script>
+
+             var map = L.map('map').setView([58.164048, 8.004007], 13); //initial location (can this be fetched from device? )
+             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+             }).addTo(map);
+
+             var drawnItems = new L.FeatureGroup();
+             map.addLayer(drawnItems);
+
+
+             // Creates the drawing controls on the left hand side
+             // The drawing control enables drawing of markers, polygons, and polylines
+             var drawControl = new L.Control.Draw({
+                 draw: {
+                     polygon: true, // PolygonOptions	{ }	Polygon draw handler options. Set to false to disable handler.
+                     polyline: true, // PolylineOptions	{ }	Polyline draw handler options. Set to false to disable handler.
+                     marker: true, // MarkerOptions	{ }	Marker draw handler options. Set to false to disable handler.
+                     circle: false,  // CircleOptions	{ }	Circle draw handler options. Set to false to disable handler.
+                     rectangle: true,  // RectangleOptions	{ }	Rectangle draw handler options. Set to false to disable handler.
+                     circlemarker: false // CircleOptions	{ }	Circle draw handler options. Set to false to disable handler.
+                 },
+                 edit: {
+                 remove: false,  // DeleteHandlerOptions	{}	Delete handler options.Set to false to disable handler.
+                     edit: false,  // EditHandlerOptions	{}	Edit handler options. Set to false to disable handler.
+                     featureGroup: drawnItems
+                 }
+             });
+             map.addControl(drawControl);
+
+             map.on(L.Draw.Event.CREATED, function (e) {
+                 var type = e.layerType;
+                     layer = e.layer;
+
+                 drawnItems.addLayer(layer);
+             });
+
+        // console.log(map.getActions());
+
+    </script>
+}

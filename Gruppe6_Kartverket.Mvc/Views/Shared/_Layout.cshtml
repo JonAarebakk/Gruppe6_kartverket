@@ -11,8 +11,8 @@
     <link rel="stylesheet" href="~/Gruppe6_Kartverket.Mvc.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/leaflet/leaflet.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/leaflet/leaflet-geoman.css" asp-append-version="true" />
-    <!--  USED FOR OPEN LAYERS WHICH IS CURRENTLY NOT BEING USED
-    <link rel="stylesheet" href="~/lib/ol/ol.css" asp-append-version="true" />  -->
+    <!--  USED FOR OPEN LAYERS WHICH IS CURRENTLY NOT BEING USED -->
+    <link rel="stylesheet" href="~/lib/ol/ol.css" asp-append-version="true" />  
 
     @await RenderSectionAsync("HeadContent", required: false)
     
@@ -65,10 +65,12 @@
 
     <div class="container">
          <main role="main" class="pb-3">
-          @RenderBody()
+            @RenderBody()
          </main>
     </div>
 
+    @if (ViewBag.HideFooter == null || ViewBag.HideFooter == false)
+    {
     <footer class="sitefooter">
         <!-- First Column: Logo -->
         <div class="sitefooter-column">
@@ -82,15 +84,15 @@
             <h4>Hjelp</h4>
             <p>Telefon: <a href="tel:32118000">32 11 80 00</a></p>
             <p>E-post: <a href="mailto:post@kartverket.no">post@kartverket.no</a></p>
-            <p><a href="/om-kartverket/kontakt-oss">Kontaktinfo og adresser</a></p>
+            <p><a href="/om-kartverket/kontakt-oss">Kontaktinfo og adresser</a></p> <!--NB! DENNE LINKEN FØRER INGEN STEDER-->
         </div>
                 
         <!-- Third Column: Help Links -->
         <div class="sitefooter-column">
             <h4>Hjelp</h4>
             <a href="http://status.kartverket.no/" rel="noopener nofollow">Driftsmeldinger</a><br>
-            <a href="/om-kartverket/faq" rel="noopener nofollow">Ofte stilte spørsmål</a><br>
-            <a href="/eiendom/skjema/alleskjema" rel="noopener nofollow">Skjemaer</a>
+            <a href="/om-kartverket/faq" rel="noopener nofollow">Ofte stilte spørsmål</a><br> <!--NB! DENNE LINKEN FØRER INGEN STEDER-->
+            <a href="/eiendom/skjema/alleskjema" rel="noopener nofollow">Skjemaer</a> <!--NB! DENNE LINKEN FØRER INGEN STEDER-->
         </div>
 
         <!-- Fourth Column: Follow Us and Social Links -->
@@ -103,14 +105,17 @@
             <a href="https://vimeo.com/kartverket/videos" rel="noopener nofollow">Video</a>
         </div>
     </footer>
+    }
+
+
     <!-- JavaScript-filer -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/lib/leaflet/leaflet.js"></script>
     <script src="~/lib/leaflet/leaflet-geoman.js"></script>
-    <!--  USED FOR OPEN LAYERS WHICH IS CURRENTLY NOT BEING USED
-    <script src="~/lib/ol/dist/ol.js"></script> -->
+    <!--  USED FOR OPEN LAYERS WHICH IS CURRENTLY NOT BEING USED -->
+    <script src="~/lib/ol/dist/ol.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
