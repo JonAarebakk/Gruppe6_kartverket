@@ -3,42 +3,35 @@ ViewBag.Title = "Landing Page";
 Layout = "_Layout";
 }
 
-<!DOCTYPE html>
-<html lang="no">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+@section HeadContent { 
     <link rel="stylesheet" href="~/css/LandingPage.css" /> <!-- Link to combined CSS file -->
-    <title>@ViewBag.Title</title>
-</head>
+}
 
-<body class="landing-page">
+<div class="landing-page">
+    <div class="landingPage-wrapper">
+        <div class="cards-container">
+            <div class="card">
+                <h2>Gå til kartet uten bruker</h2>
+                <p>Utforsk kartet uten å logge inn.</p>
+                <a href="@Url.Action("MapPage", "MapPage")" class="card-button">Gå til kartet</a>
+            </div>
 
-<div class="login-wrapper">
-    <div class="cards-container">
-        <div class="card">
-            <h2>Gå til kartet uten bruker</h2>
-            <p>Utforsk kartet uten å logge inn.</p>
-            <a href="@Url.Action("MapPage", "MapPage")" class="card-button">Gå til kartet</a>
-        </div>
+            <div class="card">
+                <h2>Logg inn</h2>
+                <p>Logg inn for å få tilgang til dine kartdata.</p>
+                <a href="@Url.Action("LogIn", "LogIn")" class="card-button">Logg inn</a>
+            </div>
 
-        <div class="card">
-            <h2>Logg inn</h2>
-            <p>Logg inn for å få tilgang til dine kartdata.</p>
-            <a href="@Url.Action("LogIn", "LogIn")" class="card-button">Logg inn</a>
-        </div>
-
-        <div class="card">
-            <h2>Registrer en bruker her</h2>
-            <p>Opprett en ny konto for å lagre dine kartpreferanser.</p>
-            <a href="@Url.Action("RegistrationForm", "LogIn")" class="card-button">Registrer deg</a>
-        </div>
+            <div class="card">
+                <h2>Registrer en bruker her</h2>
+                <p>Opprett en ny konto for å lagre dine kartpreferanser.</p>
+                <a href="@Url.Action("RegistrationForm", "LogIn")" class="card-button">Registrer deg</a>
+            </div>
         
+        </div>
+    </div>
+    <div>
+        <a href="@Url.Action("LinkPage", "LandingPage")" class="card-button">A page with links to all views</a>
     </div>
 </div>
-<div>
-    <a href="@Url.Action("LinkPage", "LandingPage")" class="card-button">A page with links to all views</a>
-</div>
-
-</body>
-</html>
