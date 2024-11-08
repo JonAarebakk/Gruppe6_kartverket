@@ -1,12 +1,11 @@
-﻿/* Style for the map */
-
+﻿
+/* Style for the map */
 .map {
-    position: relative; /* Position relative to its normal position */
     width: 100%; /* Set the width of the map */
     height: 400px; /* Set the height of the map */
     background: red; /* or another color (NB! FOR TESTING) */
-    padding-top: 10px;
 }
+
 
 /* Style for buttons inside the map */
 .map-buttons {

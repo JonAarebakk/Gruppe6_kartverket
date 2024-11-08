@@ -75,36 +75,6 @@
     background-color: #0f4c29; /* Darker green on hover */
 }
 
-/* Additional button styles */
-.buttons {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-}
-
-.button {
-    background-color: #156630; /* Dark green */
-    color: #fff;
-    padding: 0.75rem 1.5rem;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.button:hover {
-    background-color: #439CCD; /* Lighter blue for hover effect */
-}
-
-/* Bare for landingssiden */
-body.landing-page .login-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 1rem;
-    background-color: #D0ECD6;
-}
-
 /* Bare for landingssiden */
 body.landing-page .cards-container {
     display: flex;
