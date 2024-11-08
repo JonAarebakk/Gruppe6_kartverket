@@ -87,8 +87,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: calc(100vh - 60px); /* Subtract nav-bar height */
     padding: 1rem;
+    /*padding-top: 60px;*/
     background-color: #D0ECD6; /* Set the background color to green */
 }
 

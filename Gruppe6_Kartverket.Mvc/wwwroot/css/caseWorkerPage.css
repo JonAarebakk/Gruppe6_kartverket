@@ -1,17 +1,4 @@
-﻿/*css for CaseWorkerPage*/
-body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    width: 100%;
-    overflow: hidden; /* Remove scroll function */
-}
-
-#CWP_body {
-    position: relative;
-    height: 100vh;
-}
-
+﻿
 .CWP_menu, .CWP_main {
     position: absolute;
     padding-top: 99px; /* Adjust based on the height of the nav-bar */
