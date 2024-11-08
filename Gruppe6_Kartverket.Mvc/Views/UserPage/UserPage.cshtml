@@ -5,7 +5,7 @@
 }
 
 <div class="sidebar" id="sidebar">
-    <a href="@Url.Action("Map", "Map")">Go to map/Register a new case</a>
+    <a href="@Url.Action("MapPage", "MapPage")">Go to map/Register a new case</a>
     <a href="@Url.Action("Profile", "UserPage")">Profile information</a>
     <a href="@Url.Action("Settings", "UserPage")">Settings</a>
     <a href="@Url.Action("Logout", "UserPage")">Log out</a>
@@ -32,51 +32,51 @@
         <span>@userCase.Description</span>
     </div>
     }
+</div>
 
-    <div class="parent-container">
-        <a href="#UP-filterMenu" class="UP-filter-button">Filter</a>
+<a href="#UP-filterMenu" class="UP-filter-button">Filter</a>
+
+<div class="UP-filter-menu" id="UP-filterMenu">
+    <a href="#" class="close-button">&times;</a>
+
+    <h3>Filter Options</h3>
+    <div class="form-group">
+        <label for="categorySelect">Category</label>
+        <select class="form-control" id="categorySelect">
+            <option>Category 1</option>
+            <option>Category 2</option>
+            <option>Category 3</option>
+        </select>
     </div>
-    <div class="UP-filter-menu" id="UP-filterMenu">
-        <a href="#" class="close-button">&times;</a>
-        <h3>Filter Options</h3>
-        <div class="form-group">
-            <label for="categorySelect">Category</label>
-            <select class="form-control" id="categorySelect">
-                <option>Category 1</option>
-                <option>Category 2</option>
-                <option>Category 3</option>
-            </select>
-        </div>
 
-        <div class="form-group">
-            <label>Options</label>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="option1">
-                <label class="form-check-label" for="option1">
-                    Option 1
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="option2">
-                <label class="form-check-label" for="option2">
-                    Option 2
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="option3">
-                <label class="form-check-label" for="option3">
-                    Option 3
-                </label>
-            </div>
+    <div class="form-group">
+        <label>Options</label>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="option1">
+            <label class="form-check-label" for="option1">
+                Option 1
+            </label>
         </div>
-        <div class="form-group">
-            <label for="rangeInput">Range</label>
-            <input type="range" class="form-control-range" id="rangeInput">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="option2">
+            <label class="form-check-label" for="option2">
+                Option 2
+            </label>
         </div>
-        <div class="CWP-button-container">
-            <button class="CWP-reset-button" onclick="resetFilters()">Reset Filters</button>
-            <button class="CWP-apply-button" onclick="applyChanges()">Apply Changes</button>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="option3">
+            <label class="form-check-label" for="option3">
+                Option 3
+            </label>
         </div>
+    </div>
+    <div class="form-group">
+        <label for="rangeInput">Range</label>
+        <input type="range" class="form-control-range" id="rangeInput">
+    </div>
+    <div class="UP-button-container">
+        <button class="UP-reset-button" onclick="resetFilters()">Reset Filters</button>
+        <button class="UP-apply-button" onclick="applyChanges()">Apply Changes</button>
     </div>
 </div>
 
