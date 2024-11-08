@@ -3,8 +3,6 @@
 /* Set the base font size for the entire HTML document */
 html {
     font-size: 14px;
-    position: relative;
-    min-height: 100%;
 }
 
 /* Increase the base font size for screens wider than 768px */
@@ -15,14 +13,24 @@ html {
 }
 
 body {
+    display: flex;           /* Need it for the footer to stay on the bottom */
+    flex-direction: column;  /* Need it for the footer to stay on the bottom */
     position: relative;
-    height: 100%;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
     min-height: 100vh;
-    padding-top: 60px; /* Same as navbar height */
     background-color: #D0ECD6; /* Set the background color to green */
+}
+
+
+.renderBody-div {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background-color: #D0ECD6;
+}
+
+/* A general wrapper that will get the content to be below the navbar */
+.site-wrapper {
+    padding-top: 60px; 
 }
 
 .navbar {
@@ -36,8 +44,11 @@ body {
     padding: 0.5rem 1rem;
     height: 60px; /* Fixed height */
     margin: 0; /* Ensure no default margin */
-
 }
+
+
+
+
 
 /* Add a box shadow to various elements when they are focused */
 .btn:focus,
@@ -57,6 +68,8 @@ a.btn-outline-secondary.ms-3:focus {
     margin-right: 20px; /* Adjust margin as needed */
 }
 
+
+
 .topicpageheading {
     position: relative;
     top: 70px; /* Increased space from 50px to 70px */
@@ -68,37 +81,15 @@ a.btn-outline-secondary.ms-3:focus {
 } 
 
 
-/* Style for the map container inside an element with class 'container' */
-.container,
-#map {
-    position: relative; /* Position relative to its normal position */
-    width: 600px;       /* Set the width of the map */
-    height: 400px;      /* Set the height of the map */
-}
-
-/* Style for buttons inside the map */
-.map-buttons {
-    position: absolute;    /* Position absolutely within the nearest positioned ancestor */
-    top: 60px;             /* 60px from the top of the container */
-    left: 10px;            /* 10px from the left of the container */
-    display: flex;         /* Use flexbox layout */
-    flex-direction: column; /* Arrange children in a column */
-    gap: 5px;              /* 5px gap between children */
-    z-index: 500;          /* Stack order of the element */
-}
 
 /* Style for field validation error messages */
 .field-validation-error {
     color: red; /* Set the text color to red */
 }
 
-
-.container {
-    flex: 1;                          /* Makes the container a flex item that grows to fill the available space within its flex container */
-}
-
 /* Style for the site footer */
 .sitefooter {
+    position: relative;
     background-color: #ffffff;        /* Sets the background color to white */
     padding: 2rem;                    /* Adds padding of 2 rem units inside the footer */
     margin-top: auto;                 /* Pushes the footer to the bottom of the page if there is extra space */

@@ -1,23 +1,16 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿<div class="site-wrapper">
+    <p>
+        Vi grunnet både noen tekniske problemer med omgjøring av kart, og at gruppemedlemmer har vært syke så 
+        lånte vi midlertidig løsning for å fylle kravene. Dette vil endres fortløpende. Vi har full forståelse
+        av funksjonaliteten på koden som ligger bak. Måtte trouble shoote noe i 2 timer :)
+    </p>
 
-<p>
-    Vi grunnet både noen tekniske problemer med omgjøring av kart, og at gruppemedlemmer har vært syke så 
-    lånte vi midlertidig løsning for å fylle kravene. Dette vil endres fortløpende. Vi har full forståelse
-    av funksjonaliteten på koden som ligger bak. Måtte trouble shoote noe i 2 timer :)
-</p>
+    <div id="randomValue"></div>
+    <div id="serverResponse"></div>
 
-<div id="randomValue">
+    <input type="button" value="Load random value" onclick="loadRandomValue()" />
+    <input type="button" value="Send data" onclick="sendDataToTheServer()" />
 </div>
-<div id="serverResponse">
-</div>
-
-<input type="button" value="Load random value" onclick="loadRandomValue()" />
-<input type="button" value="Send data" onclick="sendDataToTheServer()" />
-
 
 @section Scripts {
     <script>

@@ -1,112 +1,52 @@
-/* Ensure the parent container uses flexbox */
-.parent-container {
-    display: flex;
-    justify-content: flex-end; /* Aligns children to the right */
-    margin-top: 10px; /* Add some margin to the top */
-}
-
-/* Style for the UP-filter-button */
 .UP-filter-button {
-    margin-right: 20px; /* Add some margin to the right */
+    position: fixed;
+    top: 70px; /* Adjust this value based on the height of your navbar */
+    right: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    z-index: 1000; /* Ensure it stays on top */
 }
 
-/* Style for the filter sidebar */
 .UP-filter-menu {
     position: fixed;
-    top: 60px; /* Adjust based on your navbar height */
-    right: -300px; /* Initially hide the sidebar off-screen */
+    top: 91px; /* Adjust this value based on the height of your nav-bar */
+    right: -300px;
     width: 300px;
-    height: 100%;
+    height: calc(100vh - 99px); /* Adjust this value based on the height of your nav-bar */
     background-color: #f8f9fa;
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    transition: right 0.3s ease-in-out;
+    transition: right 0.3s ease;
+    padding: 30px;
+    box-sizing: border-box;
+    z-index: 999; /* Ensure this is higher than the nav-bar's z-index */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-.UP-filter-menu:target {
-    right: 0; /* Slide in the sidebar when targeted */
+.UP-filter-menu.open {
+    right: 0;
 }
 
-/* Style for the close button */
-.close-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 24px;
-    text-decoration: none;
-    color: #333;
-}
-
-/* Sidebar styles */
-.sidebar {
-    width: 200px;
-    position: fixed;
-    top: 60px; /* Adjust based on your navbar height */
-    left: 0;
-    height: 100%;
-    background-color: #f8f9fa;
-    padding-top: 20px;
-    display: block; /* Show sidebar by default */
-}
-
-.sidebar a {
-    padding: 10px 15px;
-    text-decoration: none;
-    font-size: 18px;
-    color: #333;
-    display: block;
-}
-
-.sidebar a:hover {
-    background-color: #ddd;
-}
-
-/* Menu icon styles */
-.menu-icon {
-    display: none; /* Hide menu icon by default */
-    font-size: 30px;
-    cursor: pointer;
-    position: fixed;
-    top: 20px;
-    right: 20px;
-}
-
-/* Hide sidebar and show menu icon on small screens */
-@media (max-width: 992px) {
-    .sidebar {
-        display: none; /* Hide sidebar on small screens */
-    }
-
-    .menu-icon {
-        display: block; /* Show menu icon on small screens */
-    }
-
-    .sidebar.active {
-        display: block; /* Show sidebar when active class is added */
-        width: 200px;
-        position: fixed;
-        top: 60px;
-        left: 0;
-        height: 100%;
-        background-color: #f8f9fa;
-        padding-top: 20px;
-    }
-}
-
-.content {
-    margin-left: 220px; /* Same as the sidebar width + some margin */
-    padding: 20px;
-}
-
-.inbox-header {
+.UP-button-container {
     display: flex;
     justify-content: space-between;
-    padding: 10px;
-    background-color: #e9ecef;
-    border-bottom: 1px solid #ddd;
+    margin-top: 20px;
 }
 
-.inbox-item {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
+.UP-apply-button, .UP-reset-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    flex: 1;
+    margin: 0 5px;
+    text-align: center;
+}
+
+.UP-reset-button {
+    background-color: #dc3545;
 }

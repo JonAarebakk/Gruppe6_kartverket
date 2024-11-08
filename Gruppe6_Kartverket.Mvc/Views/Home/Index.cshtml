@@ -52,21 +52,13 @@
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        // Creates the drawing controls on the left hand side
-        // The drawing control enables drawing of markers, polygons, and polylines
-        var drawControl = new L.Control.Draw({
-            draw: {
-                polygon: true,
-                polyline: true,
-                marker: true,
-                circle: false, // Disable circle drawing
-                rectangle: true
-            },
-            edit: {
-                featureGroup: drawnItems
-            }
+        map.pm.addControls({  
+            position: 'topleft',  
+            drawCircleMarker: false,
+            rotateMode: false,
+            drawMarker: false,
+            drawPolyLine: false
         });
-        map.addControl(drawControl);
 
 
     </script>

@@ -10,6 +10,7 @@ public class MapPageController : Controller
     // GET
     public IActionResult MapPage()
     {
+        ViewBag.HideFooter = true;
         return View();
     }
 }

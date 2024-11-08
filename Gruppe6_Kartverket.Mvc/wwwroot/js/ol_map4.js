@@ -24,49 +24,20 @@ const vector = new ol.layer.Vector({
     },
 });
 
-
-featureCollection.on("change", function () {
-    console.log("This was the featureCollection");
-    console.log(featureCollection.getLength());
-});
-
-
-source.on("change", function () {
-    var features = source.getFeatures();
-    console.log(features);
-});
-
-
 var featureCount = 0;
 
 source.on("addfeature", function (evt) {
     featureCount = featureCount + 1;
     var feature = evt.feature;
     feature.setId(featureCount);
-    var geometry = feature.getGeometry();
-    var coords = geometry.getCoordinates();
-    var geometrytype = geometry.getType();
-    var featureId = feature.getId();
-    //console.log(geometry);
-   // console.log(coords);
-   // console.log(geometrytype);
-    console.log(featureId);
-    //console.log(source.getFeaturesCollection());
-    
-    if (featureCount >= 3) {
-        removeFeatureById(1);
-        //console.log(source.getFeaturesCollection());
-    }
-    
+    console.log(feature.getId());
 }); 
 
-function removeFeatureById(id) {
-    if (source.getFeatureById(id) != null) {
-        //var feature = source.getFeatureById(id);
-        source.removeFeature(source.getFeatureById(id));
-    }
-}
-
+/*
+source.on("change", function () {
+    var features = source.getFeatures();
+    console.log(features);
+});*/
 
 //The map object
 const map = new ol.Map({
@@ -80,32 +51,48 @@ const map = new ol.Map({
     }),
 });
 
-/*
-
-//Makes the vector layer editable
 const modify = new ol.interaction.Modify({ source: source });
 map.addInteraction(modify);
-*/
+
+const select = new ol.interaction.Select(); //Lets you select a feature on the map so we can delete it later
+//map.addInteraction(select);
+
+/*
+modify.on('modifystart', function (evt) {
+    //var myPrint = evt.get(features);
+    //var myPrint = evt.features.getArray();
+    var myPrint = evt.features;
+    console.log(myPrint);
+    var featureID = evt.features.getArray()[0].getId();
+    console.log(featureID);
+});*/
+
+
+/** CAN NOT HAVE THIS ACTIVE WHILE ONE OF THE DRAW FUNCTIONS ARE ACTIVE. WILL GIVE ERROR */
+select.on('select', function (evt) {  //NB! SE OM MAN KAN DESELCTE ETTERPÅ
+    //Start med en if() som sjekker om featuren som er trykket på er en feature som ligger i source.getFeatures()
+    console.log(evt);
+    var selectedFeature = evt.selected[0];
+    //console.log(selectedFeature);
+    var featureID = evt.selected[0].getId();
+    var selectedFeatureId = selectedFeature.getId();
+    console.log(featureID + " " + selectedFeatureId + " 1 level deep");
+
+    if (selectedFeatureId === undefined) {  //Legg inn sjekk ett level dypere //WHEN SELECT AND MODIFY ARE ACTIVE AT THE SAME TIME, THE SELECTED FEATURE WILL BE PLACED INSIDE ANOTHER FEATURE, SO THE ID HAS TO BE FOUND IN THE CHILD FEATURE
+        console.log("it returned undefined");
+        var selectedFeature2 = selectedFeature.get("features");
+        var selectedFeature2Id = selectedFeature2[0].getId();
+        //console.log(selectedFeature2);
+        console.log(selectedFeature2Id + " 2 level deep");
+    }
+    select.getFeatures().clear();
+    map.removeInteraction(select);
+    map.addInteraction(modify);
+    console.log("changed interactions");
+});
 
 let draw, snap; // global so we can remove it later
 const typeSelect = document.getElementById('type');
-
-var ExampleSelect = {
-    init: function () {
-        this.select = new ol.interaction.Select();
-        map.addInteraction(this.select);
-        this.select.setActive(true);
-        this.select.on("select", selected);
-    }
-};
-ExampleSelect.init();
-
-function selected(e) {
-    console.log("select", e);
-    // prevent draw event from triggering, but that does not work
-    // because these are different triggers
-    e.stopPropagation();
-}
 
 
 //Function to add interactions to the map
@@ -115,7 +102,6 @@ function addInteractions() {
         draw = new ol.interaction.Draw({
             source: source,
             type: typeSelect.value,
-            features: featureCollection,
         });
         draw.on('drawend', function (evt) {
             var feature = evt.feature;
@@ -164,36 +150,9 @@ document.querySelectorAll('.map-button').forEach(button => {
 
 document.querySelectorAll('.delete-feature').forEach(button => {
     button.addEventListener('click', function () {
-        console.log("deleted features");
-        source.removeFeatures(source.getFeatures());
+        console.log("button pressed");
+        //source.removeFeatures(source.getFeatures());
+        //map.removeInteraction(modify);
+        map.addInteraction(select);
     });
 });
-
-//Old submit function for the form found in ~/Views/Home/OldIndex.cshtml
-export function submitForm() {
-    var responseObject = {
-        point: [],
-        linestring: [],
-        polygon: []
-    };
-
-    var figures = drawCoords;
-    figures.forEach((x) => {
-        if (x.type === 'Point') {
-            responseObject.point.push(x.coordinates);
-        }
-        if (x.type === 'LineString') {
-            responseObject.linestring.push(x.coordinates);
-        }
-        if (x.type === 'Polygon') {
-            responseObject.polygon.push(x.coordinates);
-        }
-    });
-
-    var jsonValue = JSON.stringify(responseObject);
-    console.log(jsonValue);
-
- //  document.getElementById("hiddenField").value = jsonValue;
- //  document.getElementById("mapInputForm").submit();  //Crashes because the mapInputForm and the MapData in HomeController do not match
-}
-

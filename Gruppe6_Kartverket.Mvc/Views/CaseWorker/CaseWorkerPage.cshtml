@@ -1,5 +1,5 @@
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_CaseWorkerLayout.cshtml";
     ViewData["Title"] = "Caseworker-page";
 }
 
@@ -11,21 +11,26 @@
     @* The left menu column *@
     <div class="CWP_menu">
         <ul class="nav flex-column">
+
             <li class="nav-item">
                 <a class="nav-link" href="@Url.Action("Profile", "CaseWorker")">Profile</a>
             </li>
+            
             <li class="nav-item">
                 <a class="nav-link" href="@Url.Action("Inbox", "CaseWorker")">Inbox</a>
             </li>
+            
             <li class="nav-item">
                 <a class="nav-link" href="@Url.Action("Settings", "CaseWorker")">Settings</a>
             </li>
+            
             <li class="nav-item">
                 <a class="nav-link" href="@Url.Action("LandingPage", "LandingPage")">Log out</a>
             </li>
+            
         </ul>
     </div>
-        
+
     @* The main display of the CWP *@
     <div class="CWP_main">
         <p>display-screen</p>
@@ -70,42 +75,44 @@
                 <button class="CWP-reset-button" onclick="resetFilters()">Reset Filters</button>
                 <button class="CWP-apply-button" onclick="applyChanges()">Apply Changes</button>
             </div>
-        </div>
-
-        @section Scripts {
-            <script>
-                function toggleFilterMenu() {
-                    var filterMenu = document.getElementById("CWP-filterMenu");
-                    filterMenu.classList.toggle("open");
-                    if (filterMenu.classList.contains("open")) {
-                        document.addEventListener("click", closeFilterMenuOnClickOutside);
-                    } else {
-                        document.removeEventListener("click", closeFilterMenuOnClickOutside);
-                    }
-                }
-
-                function closeFilterMenuOnClickOutside(event) {
-                    var filterMenu = document.getElementById("CWP-filterMenu");
-                    if (!filterMenu.contains(event.target) && !event.target.matches('.CWP-filter-button')) {
-                        filterMenu.classList.remove("open");
-                        document.removeEventListener("click", closeFilterMenuOnClickOutside);
-                    }
-                }
-
-                function applyChanges() {
-                    var filterMenu = document.getElementById("CWP-filterMenu");
-                    filterMenu.classList.remove("open");
-                    document.removeEventListener("click", closeFilterMenuOnClickOutside);
-                    // Add any additional logic for applying changes here.....
-                }
-
-                function resetFilters() {
-                    document.getElementById("categorySelect").selectedIndex = 0;
-                    document.getElementById("option1").checked = false;
-                    document.getElementById("option2").checked = false;
-                    document.getElementById("option3").checked = false;
-                    document.getElementById("rangeInput").value = document.getElementById("rangeInput").min;
-                }
-            </script> }
+        </div>  
     </div>
 </div>
+
+
+@section Scripts {
+    <script>
+        function toggleFilterMenu() {
+            var filterMenu = document.getElementById("CWP-filterMenu");
+            filterMenu.classList.toggle("open");
+            if (filterMenu.classList.contains("open")) {
+                document.addEventListener("click", closeFilterMenuOnClickOutside);
+            } else {
+                document.removeEventListener("click", closeFilterMenuOnClickOutside);
+            }
+        }
+
+        function closeFilterMenuOnClickOutside(event) {
+            var filterMenu = document.getElementById("CWP-filterMenu");
+            if (!filterMenu.contains(event.target) && !event.target.matches('.CWP-filter-button')) {
+                filterMenu.classList.remove("open");
+                document.removeEventListener("click", closeFilterMenuOnClickOutside);
+            }
+        }
+
+        function applyChanges() {
+            var filterMenu = document.getElementById("CWP-filterMenu");
+            filterMenu.classList.remove("open");
+            document.removeEventListener("click", closeFilterMenuOnClickOutside);
+            // Add any additional logic for applying changes here.....
+        }
+
+        function resetFilters() {
+            document.getElementById("categorySelect").selectedIndex = 0;
+            document.getElementById("option1").checked = false;
+            document.getElementById("option2").checked = false;
+            document.getElementById("option3").checked = false;
+            document.getElementById("rangeInput").value = document.getElementById("rangeInput").min;
+        }
+    </script>
+}
