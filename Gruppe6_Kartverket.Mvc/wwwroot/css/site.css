@@ -21,6 +21,7 @@ body {
 }
 
 
+
 .renderBody-div {
     margin: 0;
     padding: 0;
@@ -67,7 +68,6 @@ a.btn-outline-secondary.ms-3:focus {
     width: 125px; /* Maintain aspect ratio */
     margin-right: 20px; /* Adjust margin as needed */
 }
-
 
 
 .topicpageheading {

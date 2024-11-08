@@ -50,3 +50,15 @@
 .UP-reset-button {
     background-color: #dc3545;
 }
+
+.filter-toggle {
+    display: none;
+}
+
+.filter-toggle:checked ~ .UP-filter-menu {
+    right: 0;
+}
+
+.filter-toggle:checked ~ .UP-filter-button {
+    display: none;
+}
