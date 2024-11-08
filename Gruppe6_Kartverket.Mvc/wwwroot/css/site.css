@@ -3,6 +3,8 @@
 /* Set the base font size for the entire HTML document */
 html {
     font-size: 14px;
+    position: relative;
+    min-height: 100%;
 }
 
 /* Increase the base font size for screens wider than 768px */
@@ -24,11 +26,11 @@ a.btn-outline-secondary.ms-3:focus {
 }
 
 /* Ensure the HTML element takes up at least the full height of the viewport */
-html {
+/*html {
     position: relative;
     min-height: 100%;
 }
-
+*/
 
 /* Style for the logo component */
 #logoContainer {
@@ -61,6 +63,7 @@ body {
 
 .container {
     padding-top: 60px;
+    background-color: #D0ECD6; /* Set the background color to green */
 }
 
 .topicpageheading {

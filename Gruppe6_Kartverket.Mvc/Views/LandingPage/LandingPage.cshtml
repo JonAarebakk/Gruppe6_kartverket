@@ -3,17 +3,10 @@ ViewBag.Title = "Landing Page";
 Layout = "_Layout";
 }
 
-<!DOCTYPE html>
-<html lang="no">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="~/css/LandingPage.css" /> <!-- Link to combined CSS file -->
-    <title>@ViewBag.Title</title>
-</head>
 
-<body class="landing-page">
 
+
+<div class= "landing-page">
 <div class="login-wrapper">
     <div class="cards-container">
         <div class="card">
@@ -39,6 +32,5 @@ Layout = "_Layout";
 <div>
     <a href="@Url.Action("LinkPage", "LandingPage")" class="card-button">A page with links to all views</a>
 </div>
+</div>
 
-</body>
-</html>
