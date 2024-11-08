@@ -21,8 +21,11 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    padding-top: 60px; /* Same as navbar height */
     background-color: #D0ECD6; /* Set the background color to green */
+}
+
+.container {
+    padding-top: 60px;
 }
 
 .navbar {
@@ -34,7 +37,8 @@ body {
     z-index: 1000; /* Ensure it stays on top */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a shadow */
     padding: 0.5rem 1rem;
-    height: 60px; /* Fixed height */
+    /*samma her*/
+    height: 10%; /* Fixed height */
     margin: 0; /* Ensure no default margin */
 
 }

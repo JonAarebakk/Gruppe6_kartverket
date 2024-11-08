@@ -1,68 +1,53 @@
-﻿body, html {
+﻿/*css for CaseWorkerPage*/
+body, html {
     margin: 0;
     padding: 0;
     height: 100%;
     width: 100%;
-    overflow: hidden; /* Prevent overflow */
+    overflow: hidden; /* Remove scroll function */
 }
 
-#navigation-bar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: white; /* or another color */
-    z-index: 1000; /* Ensure it stays on top */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a shadow */
-    padding: 0.5rem 1rem;
-    height: 10%; /* Fixed height */
-    margin: 0; /* Ensure no default margin */
+#CWP_body {
+    position: relative;
+    height: 100vh;
 }
 
-.container_display {
-    margin-top: 10%; /* Same as the height of the navigation bar */
-    height: 90%; /* Adjust height to fit within the remaining viewport */
-    overflow: auto; /* Allow scrolling within this container if needed */
+.CWP_menu, .CWP_main {
+    position: absolute;
+    padding-top: 99px; /* Adjust based on the height of the nav-bar */
+    bottom: 0;
 }
 
 .CWP_menu {
-    float: left;
-    height: 100%;
+    left: 0;
     width: 20%;
     background-color: azure;
     box-sizing: border-box;
-    overflow: auto; /* Allow scrolling within this container if needed */
+    z-index: 1; /* Ensure menu is below main content */
 }
+
+.nav-item {
+    border: 1px solid #ccc; /* Light gray border */
+    padding: 10px; /* Add some padding for better spacing */
+    margin-bottom: 10px; /* Add some space between items */
+    border-radius: 5px; /* Optional: Add rounded corners */
+}
+
+.nav-item .nav-link {
+    color: #000; /* Optional: Set the text color */
+    text-decoration: none; /* Optional: Remove underline from links */
+    }
+
+.nav-item .nav-link:hover {
+    color: #007bff; /* Optional: Change text color on hover */
+        }
 
 .CWP_main {
-    float: right;
-    height: 100%;
-    width: 80%;
+    right: 0;
+    left: 20%;
     background-color: white;
     box-sizing: border-box;
-    position: relative;
-    overflow: auto; /* Allow scrolling within this container if needed */
-}
-
-.CWP-filter-menu {
-    position: fixed;
-    top: 10%; /* Adjust this value based on the height of your nav-bar */
-    right: -300px;
-    width: 300px;
-    height: calc(100vh - 10%); /* Adjust this value based on the height of your nav-bar */
-    background-color: #f8f9fa;
-    transition: right 0.3s ease;
-    padding: 30px;
-    box-sizing: border-box;
-    z-index: 999; /* Ensure this is higher than the nav-bar's z-index */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    overflow: auto; /* Allow scrolling within this container if needed */
-}
-
-.CWP-filter-menu.open {
-    right: 0;
+    z-index: 2; /* Ensure main content is above menu */
 }
 
 .CWP-filter-button {
@@ -74,6 +59,27 @@
     border: none;
     padding: 10px 20px;
     cursor: pointer;
+    z-index: 2000; /* Ensure button is above other elements */
+}
+
+.CWP-filter-menu {
+    position: fixed;
+    top: 91px; /* Adjust this value based on the height of your nav-bar */
+    right: -300px;
+    width: 300px;
+    height: calc(100vh - 91px); /* Adjust this value based on the height of your nav-bar */
+    background-color: #f8f9fa;
+    transition: right 0.3s ease;
+    padding: 30px;
+    box-sizing: border-box;
+    z-index: 999; /* Ensure this is higher than the nav-bar's z-index */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.CWP-filter-menu.open {
+    right: 0;
 }
 
 .CWP-button-container {
@@ -96,3 +102,4 @@
 .CWP-reset-button {
     background-color: #dc3545;
 }
+

@@ -29,30 +29,29 @@
 <body id="CWP_body">
     <header>
         <nav id="navigation-bar" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid" style="display: flex; align-items: center;">
 
-                <!-- Logo Placeholder -->
+                <div class="container-fluid" style="display: flex; align-items: center;">
+                    <!-- Logo Placeholder -->
+                    <a href="@Url.Action("LandingPage", "LandingPage")">
+                        <img src="~/images/logo.svg" id="logoContainer" />
+                    </a>
 
-                <a href="@Url.Action("LandingPage", "LandingPage")" >
-                    <img src="~/images/logo.svg" id="logoContainer" />
-                </a>
-                
-                <div class="ms-auto d-flex align-items-center">
-                    <a href="@Url.Action("ContactUs", "ContactUs")" class="btn btn-outline-secondary ms-3">
-                        Profile
-                    </a>
-                    <a href="@Url.Action("LogIn", "LogIn")" class="btn btn-outline-secondary ms-3">
-                        Log out
-                    </a>
-                    <a href="@Url.Action("Settings", "Settings")" class="ms-3" style="color: #555; font-size: 24px;">
-                        <i class="fas fa-cog"></i>
-                    </a>
+                    <div class="ms-auto d-flex align-items-center">
+                        <a href="@Url.Action("ContactUs", "ContactUs")" class="btn btn-outline-secondary ms-3">
+                            Profile
+                        </a>
+                        <a href="@Url.Action("LogIn", "LogIn")" class="btn btn-outline-secondary ms-3">
+                            Log out
+                        </a>
+                        <a href="@Url.Action("Settings", "Settings")" class="ms-3" style="color: #555; font-size: 24px;">
+                            <i class="fas fa-cog"></i>
+                        </a>
+                    </div>
                 </div>
-            </div>
         </nav>
     </header>
 
-    <div class="container-fluid p-0">
+    <div class="display_under_navigation-bar">
          <main role="main" class="pb-3">
           @RenderBody()
          </main>
