@@ -1,8 +1,10 @@
-﻿/*css for CaseWorkerPage*/
-.CWP_container {
-    display: grid; 
-    grid-template-columns: 20% 80%;
+﻿
+.CWP_menu, .CWP_main {
+    position: absolute;
+    padding-top: 99px; /* Adjust based on the height of the nav-bar */
+    bottom: 0;
 }
+
 .CWP_menu {
     left: 0;
     width: 20%;

@@ -3,8 +3,6 @@
 /* Set the base font size for the entire HTML document */
 html {
     font-size: 14px;
-    position: relative;
-    min-height: 100%;
 }
 
 /* Increase the base font size for screens wider than 768px */
@@ -15,15 +13,25 @@ html {
 }
 
 body {
+    display: flex;           /* Need it for the footer to stay on the bottom */
+    flex-direction: column;  /* Need it for the footer to stay on the bottom */
     position: relative;
     min-height: 100vh;
     background-color: #D0ECD6; /* Set the background color to green */
 }
-*/
 
-.container {
-    padding-top: 60px;
-    background-color: #D0ECD6; /* Set the background color to green */
+
+
+.renderBody-div {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background-color: #D0ECD6;
+}
+
+/* A general wrapper that will get the content to be below the navbar */
+.site-wrapper {
+    padding-top: 60px; 
 }
 
 .navbar {
@@ -37,7 +45,6 @@ body {
     padding: 0.5rem 1rem;
     height: 60px; /* Fixed height */
     margin: 0; /* Ensure no default margin */
-
 }
 
 
@@ -61,6 +68,7 @@ a.btn-outline-secondary.ms-3:focus {
     width: 125px; /* Maintain aspect ratio */
     margin-right: 20px; /* Adjust margin as needed */
 }
+
 
 .topicpageheading {
     position: relative;

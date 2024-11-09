@@ -25,7 +25,7 @@
     
 </head>
 
-<body id="CWP_body">
+<body>
     <header>
         <nav id="navigation-bar" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
 
@@ -37,7 +37,7 @@
 
                     <div class="ms-auto d-flex align-items-center">
                         <a href="@Url.Action("ContactUs", "ContactUs")" class="btn btn-outline-secondary ms-3">
-                            X
+                            Profile
                         </a>
                         <a href="@Url.Action("LogIn", "LogIn")" class="btn btn-outline-secondary ms-3">
                             Log out
@@ -50,7 +50,7 @@
         </nav>
     </header>
 
-    <div class="container">
+    <div class="renderBody-div">
          <main role="main" class="pb-3">
             @RenderBody()
          </main>
