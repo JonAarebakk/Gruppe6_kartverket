@@ -8,7 +8,6 @@
     <!-- Standard CSS og biblioteker -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Gruppe6_Kartverket.Mvc.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/leaflet/leaflet.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/leaflet/leaflet-geoman.css" asp-append-version="true" />
     <!--  USED FOR OPEN LAYERS WHICH IS CURRENTLY NOT BEING USED
@@ -38,7 +37,7 @@
 
                     <div class="ms-auto d-flex align-items-center">
                         <a href="@Url.Action("ContactUs", "ContactUs")" class="btn btn-outline-secondary ms-3">
-                            Profile
+                            X
                         </a>
                         <a href="@Url.Action("LogIn", "LogIn")" class="btn btn-outline-secondary ms-3">
                             Log out
@@ -51,9 +50,9 @@
         </nav>
     </header>
 
-    <div class="display_under_navigation-bar">
+    <div class="container">
          <main role="main" class="pb-3">
-          @RenderBody()
+            @RenderBody()
          </main>
     </div>
 

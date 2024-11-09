@@ -23,6 +23,7 @@ body {
 
 .container {
     padding-top: 60px;
+    background-color: #D0ECD6; /* Set the background color to green */
 }
 
 .navbar {
@@ -59,11 +60,6 @@ a.btn-outline-secondary.ms-3:focus {
     height: 91px; /* Adjust height as needed */
     width: 125px; /* Maintain aspect ratio */
     margin-right: 20px; /* Adjust margin as needed */
-}
-
-.container {
-    padding-top: 60px;
-    background-color: #D0ECD6; /* Set the background color to green */
 }
 
 .topicpageheading {
