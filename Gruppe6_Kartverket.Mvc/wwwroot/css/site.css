@@ -1,5 +1,7 @@
 /*@import "~lib/ol/ol.css";*/
 
+
+
 /* Set the base font size for the entire HTML document */
 html {
     font-size: 16px;
@@ -14,6 +16,7 @@ html {
     }
 }
 
+
 body {
     display: flex;           /* Need it for the footer to stay on the bottom */
     flex-direction: column;  /* Need it for the footer to stay on the bottom */
@@ -21,7 +24,6 @@ body {
     min-height: 100vh;
     background-color: #D0ECD6; /* Set the background color to light green */
 }
-
 
 
 .renderBody-div {
@@ -33,7 +35,7 @@ body {
 
 /* A general wrapper that will get the content to be below the navbar */
 .site-wrapper {
-    padding-top: 60px; 
+    padding-top: 60px;
 }
 
 .navbar {

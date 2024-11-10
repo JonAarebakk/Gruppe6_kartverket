@@ -1,9 +1,82 @@
-﻿
+﻿/* Wrapper for whole mapPage View */
+.map-page-wrapper {
+    height: 100vh;
+    padding-top: 60px;
+    display: flex;
+    flex-direction: row;
+}
+
+/* Wrapper for the map and form (case input) */
+.map-and-control-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column; 
+}
+
 /* Style for the map */
 .map {
+    height: 80%;
     width: 100%; /* Set the width of the map */
-    height: 400px; /* Set the height of the map */
     background: red; /* or another color (NB! FOR TESTING) */
+    display: flex;
+}
+
+
+/* Wrapper for case input sidebar */
+.case-input-wrapper {
+    background-color: #f8f9fa;
+    width: 30%;
+    display: none; /* Starts as hidden */
+}
+
+/* The bottom bar with buttons for interacting with the map */
+.control-button-bar {
+    width: 100%;
+    height: 20%;
+    background: blue;
+    display: flex;
+
+}
+
+.map-button-group {
+    height: 100%;
+    width: 100%;
+    display: none;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+}
+
+.new-case {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+}
+
+.new-case button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    padding: 4px 8px;
+    cursor: pointer;
+    margin: 0 5px;
+    height: 40%;
+    width: 20%;
+}
+
+.map-button-group button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    padding: 4px 8px;
+    cursor: pointer;
+    margin: 0 5px;
+    height: 40%;
+    width: 20%;
 }
 
 
