@@ -7,10 +7,31 @@
     <link rel="stylesheet" href="~/css/caseWorkerPage.css">
 }
 
-<div class="row">
+<div class="row" id="CWP_body">
     @* The left menu column *@
-    <div class="CWP_menu">
-        <ul class="nav flex-column">
+    <div class="CWP_sidenav">
+
+        <ul id="CWP_sidenav-content">
+            <li class="nav-item">
+                <button class="nav-link" onclick="toggleCWPSideNav()">Inbox</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" onclick="toggleCWPSideNav()">...</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" onclick="toggleCWPSideNav()">...</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" onclick="toggleCWPSideNav()">...</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" onclick="toggleCWPSideNav()">...</button>
+            </li>
+            
+        </ul>
+
+        @* Dette er den originale koden om den trengs but idk
+            <ul class="nav flex-column">
 
             <li class="nav-item">
                 <a class="nav-link" href="@Url.Action("Profile", "CaseWorker")">Profile</a>
@@ -21,67 +42,133 @@
             </li>
             
             <li class="nav-item">
-                <a class="nav-link" href="@Url.Action("Settings", "CaseWorker")">Settings</a>
+                <a class="nav-link" href="@Url.Action("Settings", "Settings")">Settings</a>
             </li>
             
             <li class="nav-item">
                 <a class="nav-link" href="@Url.Action("LandingPage", "LandingPage")">Log out</a>
             </li>
             
-        </ul>
+        </ul> *@
     </div>
 
     @* The main display of the CWP *@
-    <div class="CWP_main">
-        <p>display-screen</p>
+    <div class="CWP_content">
+      <div id="CW_inboxContent">
+        <div class="CWP_content-header">
+            <h1><strong>Inbox</strong></h1>
+            <div class="CWP-header-buttons"> 
+                <button class="CWP-header-button">Sorter etter V</button>
+                <button class="CWP-header-button">Status V</button>
+            </div>
+            <button class="CWP-filter-button" onclick="toggleFilterMenu()">Filter</button>
+        </div>
 
-        <button class="CWP-filter-button" onclick="toggleFilterMenu()">Filter</button>
-        <div class="CWP-filter-menu" id="CWP-filterMenu">
-            <h3>Filter Options</h3>
-            <div class="form-group">
-                <label for="categorySelect">Category</label>
-                <select class="form-control" id="categorySelect">
-                    <option>Category 1</option>
-                    <option>Category 2</option>
-                    <option>Category 3</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Options</label>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="option1">
-                    <label class="form-check-label" for="option1">
-                        Option 1
-                    </label>
+        <div id="CW_inbox">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Mail Item</th>
+                            <th>Sender</th>
+                            <th>Receive Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>mail item</td>
+                            <td>sender</td>
+                            <td>receive-date</td>
+                        </tr>
+                        <tr>
+                            <td>mail item</td>
+                            <td>sender</td>
+                            <td>receive-date</td>
+                        </tr>
+                        <tr>
+                            <td>mail item</td>
+                            <td>sender</td>
+                            <td>receive-date</td>
+                        </tr>
+                        <tr>
+                            <td>mail item</td>
+                            <td>sender</td>
+                            <td>receive-date</td>
+                        </tr>
+                        <tr>
+                            <td>mail item</td>
+                            <td>sender</td>
+                            <td>receive-date</td>
+                        </tr>
+                    </tbody>
+                </table>
+        </div>
+      </div>
+            @* <div class="CW_inbox">
+                <ol>
+                    @foreach (var mail in Model)
+                    {
+                        <li>
+                            <div class="mail-item">
+                                <h4>@mail.Subject</h4>
+                                <p>@mail.Sender</p>
+                                <p>@mail.ReceivedDate.ToString("g")</p>
+                            </div>
+                        </li>
+                    }
+                </ol> *@
+
+            <div class="CWP-filter-menu" id="CWP-filterMenu">
+                <h3>Filter Options</h3>
+                <div class="form-group">
+                    <label for="categorySelect">Dropdown V</label>
+                    <select class="form-control" id="categorySelect">
+                        <option>s1</option>
+                        <option>s2</option>
+                        <option>s3</option>
+                    </select>
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="option2">
-                    <label class="form-check-label" for="option2">
-                        Option 2
-                    </label>
+                <div class="form-group">
+                    <label>Fylke/kommune</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="option1">
+                        <label class="form-check-label" for="option1">
+                            f/k-1
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="option2">
+                        <label class="form-check-label" for="option2">
+                            f/k-2
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="option3">
+                        <label class="form-check-label" for="option3">
+                            f/k-3
+                        </label>
+                    </div>
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="option3">
-                    <label class="form-check-label" for="option3">
-                        Option 3
-                    </label>
+                <div class="CWP-button-container">
+                    <button class="CWP-reset-button" onclick="resetFilters()">Reset Filters</button>
+                    <button class="CWP-apply-button" onclick="applyChanges()">Apply Changes</button>
                 </div>
             </div>
-            <div class="form-group">
-                <label for="rangeInput">Range</label>
-                <input type="range" class="form-control-range" id="rangeInput">
-            </div>
-            <div class="CWP-button-container">
-                <button class="CWP-reset-button" onclick="resetFilters()">Reset Filters</button>
-                <button class="CWP-apply-button" onclick="applyChanges()">Apply Changes</button>
-            </div>
-        </div>  
+        </div>
     </div>
 </div>
 
 
 @section Scripts {
     <script>
+        function toggleCWPSideNav() {
+            var x = document.getElementById("CW_inboxContent");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+
         function toggleFilterMenu() {
             var filterMenu = document.getElementById("CWP-filterMenu");
             filterMenu.classList.toggle("open");
@@ -104,7 +191,6 @@
             var filterMenu = document.getElementById("CWP-filterMenu");
             filterMenu.classList.remove("open");
             document.removeEventListener("click", closeFilterMenuOnClickOutside);
-            // Add any additional logic for applying changes here.....
         }
 
         function resetFilters() {

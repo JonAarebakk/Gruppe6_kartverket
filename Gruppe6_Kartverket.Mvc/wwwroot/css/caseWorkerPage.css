@@ -1,84 +1,143 @@
-﻿
-.CWP_menu, .CWP_main {
-    position: absolute;
-    padding-top: 99px; /* Adjust based on the height of the nav-bar */
-    bottom: 0;
+﻿.row {
+    --bs-gutter-x: 0; /* Override the horizontal gutter */
+    --bs-gutter-y: 0; /* Override the vertical gutter */
 }
 
-.CWP_menu {
-    left: 0;
-    width: 20%;
-    background-color: azure;
-    box-sizing: border-box;
-    z-index: 1; /* Ensure menu is below main content */
+#CWP_body {
+    display: grid;
+    grid-template-columns: 20% 80%;
+    padding-top: 60px;
+    height: calc(100vh - 10px);
+    overflow: hidden;
+}
+
+.CWP_sidenav {
+    float: left;
+    background-color: #E4F1F8;
+    outline: 1px;
+    outline-color: black;
+    overflow: hidden;
+    height: 100vh;
 }
 
 .nav-item {
-    border: 1px solid #ccc; /* Light gray border */
-    padding: 10px; /* Add some padding for better spacing */
+    width: 100%; /* Ensure the item takes up the full width */
+    background-color: transparent;
+    display: block;
     margin-bottom: 10px; /* Add some space between items */
-    border-radius: 5px; /* Optional: Add rounded corners */
 }
 
-.nav-item .nav-link {
-    color: #000; /* Optional: Set the text color */
-    text-decoration: none; /* Optional: Remove underline from links */
+.nav-link {
+    width: 100%; /* Ensure the button takes up the full width */
+    background-color: transparent;
+    border: none;
+    text-align: left; /* Align text to the left */
+    padding: 10px; /* Add padding for better spacing */
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+    .nav-link:hover {
+        background-color: #439CCD;
+        color: black;
     }
 
-.nav-item .nav-link:hover {
-    color: #007bff; /* Optional: Change text color on hover */
-        }
-
-.CWP_main {
-    right: 0;
-    left: 20%;
+.CWP_content {
+    display: grid;
+    grid-template-rows: 40px auto;
+    grid-template-areas:
+        "header"
+        "main";
+    float: right;
     background-color: white;
-    box-sizing: border-box;
-    z-index: 2; /* Ensure main content is above menu */
+   /* overflow: auto;
+    height: calc(100vh - 60px);*/
 }
 
-.CWP-filter-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
+.CWP_content-header {
+    grid-area: header;
+    /*padding-top: 10px;*/
+    background-color: #E4F1F8;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 10px;
+}
+
+    .CWP_content-header h1 {
+        margin-left: 10px;
+    }
+
+#CW_inbox {
+    grid-area: main;
+    overflow: auto;
+}
+
+.CWP-header-buttons {
+    display: flex;
+    gap: 10px; 
+    text-align: center;
+}
+.CWP-header-button {
     background-color: #007bff;
     color: white;
     border: none;
-    padding: 10px 20px;
+    border-radius: 7px;
+    padding: 4px 8px; 
     cursor: pointer;
-    z-index: 2000; /* Ensure button is above other elements */
 }
+
+.CWP-filter-button {
+    float: right;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    padding: 4px 8px; 
+    cursor: pointer;
+    text-align: center;
+}
+
+    .CWP-header-button:hover, .CWP-filter-button:hover {
+        background-color: #0056b3;
+    }
 
 .CWP-filter-menu {
     position: fixed;
-    top: 91px; /* Adjust this value based on the height of your nav-bar */
+    top: 60px;  
+    height: 90%;
     right: -300px;
-    width: 300px;
-    height: calc(100vh - 91px); /* Adjust this value based on the height of your nav-bar */
+    width: 300px; 
     background-color: #f8f9fa;
     transition: right 0.3s ease;
     padding: 30px;
-    box-sizing: border-box;
-    z-index: 999; /* Ensure this is higher than the nav-bar's z-index */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    overflow: hidden;
 }
 
 .CWP-filter-menu.open {
     right: 0;
+    overflow: hidden;
+}
+
+.form-group {
+    margin-bottom: 10px;
 }
 
 .CWP-button-container {
     display: flex;
     justify-content: space-between;
-    margin-top: 20px;
+    margin-top: auto;
 }
 
 .CWP-apply-button, .CWP-reset-button {
+    
     background-color: #28a745;
     color: white;
     border: none;
+    border-radius: 7px;
     padding: 5px 10px;
     cursor: pointer;
     flex: 1;
