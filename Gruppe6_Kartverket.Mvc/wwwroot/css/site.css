@@ -2,7 +2,9 @@
 
 /* Set the base font size for the entire HTML document */
 html {
-    font-size: 14px;
+    font-size: 16px;
+    font-family: 'Mulish', sans-serif !important;
+
 }
 
 /* Increase the base font size for screens wider than 768px */
@@ -17,7 +19,7 @@ body {
     flex-direction: column;  /* Need it for the footer to stay on the bottom */
     position: relative;
     min-height: 100vh;
-    background-color: #D0ECD6; /* Set the background color to green */
+    background-color: #D0ECD6; /* Set the background color to light green */
 }
 
 
