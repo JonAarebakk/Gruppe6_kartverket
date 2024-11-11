@@ -7,49 +7,27 @@
     <link rel="stylesheet" href="~/css/caseWorkerPage.css">
 }
 
-<div class="row" id="CWP_body">
-    @* The left menu column *@
-    <div class="CWP_sidenav">
 
+<div id ="CWP_body" @* class="row" *@>
+    @*  *@
+    <div class="CWP_sidenav">
         <ul id="CWP_sidenav-content">
             <li class="nav-item">
                 <button class="nav-link" onclick="toggleCWPSideNav()">Inbox</button>
             </li>
             <li class="nav-item">
-                <button class="nav-link" onclick="toggleCWPSideNav()">...</button>
+                <button class="nav-link" onclick="toggleCWPSideNav()">Sent Items</button>
             </li>
             <li class="nav-item">
-                <button class="nav-link" onclick="toggleCWPSideNav()">...</button>
+                <button class="nav-link" onclick="toggleCWPSideNav()">Drafts</button>
             </li>
             <li class="nav-item">
-                <button class="nav-link" onclick="toggleCWPSideNav()">...</button>
+                <button class="nav-link" onclick="toggleCWPSideNav()">Deleted Items</button>
             </li>
             <li class="nav-item">
-                <button class="nav-link" onclick="toggleCWPSideNav()">...</button>
+                <button class="nav-link" onclick="toggleCWPSideNav()">Archive</button>
             </li>
-            
         </ul>
-
-        @* Dette er den originale koden om den trengs but idk
-            <ul class="nav flex-column">
-
-            <li class="nav-item">
-                <a class="nav-link" href="@Url.Action("Profile", "CaseWorker")">Profile</a>
-            </li>
-            
-            <li class="nav-item">
-                <a class="nav-link" href="@Url.Action("Inbox", "CaseWorker")">Inbox</a>
-            </li>
-            
-            <li class="nav-item">
-                <a class="nav-link" href="@Url.Action("Settings", "Settings")">Settings</a>
-            </li>
-            
-            <li class="nav-item">
-                <a class="nav-link" href="@Url.Action("LandingPage", "LandingPage")">Log out</a>
-            </li>
-            
-        </ul> *@
     </div>
 
     @* The main display of the CWP *@
@@ -103,19 +81,6 @@
                 </table>
         </div>
       </div>
-            @* <div class="CW_inbox">
-                <ol>
-                    @foreach (var mail in Model)
-                    {
-                        <li>
-                            <div class="mail-item">
-                                <h4>@mail.Subject</h4>
-                                <p>@mail.Sender</p>
-                                <p>@mail.ReceivedDate.ToString("g")</p>
-                            </div>
-                        </li>
-                    }
-                </ol> *@
 
             <div class="CWP-filter-menu" id="CWP-filterMenu">
                 <h3>Filter Options</h3>
