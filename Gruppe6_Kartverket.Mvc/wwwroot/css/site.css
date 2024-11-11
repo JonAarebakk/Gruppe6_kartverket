@@ -1,12 +1,10 @@
-/*@import "~lib/ol/ol.css";*/
-
-
+/* Import the Mulish font using @import */
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;700&display=swap');
 
 /* Set the base font size for the entire HTML document */
 html {
     font-size: 16px;
-    font-family: 'Mulish', sans-serif !important;
-
+    font-family: 'Mulish', sans-serif;
 }
 
 /* Increase the base font size for screens wider than 768px */
@@ -16,15 +14,14 @@ html {
     }
 }
 
-
 body {
     display: flex;           /* Need it for the footer to stay on the bottom */
     flex-direction: column;  /* Need it for the footer to stay on the bottom */
     position: relative;
     min-height: 100vh;
     background-color: #D0ECD6; /* Set the background color to light green */
+    font-family: 'Mulish', sans-serif; /* Apply Mulish font to the body */
 }
-
 
 .renderBody-div {
     margin: 0;
@@ -51,10 +48,6 @@ body {
     margin: 0; /* Ensure no default margin */
 }
 
-
-
-
-
 /* Add a box shadow to various elements when they are focused */
 .btn:focus,
 .btn:active:focus,
@@ -73,7 +66,6 @@ a.btn-outline-secondary.ms-3:focus {
     margin-right: 20px; /* Adjust margin as needed */
 }
 
-
 .topicpageheading {
     position: relative;
     top: 70px; /* Increased space from 50px to 70px */
@@ -82,9 +74,7 @@ a.btn-outline-secondary.ms-3:focus {
 .contentsection {
     position: relative;
     top: 70px; /* Increased space from 50px to 70px */
-} 
-
-
+}
 
 /* Style for field validation error messages */
 .field-validation-error {
@@ -134,19 +124,16 @@ a.btn-outline-secondary.ms-3:focus {
     color: #258cfb;               /* Hover color for links */
 }
 
-
-
-
 /* Style for the UserPage */
- .sidebar {
-     width: 200px;
-     position: fixed;
-     top: 60px; /* Adjust based on your navbar height */
-     left: 0;
-     height: 100%;
-     background-color: #f8f9fa;
-     padding-top: 20px;
- }
+.sidebar {
+    width: 200px;
+    position: fixed;
+    top: 60px; /* Adjust based on your navbar height */
+    left: 0;
+    height: 100%;
+    background-color: #f8f9fa;
+    padding-top: 20px;
+}
 .sidebar a {
     padding: 10px 15px;
     text-decoration: none;
@@ -179,5 +166,4 @@ a.btn-outline-secondary.ms-3:focus {
         grid-template-columns: 1fr; /* Stacks columns on small screens */
         text-align: center; /* Center text alignment */
     }
-    
 }
