@@ -9,6 +9,7 @@
         public int LocationId { get; set; }
         public int UserId { get; set; }
 
+
         // Navigation property to CaseLocation
         public virtual CaseLocation CaseLocation { get; set; }
 

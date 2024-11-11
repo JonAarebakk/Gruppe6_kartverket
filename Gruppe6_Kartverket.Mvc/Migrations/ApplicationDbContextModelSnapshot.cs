@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
+// This is a snapshot of the current model state. When the model changes, a new snapshot will be generated.
+
 namespace Gruppe6_Kartverket.Mvc.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]

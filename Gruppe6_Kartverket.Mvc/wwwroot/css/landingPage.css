@@ -26,13 +26,13 @@
     margin-bottom: 2rem;
 }
 
-
 /* Horizontal card layout container */
 .cards-container {
     display: flex;
     gap: 2rem; /* Space between cards */
     max-width: 1200px;
     justify-content: center;
+    align-items: stretch; /* Ensures all cards have the same height */
 }
 
 /* Individual card styling */
@@ -43,6 +43,9 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     text-align: center;
     width: 300px; /* Fixed width for consistent layout */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Ensures content is spaced evenly */
 }
 
 .card h2 {

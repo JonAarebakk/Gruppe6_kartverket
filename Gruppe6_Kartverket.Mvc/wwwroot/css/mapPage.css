@@ -1,4 +1,11 @@
-﻿/* Wrapper for whole mapPage View */
+﻿/*
+**************************************
+***  Styling for the mapPage view  ***
+**************************************
+*/
+
+
+/* Wrapper for whole mapPage View */
 .map-page-wrapper {
     height: 100vh;
     padding-top: 60px;
@@ -16,9 +23,9 @@
 
 /* Style for the map */
 .map {
-    height: 80%;
+    height: 90%;
     width: 100%; /* Set the width of the map */
-    background: red; /* or another color (NB! FOR TESTING) */
+    background: white; /* or another color (NB! FOR TESTING) */
     display: flex;
 }
 
@@ -28,17 +35,19 @@
     background-color: #f8f9fa;
     width: 30%;
     display: none; /* Starts as hidden */
+    flex-direction: column;
 }
 
 /* The bottom bar with buttons for interacting with the map */
 .control-button-bar {
     width: 100%;
-    height: 20%;
+    height: 10%;
     background: blue;
     display: flex;
 
 }
 
+/* The button group for the map */
 .map-button-group {
     height: 100%;
     width: 100%;
@@ -47,6 +56,7 @@
     align-items: center; /* Center vertically */
 }
 
+/* div for new case button */
 .new-case {
     height: 100%;
     width: 100%;
@@ -55,6 +65,7 @@
     align-items: center; /* Center vertically */
 }
 
+/* Style for the button in new-case div */
 .new-case button {
     background-color: #007bff;
     color: white;
@@ -63,10 +74,11 @@
     padding: 4px 8px;
     cursor: pointer;
     margin: 0 5px;
-    height: 40%;
+    height: 70%;
     width: 20%;
 }
 
+/* Style for every button in the .map-button-group div */
 .map-button-group button {
     background-color: #007bff;
     color: white;
@@ -75,18 +87,20 @@
     padding: 4px 8px;
     cursor: pointer;
     margin: 0 5px;
-    height: 40%;
+    height: 70%;
     width: 20%;
 }
 
+/*  Active button style */
+.map-button.active {
+    background-color: green;
+    color: white;
+}
 
-/* Style for buttons inside the map */
-.map-buttons {
-    position: absolute; /* Position absolutely within the nearest positioned ancestor */
-    top: 60px; /* 60px from the top of the container */
-    left: 10px; /* 10px from the left of the container */
-    display: flex; /* Use flexbox layout */
-    flex-direction: column; /* Arrange children in a column */
-    gap: 5px; /* 5px gap between children */
-    z-index: 500; /* Stack order of the element */
+/* Places the buttons next to each other */
+.submit-cancel-wrapper {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center; /* Center horizontally */
 }
