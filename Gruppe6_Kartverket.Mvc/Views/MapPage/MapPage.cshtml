@@ -1,3 +1,5 @@
+@model Gruppe6_Kartverket.Mvc.Models.CaseRegistrationModel
+
 @{
     ViewData["Title"] = "Map Page";
 }
@@ -15,25 +17,58 @@
                 <button class="btn" onclick="startNewCase()">New Case</button>
             </div>
             <div class="map-button-group" id="map-button-group">
-                <button class="btn" data-selector="Point">Punkt</button>
-                <button class="btn" data-select="LineString">Linje</button>
-                <button class="btn" data-select="Polygon">Flate</button>
-                <button class="btn" data-select="Delete">Slett</button>
-                <button class="btn" onclick="cancelCase()">Toggle</button>
+                <button class="map-button" data-select="Point">Punkt</button>
+                <button class="map-button" data-select="LineString">Linje</button>
+                <button class="map-button" data-select="Polygon">Flate</button>
+                <button class="map-button" data-select="Delete">Slett</button>
             </div>
+            <input type="hidden" id="actionType" value="None">
         </div>
     </div>
     <div class="case-input-wrapper" id="case-input-wrapper">
+        <form asp-action="CaseForm" method="post">
+            <p>
+                <div>
+                    <label asp-for="CaseTitle">Tittel på case:</label>
+                    <input asp-for="CaseTitle" placeholder="Skriv inn tittel" />
+                    <span asp-validation-for="CaseTitle" class="text-danger"></span>
+                </div>
+            </p>
+            <p>
+                <div>
+                    <label asp-for="Kategori">Kategori:</label>
+                    <select asp-for="Kategori">
+                        <option value="Kategori1">Kategori1</option>
+                        <option value="Kategori2">Kategori2</option>
+                        <option value="Kategori3">Kategori3</option>
+                    </select>
+                </div>
+            </p>
+            <p>
+                <div>
+                    <label asp-for="Beskrivelse">Beskrivelse:</label>
+                    <input asp-for="Beskrivelse" placeholder="Beskriv problemet her" />
+                    <span asp-validation-for="Beskrivelse" class="text-danger"></span>
+                </div>
+            </p>
+        </form>
+        
         <p>Input for case info will be placed in here</p>
+        <div class="submit-cancel-wrapper">
+            <button class="cancel-case-button" onclick="cancelCase()">Avbryt</button>
+            <button class="submit-case">Submit</button>
+        </div>
     </div>
 </div>
 
 
 @section Scripts {
-    <script type="module" src="~/js/ol_map4.js"></script>
+    <script type="module" src="~/js/ol_map5.js"></script>
     <script>
         //Toggle the elements that are displayed when a new case is started
         function startNewCase() { 
+            //NB! Start with a if(logged in){do the things} else {give popup for log in/give number}
+            
             let newCase = document.getElementById("new-case");
             let mapButtons = document.getElementById("map-button-group");
             let caseInput = document.getElementById("case-input-wrapper");
@@ -45,6 +80,8 @@
 
         //Toggle the elements back to "default"
         function cancelCase() {
+            //Start with if(there are changes){give warning} else {cancelCase}
+
             let newCase = document.getElementById("new-case");
             let mapButtons = document.getElementById("map-button-group");
             let caseInput = document.getElementById("case-input-wrapper");
