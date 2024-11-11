@@ -7,7 +7,7 @@ namespace Gruppe6_Kartverket.Mvc.Controllers;
 
 public class MapPageController : Controller
 {
-    // GET
+    // GET 
     public IActionResult MapPage()
     {
         ViewBag.HideFooter = true;
