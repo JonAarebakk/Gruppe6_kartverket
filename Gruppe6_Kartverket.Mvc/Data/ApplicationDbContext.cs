@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 
 
-
+// This file is used to set up the connection to the database
 namespace Gruppe6_Kartverket.Mvc.Data
 {
     public class ApplicationDbContext : DbContext
@@ -12,25 +12,30 @@ namespace Gruppe6_Kartverket.Mvc.Data
         public DbSet<User> Users { get; set; }
         public DbSet<UserTypes> UserTypes { get; set; }
         public DbSet<CaseLocation> CaseLocations { get; set; }
-        public DbSet<Case> Cases { get; set; }
+        public DbSet<CaseRecord> CaseRecords { get; set; }
+
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
 
+
+        // Configures the connection to the database with a retry function
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseMySql(
                 "Server=localhost;Port=3306;Database=kartverket_tables;User=root;Password=Mnarild12!;SslMode=Preferred;",
                 new MySqlServerVersion(new Version(8, 0, 21)),
                 mySqlOptions => mySqlOptions.EnableRetryOnFailure(
-                    maxRetryCount: 2, // Number of retry attempts
-                    maxRetryDelay: TimeSpan.FromSeconds(30), // Delay between retries
-                    errorNumbersToAdd: null // List of error numbers to consider for retry
+                    maxRetryCount: 2,
+                    maxRetryDelay: TimeSpan.FromSeconds(30), 
+                    errorNumbersToAdd: null 
                 )
             );
         }
 
+
+        // Ensures that the relationships between the tables are set up correctly
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>()
@@ -53,19 +58,21 @@ namespace Gruppe6_Kartverket.Mvc.Data
                 .WithMany()
                 .HasForeignKey(c => c.UserId);
 
-            // Ensure CaseLocation has a primary key
+
+
+            // Ensures that CaseLocation, CaseRecord, UserInfo and Usertypes have a primary key each
             modelBuilder.Entity<CaseLocation>()
                 .HasKey(cl => cl.LocationId);
 
-            // Ensure Case has a primary key
+            
             modelBuilder.Entity<CaseRecord>()
                 .HasKey(c => c.CaseId);
 
-            // Ensure UserInfo has a primary key
+            
             modelBuilder.Entity<UserInfo>()
                 .HasKey(ui => ui.UserId);
 
-            // Ensure UserTypes has a primary key
+            
             modelBuilder.Entity<UserTypes>()
                 .HasKey(ut => ut.UserType);
 
