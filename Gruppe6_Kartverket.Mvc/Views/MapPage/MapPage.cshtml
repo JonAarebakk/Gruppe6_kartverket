@@ -1,23 +1,57 @@
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Map Page";
 }
 
 @section HeadContent {
-<!-- Link to CSS file -->
+    <!-- Link to CSS file -->
     <link rel="stylesheet" href="~/css/mapPage.css" asp-append-version="true" />
 }
 
-<div class="site-wrapper">
-    <div class="map" id="map">
-        <p>Map</p>
+<div class="map-page-wrapper">
+    <div class="map-and-control-wrapper">
+        <div class="map" id="map"></div>
+        <div class="control-button-bar">
+            <div class="new-case" id="new-case">
+                <button class="btn" onclick="startNewCase()">New Case</button>
+            </div>
+            <div class="map-button-group" id="map-button-group">
+                <button class="btn" data-selector="Point">Punkt</button>
+                <button class="btn" data-select="LineString">Linje</button>
+                <button class="btn" data-select="Polygon">Flate</button>
+                <button class="btn" data-select="Delete">Slett</button>
+                <button class="btn" onclick="cancelCase()">Toggle</button>
+            </div>
+        </div>
     </div>
-</div>
-
-<div style="display: none;">
-    <div id="popup"></div>
+    <div class="case-input-wrapper" id="case-input-wrapper">
+        <p>Input for case info will be placed in here</p>
+    </div>
 </div>
 
 
 @section Scripts {
-    <!--<script type="module" src="~/js/ol_map4.js"></script>-->
+    <script type="module" src="~/js/ol_map4.js"></script>
+    <script>
+        //Toggle the elements that are displayed when a new case is started
+        function startNewCase() { 
+            let newCase = document.getElementById("new-case");
+            let mapButtons = document.getElementById("map-button-group");
+            let caseInput = document.getElementById("case-input-wrapper");
+
+            newCase.style.display = "none";
+            mapButtons.style.display = "flex";
+            caseInput.style.display = "flex";
+        }
+
+        //Toggle the elements back to "default"
+        function cancelCase() {
+            let newCase = document.getElementById("new-case");
+            let mapButtons = document.getElementById("map-button-group");
+            let caseInput = document.getElementById("case-input-wrapper");
+
+            newCase.style.display = "flex";
+            mapButtons.style.display = "none";
+            caseInput.style.display = "none";
+        }
+    </script>
 }

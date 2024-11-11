@@ -11,17 +11,20 @@
     <link rel="stylesheet" href="~/lib/leaflet/leaflet.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/leaflet/leaflet-geoman.css" asp-append-version="true" />
     <!--  USED FOR OPEN LAYERS WHICH IS CURRENTLY NOT BEING USED -->
-    <link rel="stylesheet" href="~/lib/ol/ol.css" asp-append-version="true" />  
+    <link rel="stylesheet" href="~/lib/ol/ol.css" asp-append-version="true" />
 
     @await RenderSectionAsync("HeadContent", required: false)
 
     <!-- Legg til landingpage.css -->
-
     <link rel="stylesheet" href="~/css/landingPage.css" asp-append-version="true" />
-
 
     <!-- FontAwesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+    <!-- Preconnect and Font Stylesheets -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Playfair+Display&display=swap" rel="stylesheet">
 
 </head>
 
@@ -63,9 +66,9 @@
 </header>
 
     <div class="renderBody-div">
-         <main role="main" class="pb-3">
+        <main role="main">
                @RenderBody()
-         </main>
+        </main>
     </div>
 
     @if (ViewBag.HideFooter == null || ViewBag.HideFooter == false)
