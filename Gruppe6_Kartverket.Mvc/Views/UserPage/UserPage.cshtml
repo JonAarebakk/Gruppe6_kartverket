@@ -5,16 +5,16 @@
 }
 
 <div class="sidebar" id="sidebar">
-    <a href="@Url.Action("MapPage", "MapPage")">Go to map/Register a new case</a>
-    <a href="@Url.Action("Profile", "UserPage")">Profile information</a>
-    <a href="@Url.Action("Settings", "UserPage")">Settings</a>
-    <a href="@Url.Action("Logout", "UserPage")">Log out</a>
+    <button class="sidebar-button"><a href="@Url.Action("MapPage", "MapPage")">Go to map/Register a new case</a></button>
+    <button class="sidebar-button"><a href="@Url.Action("Profile", "UserPage")">Profile information</a></button>
+    <button class="sidebar-button"><a href="@Url.Action("Settings", "UserPage")">Settings</a></button>
+    <button class="sidebar-button"><a href="@Url.Action("Logout", "UserPage")">Log out</a></button>
 </div>
 
-<div class="menu-icon" id="menuIcon" onclick="toggleSidebar()">☰</div>
+<div class="menu-icon" id="menuIcon" onclick="toggleSidebar()"></div>
 
 <div class="content">
-    <h2>@Model.UserName's Inbox</h2>
+    <h2>Inbox</h2>
     <div class="inbox-header">
         <span>User</span>
         <span>User-Id</span>
@@ -22,81 +22,102 @@
         <span>Issue-type</span>
         <span>Description</span>
     </div>
-</div>
-@foreach (var userCase in Model.Cases)
+    @foreach (var userCase in Model.Cases)
     {
-        <div class="inbox-item">
-            <span>@Model.UserName</span>
-            <span>@Model.UserId</span>
-            <span>@Model.RegistrationDate.ToShortDateString()</span>
-            <span>@userCase.IssueType</span>
-            <span>@userCase.Description</span>
-        </div>
+    <div class="inbox-item">
+        <span>@Model.UserName</span>
+        <span>@Model.UserId</span>
+        <span>@Model.RegistrationDate.ToShortDateString()</span>
+        <span>@userCase.IssueType</span>
+        <span>@userCase.Description</span>
+    </div>
     }
+</div>
+
 <input type="checkbox" id="filterToggle" class="filter-toggle">
 <label for="filterToggle" class="UP-filter-button">Filter</label>
 
-<div class="UP-filter-menu">
+<div class="UP-filter-menu" id="UP-filterMenu">
     <label for="filterToggle" class="close-button">&times;</label>
 
     <h3>Filter Options</h3>
-        <div class="form-group">
-            <label for="categorySelect">Category</label>
-            <select class="form-control" id="categorySelect">
-                <option>Category 1</option>
-                <option>Category 2</option>
-                <option>Category 3</option>
-            </select>
-        </div>
+    <div class="form-group">
+        <label for="categorySelect">Dropdown </label>
+        <select class="form-control" id="categorySelect">
+            <option></option>
+            <option></option>
+            <option></option>
+        </select>
+    </div>
 
-        <div class="form-group">
-            <label>Options</label>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="option1">
-                <label class="form-check-label" for="option1">
-                    Option 1
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="option2">
-                <label class="form-check-label" for="option2">
-                    Option 2
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="option3">
-                <label class="form-check-label" for="option3">
-                    Option 3
-                </label>
-            </div>
+    <div class="form-group">
+        <label>Fylke/kommune</label>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="option1">
+            <label class="form-check-label" for="option1">
+                f/k-1
+            </label>
         </div>
-        <div class="form-group">
-            <label for="rangeInput">Range</label>
-            <input type="range" class="form-control-range" id="rangeInput">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="option2">
+            <label class="form-check-label" for="option2">
+                f/k-2
+            </label>
         </div>
-        <div class="UP-button-container">
-            <button class="UP-reset-button" onclick="resetFilters()">Reset Filters</button>
-            <button class="UP-apply-button" onclick="applyChanges()">Apply Changes</button>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="option3">
+            <label class="form-check-label" for="option3">
+                f/k-3
+            </label>
         </div>
-    </div> 
+    </div>
+    <div class="UP-button-container">
+        <button class="UP-reset-button" onclick="resetFilters()">Reset Filters</button>
+        <button class="UP-apply-button" onclick="applyChanges()">Apply Changes</button>
+    </div>
+</div>
+
 @section Scripts {
-    <script>
-        function toggleSidebar() {
-            var sidebar = document.getElementById("sidebar");
-            sidebar.classList.toggle("active");
+<script>
+    function toggleUPSideNav() {
+        var x = document.getElementById("UP_inboxContent");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
         }
-
-        function applyChanges() {
-            // Add any additional logic for applying changes here.....
-        }
-
-        function resetFilters() {
-            document.getElementById("categorySelect").selectedIndex = 0;
-            document.getElementById("option1").checked = false;
-            document.getElementById("option2").checked = false;
-            document.getElementById("option3").checked = false;
-            document.getElementById("rangeInput").value = document.getElementById("rangeInput").min;
-        }
-    </script>
     }
-    
+
+    function toggleFilterMenu() {
+        var filterMenu = document.getElementById("UP-filterMenu");
+        filterMenu.classList.toggle("open");
+        if (filterMenu.classList.contains("open")) {
+            document.addEventListener("click", closeFilterMenuOnClickOutside);
+        } else {
+            document.removeEventListener("click", closeFilterMenuOnClickOutside);
+        }
+    }
+
+    function closeFilterMenuOnClickOutside(event) {
+        var filterMenu = document.getElementById("UP-filterMenu");
+        if (!filterMenu.contains(event.target) && !event.target.matches('.UP-filter-button')) {
+            filterMenu.classList.remove("open");
+            document.removeEventListener("click", closeFilterMenuOnClickOutside);
+        }
+    }
+
+    function applyChanges() {
+        var filterMenu = document.getElementById("UP-filterMenu");
+        filterMenu.classList.remove("open");
+        document.removeEventListener("click", closeFilterMenuOnClickOutside);
+    }
+
+    function resetFilters() {
+        document.getElementById("categorySelect").selectedIndex = 0;
+        document.getElementById("option1").checked = false;
+        document.getElementById("option2").checked = false;
+        document.getElementById("option3").checked = false;
+        document.getElementById("rangeInput").value = document.getElementById("rangeInput").min;
+    }
+</script>
+}

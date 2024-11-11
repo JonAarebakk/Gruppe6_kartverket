@@ -9,21 +9,58 @@
     cursor: pointer;
     z-index: 1000; /* Ensure it stays on top */
 }
-
 .UP-filter-menu {
     position: fixed;
-    top: 91px; /* Adjust this value based on the height of your nav-bar */
+    top: 60px; /* Adjust this value based on the height of your navbar */
     right: -300px;
     width: 300px;
-    height: calc(100vh - 99px); /* Adjust this value based on the height of your nav-bar */
+    height: calc(100vh - 70px); /* Adjust this value based on the height of your navbar */
     background-color: #f8f9fa;
     transition: right 0.3s ease;
     padding: 30px;
     box-sizing: border-box;
-    z-index: 999; /* Ensure this is higher than the nav-bar's z-index */
+    z-index: 999; /* Ensure this is higher than the navbar's z-index */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+
+.sidebar {
+    float: left;
+    background-color: #E4F1F8;
+    outline: 1px;
+    outline-color: black;
+    overflow: hidden;
+    height: 100vh;
+}
+
+.sidebar-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 0; /* Remove margin */
+    background-color: #E4F1F8; /* Color before hovering */
+    border: 0;
+    color: #000000;
+    text-align: left;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 0;
+
+}
+
+.sidebar-button a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    width: 100%;
+}
+
+.sidebar-button:hover {
+    background-color: #C2DEEF; /* Color after hovering */
+    color: black;
+    border-color: #C2DEEF; /* Ensure border has the same color */
+    padding: 0
 }
 
 .UP-filter-menu.open {
@@ -35,6 +72,9 @@
     justify-content: space-between;
     margin-top: 20px;
 }
+.inbox-header {
+    background-color: #E4F1F8; /* Set the background color to light gray */
+}
 
 .UP-apply-button, .UP-reset-button {
     background-color: #28a745;
@@ -45,6 +85,10 @@
     flex: 1;
     margin: 0 5px;
     text-align: center;
+}
+
+.content {
+    margin-top: 70px; /* Adjust this value as needed */
 }
 
 .UP-reset-button {
