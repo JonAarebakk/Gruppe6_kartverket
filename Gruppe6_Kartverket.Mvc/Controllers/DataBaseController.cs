@@ -171,7 +171,7 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
             }
 
             [HttpPost]
-            public IActionResult RegisterCase(Case caseRecord)
+            public IActionResult RegisterCase(CaseRecord caseRecord)
             {
                 try
                 {
