@@ -8,6 +8,6 @@
         public string County { get; set; }
 
         // Navigation property to list of Cases
-        public virtual ICollection<Case> Cases { get; set; }
+        public virtual ICollection<CaseRecord> CaseRecordss { get; set; }
     }
 }
