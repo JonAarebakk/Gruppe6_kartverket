@@ -8,8 +8,6 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-// This is a snapshot of the current model state. When the model changes, a new snapshot will be generated.
-
 namespace Gruppe6_Kartverket.Mvc.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
@@ -43,35 +41,6 @@ namespace Gruppe6_Kartverket.Mvc.Migrations
                     b.ToTable("GeoChanges");
                 });
 
-            modelBuilder.Entity("Gruppe6_Kartverket.Mvc.Models.Case", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("CaseLocationLocationId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CaseLocationLocationId");
-
-                    b.ToTable("Cases");
-                });
-
             modelBuilder.Entity("Gruppe6_Kartverket.Mvc.Models.CaseLocation", b =>
                 {
                     b.Property<int>("LocationId")
@@ -99,11 +68,11 @@ namespace Gruppe6_Kartverket.Mvc.Migrations
 
             modelBuilder.Entity("Gruppe6_Kartverket.Mvc.Models.CaseRecord", b =>
                 {
-                    b.Property<int>("CaseId")
+                    b.Property<int>("CaseRecordId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("CaseId"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("CaseRecordId"));
 
                     b.Property<DateTime>("CaseDate")
                         .HasColumnType("datetime(6)");
@@ -111,6 +80,9 @@ namespace Gruppe6_Kartverket.Mvc.Migrations
                     b.Property<string>("CaseDescription")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<int?>("CaseLocationLocationId")
+                        .HasColumnType("int");
 
                     b.Property<string>("CaseStatus")
                         .IsRequired()
@@ -122,13 +94,15 @@ namespace Gruppe6_Kartverket.Mvc.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.HasKey("CaseId");
+                    b.HasKey("CaseRecordId");
+
+                    b.HasIndex("CaseLocationLocationId");
 
                     b.HasIndex("LocationId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("CaseRecord");
+                    b.ToTable("CaseRecords");
                 });
 
             modelBuilder.Entity("Gruppe6_Kartverket.Mvc.Models.User", b =>
@@ -212,15 +186,12 @@ namespace Gruppe6_Kartverket.Mvc.Migrations
                     b.ToTable("UserTypes");
                 });
 
-            modelBuilder.Entity("Gruppe6_Kartverket.Mvc.Models.Case", b =>
-                {
-                    b.HasOne("Gruppe6_Kartverket.Mvc.Models.CaseLocation", null)
-                        .WithMany("Cases")
-                        .HasForeignKey("CaseLocationLocationId");
-                });
-
             modelBuilder.Entity("Gruppe6_Kartverket.Mvc.Models.CaseRecord", b =>
                 {
+                    b.HasOne("Gruppe6_Kartverket.Mvc.Models.CaseLocation", null)
+                        .WithMany("CaseRecordss")
+                        .HasForeignKey("CaseLocationLocationId");
+
                     b.HasOne("Gruppe6_Kartverket.Mvc.Models.CaseLocation", "CaseLocation")
                         .WithMany()
                         .HasForeignKey("LocationId")
@@ -266,7 +237,7 @@ namespace Gruppe6_Kartverket.Mvc.Migrations
 
             modelBuilder.Entity("Gruppe6_Kartverket.Mvc.Models.CaseLocation", b =>
                 {
-                    b.Navigation("Cases");
+                    b.Navigation("CaseRecordss");
                 });
 
             modelBuilder.Entity("Gruppe6_Kartverket.Mvc.Models.User", b =>

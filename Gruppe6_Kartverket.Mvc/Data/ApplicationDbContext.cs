@@ -7,6 +7,10 @@ namespace Gruppe6_Kartverket.Mvc.Data
 {
     public class ApplicationDbContext : DbContext
     {
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        {
+        }
+
         public DbSet<UserInfo> UserInfos { get; set; }
         public DbSet<GeoChange> GeoChanges { get; set; }
         public DbSet<User> Users { get; set; }
@@ -14,10 +18,6 @@ namespace Gruppe6_Kartverket.Mvc.Data
         public DbSet<CaseLocation> CaseLocations { get; set; }
         public DbSet<CaseRecord> CaseRecords { get; set; }
 
-
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
-        {
-        }
 
 
         // Configures the connection to the database with a retry function
@@ -66,7 +66,7 @@ namespace Gruppe6_Kartverket.Mvc.Data
 
             
             modelBuilder.Entity<CaseRecord>()
-                .HasKey(c => c.CaseId);
+                .HasKey(c => c.CaseRecordId);
 
             
             modelBuilder.Entity<UserInfo>()

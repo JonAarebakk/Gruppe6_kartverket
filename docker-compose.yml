@@ -9,7 +9,7 @@ version: '3.8'
 services:
   mariadb:
     image: mariadb:latest
-    container_name: mariadb
+    container_name: Gruppe6_Kartverket.Mvc_1
     environment:
       MYSQL_ROOT_PASSWORD: Mnarild12!
       MYSQL_DATABASE: kartverket_tables

@@ -2,7 +2,7 @@
 {
     public class CaseRecord
     {
-        public int CaseId { get; set; }
+        public int CaseRecordId { get; set; }
         public DateTime CaseDate { get; set; }
         public string CaseDescription { get; set; }
         public string CaseStatus { get; set; }
