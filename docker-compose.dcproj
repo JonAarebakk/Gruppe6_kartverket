@@ -4,7 +4,7 @@
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
     <DockerPublishLocally>False</DockerPublishLocally>
-    <ProjectGuid>7c00794c-5ac2-423f-9125-4d6f79351afc</ProjectGuid>
+    <ProjectGuid>fc0ff0f3-6e61-40f0-950b-c0362c4322bc</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}</DockerServiceUrl>
     <DockerServiceName>gruppe6_kartverket.mvc</DockerServiceName>
