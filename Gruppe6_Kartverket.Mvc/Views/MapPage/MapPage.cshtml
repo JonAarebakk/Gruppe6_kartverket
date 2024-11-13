@@ -10,11 +10,11 @@
 }
 
 <div class="map-page-wrapper">
-    <div class="map-and-control-wrapper">
+    <div class="map-and-control-wrapper"> 
         <div class="map" id="map"></div>
         <div class="control-button-bar">
             <div class="new-case" id="new-case">
-                <button class="btn" onclick="startNewCase()">New Case</button>
+                <button class="btn" id="new-case-button">New Case</button>
             </div>
             <div class="map-button-group" id="map-button-group">
                 <button class="map-button" data-select="Point">Punkt</button>
@@ -26,7 +26,7 @@
         </div>
     </div>
     <div class="case-input-wrapper" id="case-input-wrapper">
-        <form asp-action="CaseForm" method="post">
+        <form asp-action="CaseForm" id="CaseForm" method="post">
             <p>
                 <div>
                     <label asp-for="CaseTitle">Tittel på case:</label>
@@ -38,9 +38,13 @@
                 <div>
                     <label asp-for="Kategori">Kategori:</label>
                     <select asp-for="Kategori">
-                        <option value="Kategori1">Kategori1</option>
-                        <option value="Kategori2">Kategori2</option>
-                        <option value="Kategori3">Kategori3</option>
+                        <option value="" selected disabled>Velg kategori</option>
+                        <option value="Hindring">Hindring</option>
+                        <option value="Vei">Vei</option>
+                        <option value="Sti">Sti</option>
+                        <option value="Adresse">Adresse</option>
+                        <option value="Tunell">Tunell</option>
+                        <option value="Annet">Annet</option>
                     </select>
                 </div>
             </p>
@@ -51,44 +55,101 @@
                     <span asp-validation-for="Beskrivelse" class="text-danger"></span>
                 </div>
             </p>
+            <p>
+                <div>
+                    <label>Bilde:</label> 
+                    <br />
+                    <button disabled>Legg til bilde</button> <!-- "Disabled" so it won't make problems (placedholder) -->
+                </div>
+            </p>
+            <input asp-for="GeoJson" type="hidden" id="GeoJsonInput"/>
         </form>
         
         <p>Input for case info will be placed in here</p>
         <div class="submit-cancel-wrapper">
-            <button class="cancel-case-button" onclick="cancelCase()">Avbryt</button>
-            <button class="submit-case">Submit</button>
+            <button class="cancel-case-button" id="cancel-case-button">Avbryt</button>
+            <button class="submit-case">Submit</button> <!-- Maybe have input type="submit" & type="reset"? -->
         </div>
+    </div>
+</div>
+
+<!-- Section for Popups -->
+<div class="overlay-and-popup">
+    <!-- Add a function for when the overlay is clicked and you are under the process of insering phone number, to make sure that if you want to go out or not. -->
+    <div class="overlay" id="insert-phone-number-overlay"></div>
+
+    <!-- For popups that don't need a function when the overlay is clicked -->
+    <div class="overlay popup-close" id="popup-overlay"></div>
+
+    <div class="popup" id="insert-phone-number">
+        <h2>Telefonnummer</h2>
+        <p>
+            "Legg til forklaring her"
+        </p>
+        <div>
+            <input type="text" placeholder="Telefonnummer">
+            <button>Verifiser</button>
+            <button style="display: none;">Gå videre</button>
+            <button class="popup-close">Close</button> <!-- Change to are you sure or something idk -->
+        </div>
+    </div>
+    <div class="popup" id="new-case-explanation">
+        <h2>Ny registrering</h2>
+        <p>
+            "Legg til praktisk info her"
+        </p>
+        <div>
+            <button onclick="location.href='@Url.Action("LogIn", "LogIn")'">Logg inn</button>
+            <button id="to-tlf-popup">Telefonnummer</button>
+            <button class="popup-close">Close</button>
+        </div>
+    </div>
+    <div class="popup" id="delete-features">
+        <h2>Det er ingen flere tegninger å slette</h2>
+        <button class="popup-close">Close</button>
+    </div>
+    <div class="popup" id="max-features">
+        <h2>Max features reached</h2>
+        <p>
+            "Du kan ikke tegne mer enn X figurer"
+        </p>
+        <button class="popup-close">Close</button>
+    </div>
+    <div class="popup" id="case-submitted">
+        <h2>Case submitted</h2>
+        <p>
+            "Case submitted text" <br />
+            "Info fra innsendingen"
+        </p>
+        <button class="popup-close">Close</button>
+    </div>
+    <div class="popup" id="submit-case-popup">
+        <h2>Submit?</h2>
+        <p>
+            Ønsker du å sende inn saken?
+        </p>
+        <button>Send inn</button>
+        <button class="popup-close">Tilbake</button>
+    </div>
+    <div class="popup" id="avbryt-case">
+        <h2>Avbryt?</h2>
+        <p>
+            Ønsker du å avbryte? Dette vil slette all informasjon som er lagt inn.
+        </p>
+        <button>Avbryt</button>
+        <button class="popup-close">Tilbake</button>
+    </div>
+    <div class="popup" id="case-submit-help">
+        <!-- Have a help button somewhere, and maybe show this after Log in/tlf -->
+        <h2>Hvordan registrere sak</h2>
+        <p>
+            "Legg inn forklaring/hjelp på hvordan sende inn case"
+        </p>
+        <button class="popup-close">Close</button>
     </div>
 </div>
 
 
 @section Scripts {
     <script type="module" src="~/js/ol_map5.js"></script>
-    <script>
-        //Toggle the elements that are displayed when a new case is started
-        function startNewCase() { 
-            //NB! Start with a if(logged in){do the things} else {give popup for log in/give number}
-            
-            let newCase = document.getElementById("new-case");
-            let mapButtons = document.getElementById("map-button-group");
-            let caseInput = document.getElementById("case-input-wrapper");
-
-            newCase.style.display = "none";
-            mapButtons.style.display = "flex";
-            caseInput.style.display = "flex";
-        }
-
-        //Toggle the elements back to "default"
-        function cancelCase() {
-            //Start with if(there are changes){give warning} else {cancelCase}
-
-            let newCase = document.getElementById("new-case");
-            let mapButtons = document.getElementById("map-button-group");
-            let caseInput = document.getElementById("case-input-wrapper");
-
-            newCase.style.display = "flex";
-            mapButtons.style.display = "none";
-            caseInput.style.display = "none";
-        }
-    </script>
 }
