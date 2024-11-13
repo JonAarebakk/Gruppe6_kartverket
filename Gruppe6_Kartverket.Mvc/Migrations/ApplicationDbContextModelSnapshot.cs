@@ -189,7 +189,7 @@ namespace Gruppe6_Kartverket.Mvc.Migrations
             modelBuilder.Entity("Gruppe6_Kartverket.Mvc.Models.CaseRecord", b =>
                 {
                     b.HasOne("Gruppe6_Kartverket.Mvc.Models.CaseLocation", null)
-                        .WithMany("CaseRecordss")
+                        .WithMany("CaseRecords")
                         .HasForeignKey("CaseLocationLocationId");
 
                     b.HasOne("Gruppe6_Kartverket.Mvc.Models.CaseLocation", "CaseLocation")
@@ -237,7 +237,7 @@ namespace Gruppe6_Kartverket.Mvc.Migrations
 
             modelBuilder.Entity("Gruppe6_Kartverket.Mvc.Models.CaseLocation", b =>
                 {
-                    b.Navigation("CaseRecordss");
+                    b.Navigation("CaseRecords");
                 });
 
             modelBuilder.Entity("Gruppe6_Kartverket.Mvc.Models.User", b =>
