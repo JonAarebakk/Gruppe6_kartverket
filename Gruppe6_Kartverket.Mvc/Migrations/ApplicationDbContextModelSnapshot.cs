@@ -65,9 +65,19 @@ namespace Gruppe6_Kartverket.Mvc.Migrations
                         .HasMaxLength(300)
                         .HasColumnType("varchar(300)");
 
+                    b.Property<string>("CaseIssueType")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("varchar(30)");
+
                     b.Property<string>("CaseStatus")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<string>("CaseTitle")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<int?>("LocationId")
                         .HasColumnType("int");

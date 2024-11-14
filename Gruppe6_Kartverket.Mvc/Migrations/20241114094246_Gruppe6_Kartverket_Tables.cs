@@ -81,6 +81,10 @@ namespace Gruppe6_Kartverket.Mvc.Migrations
                     CaseRecordId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     CaseDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    CaseTitle = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CaseIssueType = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     CaseDescription = table.Column<string>(type: "varchar(300)", maxLength: 300, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     CaseStatus = table.Column<string>(type: "longtext", nullable: false)

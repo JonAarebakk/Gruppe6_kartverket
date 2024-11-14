@@ -19,13 +19,6 @@ namespace Gruppe6_Kartverket.Mvc.Models.Database
         public virtual ICollection<User> Users { get; set; }
     }
 
-    public enum UserType
-    {
-        CW,
-        CU,
-        P,
-        A
-    }
 
     public enum UserTypeDescription
     {

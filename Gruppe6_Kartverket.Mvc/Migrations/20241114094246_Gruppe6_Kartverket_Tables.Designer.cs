@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gruppe6_Kartverket.Mvc.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241114085005_Gruppe6_Kartverket_Tables")]
+    [Migration("20241114094246_Gruppe6_Kartverket_Tables")]
     partial class Gruppe6_Kartverket_Tables
     {
         /// <inheritdoc />
@@ -68,9 +68,19 @@ namespace Gruppe6_Kartverket.Mvc.Migrations
                         .HasMaxLength(300)
                         .HasColumnType("varchar(300)");
 
+                    b.Property<string>("CaseIssueType")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("varchar(30)");
+
                     b.Property<string>("CaseStatus")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<string>("CaseTitle")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<int?>("LocationId")
                         .HasColumnType("int");

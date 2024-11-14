@@ -75,13 +75,19 @@ namespace Gruppe6_Kartverket.Mvc.Data
 
             // Configure the enum properties for UserTypes
             modelBuilder.Entity<UserTypes>(entity =>
-            {
-                entity.Property(e => e.UserType)
-                      .HasConversion<string>(); // Store enum as string
-
+            { 
                 entity.Property(e => e.UserTypeDescription)
                       .HasConversion<string>(); // Store enum as string
             });
+
+
+            // Configure the enum properties for CaseRecord
+            modelBuilder.Entity<CaseRecord>(entity =>
+            {
+                entity.Property(e => e.CaseStatus)
+                      .HasConversion<string>(); // Store enum as string
+            });
+
         }
     }
 }
