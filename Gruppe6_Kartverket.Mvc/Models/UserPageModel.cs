@@ -5,12 +5,12 @@ public class UserPageModel
     public string UserName { get; set; }
     public string UserId { get; set; }
     public DateTime RegistrationDate { get; set; }
-    public List<CaseRecord> CaseRecords { get; set; } = new List<CaseRecord>();
+    public List<Case> Case { get; set; } = new List<Case>();
     public int NewMessagesCount { get; set; }
     public List<Notification> Notifications { get; set; } = new List<Notification>();
 }
 
-public class CaseRecord
+public class Case
 {
     public int Id { get; set; }
     public string Title { get; set; }
