@@ -22,26 +22,7 @@ namespace Gruppe6_Kartverket.Mvc.Migrations
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
-            modelBuilder.Entity("Gruppe6_Kartverket.Mvc.Data.GeoChange", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("GeoJson")
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GeoChanges");
-                });
-
-            modelBuilder.Entity("Gruppe6_Kartverket.Mvc.Models.CaseLocation", b =>
+            modelBuilder.Entity("Gruppe6_Kartverket.Mvc.Models.Database.CaseLocation", b =>
                 {
                     b.Property<int>("LocationId")
                         .ValueGeneratedOnAdd()
@@ -51,22 +32,24 @@ namespace Gruppe6_Kartverket.Mvc.Migrations
 
                     b.Property<string>("County")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(40)
+                        .HasColumnType("varchar(40)");
 
                     b.Property<string>("GeoJSON")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("json");
 
                     b.Property<string>("Municipality")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(40)
+                        .HasColumnType("varchar(40)");
 
                     b.HasKey("LocationId");
 
                     b.ToTable("CaseLocations");
                 });
 
-            modelBuilder.Entity("Gruppe6_Kartverket.Mvc.Models.CaseRecord", b =>
+            modelBuilder.Entity("Gruppe6_Kartverket.Mvc.Models.Database.CaseRecord", b =>
                 {
                     b.Property<int>("CaseRecordId")
                         .ValueGeneratedOnAdd()
@@ -79,24 +62,20 @@ namespace Gruppe6_Kartverket.Mvc.Migrations
 
                     b.Property<string>("CaseDescription")
                         .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<int?>("CaseLocationLocationId")
-                        .HasColumnType("int");
+                        .HasMaxLength(300)
+                        .HasColumnType("varchar(300)");
 
                     b.Property<string>("CaseStatus")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("LocationId")
+                    b.Property<int?>("LocationId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("CaseRecordId");
-
-                    b.HasIndex("CaseLocationLocationId");
 
                     b.HasIndex("LocationId");
 
@@ -105,7 +84,7 @@ namespace Gruppe6_Kartverket.Mvc.Migrations
                     b.ToTable("CaseRecords");
                 });
 
-            modelBuilder.Entity("Gruppe6_Kartverket.Mvc.Models.User", b =>
+            modelBuilder.Entity("Gruppe6_Kartverket.Mvc.Models.Database.User", b =>
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
@@ -115,138 +94,134 @@ namespace Gruppe6_Kartverket.Mvc.Migrations
 
                     b.Property<string>("UserName")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("UserPassword")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("UserType")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("UserTypesUserType")
-                        .HasColumnType("varchar(255)");
+                        .HasMaxLength(2)
+                        .HasColumnType("varchar(2)");
 
                     b.HasKey("UserId");
 
                     b.HasIndex("UserType");
 
-                    b.HasIndex("UserTypesUserType");
-
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Gruppe6_Kartverket.Mvc.Models.UserInfo", b =>
+            modelBuilder.Entity("Gruppe6_Kartverket.Mvc.Models.Database.UserInfo", b =>
                 {
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(30)
+                        .HasColumnType("varchar(30)");
 
-                    b.Property<int?>("Gender")
-                        .HasColumnType("int");
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(30)
+                        .HasColumnType("varchar(30)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(15)
+                        .HasColumnType("varchar(15)");
 
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int?>("UserStatus")
-                        .HasColumnType("int");
+                    b.Property<string>("UserStatus")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.HasKey("UserId");
 
                     b.ToTable("UserInfos");
                 });
 
-            modelBuilder.Entity("Gruppe6_Kartverket.Mvc.Models.UserTypes", b =>
+            modelBuilder.Entity("Gruppe6_Kartverket.Mvc.Models.Database.UserTypes", b =>
                 {
                     b.Property<string>("UserType")
-                        .HasColumnType("varchar(255)");
+                        .HasMaxLength(2)
+                        .HasColumnType("varchar(2)");
 
                     b.Property<string>("UserTypeDescription")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
 
                     b.HasKey("UserType");
 
                     b.ToTable("UserTypes");
                 });
 
-            modelBuilder.Entity("Gruppe6_Kartverket.Mvc.Models.CaseRecord", b =>
+            modelBuilder.Entity("Gruppe6_Kartverket.Mvc.Models.Database.CaseRecord", b =>
                 {
-                    b.HasOne("Gruppe6_Kartverket.Mvc.Models.CaseLocation", null)
+                    b.HasOne("Gruppe6_Kartverket.Mvc.Models.Database.CaseLocation", "CaseLocation")
                         .WithMany("CaseRecords")
-                        .HasForeignKey("CaseLocationLocationId");
+                        .HasForeignKey("LocationId");
 
-                    b.HasOne("Gruppe6_Kartverket.Mvc.Models.CaseLocation", "CaseLocation")
-                        .WithMany()
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Gruppe6_Kartverket.Mvc.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("Gruppe6_Kartverket.Mvc.Models.Database.User", "User")
+                        .WithMany("CaseRecords")
+                        .HasForeignKey("UserId");
 
                     b.Navigation("CaseLocation");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Gruppe6_Kartverket.Mvc.Models.User", b =>
+            modelBuilder.Entity("Gruppe6_Kartverket.Mvc.Models.Database.User", b =>
                 {
-                    b.HasOne("Gruppe6_Kartverket.Mvc.Models.UserTypes", "UserTypeNavigation")
-                        .WithMany()
+                    b.HasOne("Gruppe6_Kartverket.Mvc.Models.Database.UserTypes", "UserTypeNavigation")
+                        .WithMany("Users")
                         .HasForeignKey("UserType")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Gruppe6_Kartverket.Mvc.Models.UserTypes", null)
-                        .WithMany("Users")
-                        .HasForeignKey("UserTypesUserType");
-
                     b.Navigation("UserTypeNavigation");
                 });
 
-            modelBuilder.Entity("Gruppe6_Kartverket.Mvc.Models.UserInfo", b =>
+            modelBuilder.Entity("Gruppe6_Kartverket.Mvc.Models.Database.UserInfo", b =>
                 {
-                    b.HasOne("Gruppe6_Kartverket.Mvc.Models.User", "User")
+                    b.HasOne("Gruppe6_Kartverket.Mvc.Models.Database.User", "User")
                         .WithOne("UserInfo")
-                        .HasForeignKey("Gruppe6_Kartverket.Mvc.Models.UserInfo", "UserId")
+                        .HasForeignKey("Gruppe6_Kartverket.Mvc.Models.Database.UserInfo", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Gruppe6_Kartverket.Mvc.Models.CaseLocation", b =>
+            modelBuilder.Entity("Gruppe6_Kartverket.Mvc.Models.Database.CaseLocation", b =>
                 {
                     b.Navigation("CaseRecords");
                 });
 
-            modelBuilder.Entity("Gruppe6_Kartverket.Mvc.Models.User", b =>
+            modelBuilder.Entity("Gruppe6_Kartverket.Mvc.Models.Database.User", b =>
                 {
+                    b.Navigation("CaseRecords");
+
                     b.Navigation("UserInfo")
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Gruppe6_Kartverket.Mvc.Models.UserTypes", b =>
+            modelBuilder.Entity("Gruppe6_Kartverket.Mvc.Models.Database.UserTypes", b =>
                 {
                     b.Navigation("Users");
                 });

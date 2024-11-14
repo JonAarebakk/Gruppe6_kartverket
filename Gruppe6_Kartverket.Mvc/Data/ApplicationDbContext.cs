@@ -1,5 +1,6 @@
 ﻿using Gruppe6_Kartverket.Mvc.Models;
 using Microsoft.EntityFrameworkCore;
+using Gruppe6_Kartverket.Mvc.Models.Database;
 
 
 // This file is used to set up the connection to the database
@@ -12,7 +13,6 @@ namespace Gruppe6_Kartverket.Mvc.Data
         }
 
         public DbSet<UserInfo> UserInfos { get; set; }
-        public DbSet<GeoChange> GeoChanges { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserTypes> UserTypes { get; set; }
         public DbSet<CaseLocation> CaseLocations { get; set; }
@@ -38,45 +38,50 @@ namespace Gruppe6_Kartverket.Mvc.Data
         // Ensures that the relationships between the tables are set up correctly
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>()
-                .HasOne(u => u.UserTypeNavigation)
-                .WithMany()
-                .HasForeignKey(u => u.UserType);
+            modelBuilder.Entity<CaseLocation>(entity =>
+            {
+                entity.Property(e => e.GeoJSON).HasColumnType("json");
+            });
+
+            modelBuilder.Entity<CaseRecord>()
+                .HasOne(cr => cr.CaseLocation)
+                .WithMany(cl => cl.CaseRecords)
+                .HasForeignKey(cr => cr.LocationId);
 
             modelBuilder.Entity<User>()
-                .HasOne(u => u.UserInfo)
-                .WithOne(ui => ui.User)
+                .HasOne(u => u.UserTypeNavigation)
+                .WithMany(ut => ut.Users)
+                .HasForeignKey(u => u.UserType);
+
+            modelBuilder.Entity<UserInfo>()
+                .HasOne(ui => ui.User)
+                .WithOne(u => u.UserInfo)
                 .HasForeignKey<UserInfo>(ui => ui.UserId);
 
             modelBuilder.Entity<CaseRecord>()
-                .HasOne(c => c.CaseLocation)
-                .WithMany()
-                .HasForeignKey(c => c.LocationId);
+                .HasOne(cr => cr.User)
+                .WithMany(u => u.CaseRecords)
+                .HasForeignKey(cr => cr.UserId);
 
-            modelBuilder.Entity<CaseRecord>()
-                .HasOne(c => c.User)
-                .WithMany()
-                .HasForeignKey(c => c.UserId);
+            // Configure the enum properties for UserInfo
+            modelBuilder.Entity<UserInfo>(entity =>
+            {
+                entity.Property(e => e.Gender)
+                      .HasConversion<string>(); // Store enum as string
 
+                entity.Property(e => e.UserStatus)
+                      .HasConversion<string>(); // Store enum as string
+            });
 
+            // Configure the enum properties for UserTypes
+            modelBuilder.Entity<UserTypes>(entity =>
+            {
+                entity.Property(e => e.UserType)
+                      .HasConversion<string>(); // Store enum as string
 
-            // Ensures that CaseLocation, CaseRecord, UserInfo and Usertypes have a primary key each
-            modelBuilder.Entity<CaseLocation>()
-                .HasKey(cl => cl.LocationId);
-
-            
-            modelBuilder.Entity<CaseRecord>()
-                .HasKey(c => c.CaseRecordId);
-
-            
-            modelBuilder.Entity<UserInfo>()
-                .HasKey(ui => ui.UserId);
-
-            
-            modelBuilder.Entity<UserTypes>()
-                .HasKey(ut => ut.UserType);
-
-            base.OnModelCreating(modelBuilder);
+                entity.Property(e => e.UserTypeDescription)
+                      .HasConversion<string>(); // Store enum as string
+            });
         }
     }
 }
