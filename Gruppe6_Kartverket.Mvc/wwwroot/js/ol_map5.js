@@ -50,9 +50,7 @@ const map = new ol.Map({
 **  Section 2: Configure map buttons and interactions  **
 *********************************************************
 **  To do list:                                        **
-**  - make maxFeaturesWarning() give a popUp           **
 **  - make select.on to deactivate proparly            **
-**  - make deleteFeature give popup for no more objects**
 **  - remove console.log() debugging statements        **
 **  - for cancel-case-button add a popUp for are you   **
 **    sure? And if yes, clear the map                  **
@@ -94,12 +92,10 @@ function deleteFeature() {
     if (drawnFeatures > 0) {
         map.removeInteraction(modify);
         map.addInteraction(select);
-    } else {
-        //Give a message that there are no features to delete
-        /* Will be changed to give a popUp instead later */
-        
+    } else {    
         actionType.value = 'None';  //Set the actionType back to "None"
         resetInteractions();        //Reset the interactions
+        showPopup('delete-features'); //Gives a popup for no more features to delete
     }
 }
 
@@ -123,8 +119,7 @@ function drawFeature() {
 //Gives a warning when the user tries to draw more than 10 objects
 function maxFeaturesWarning() { 
     if (source.getFeatures().length <= 10) {
-        console.log("You can not draw more than 10 objects"); //for debugging
-        /* Will be changed to give a popUp instead later */
+        showPopup('max-features'); //Gives a popup for no more features to delete
     }
 }
 
@@ -342,6 +337,10 @@ function showPopup(popupID) {
 **  - Add if() on necCaseButton                               **
 **  - Add if() on cancelCaseButton                            **
 **  - Combine the two cancelCaseButton functions              **
+**  - change querySelectorAll to querySelector on elements    **
+**    where there is only one element                         **
+**  - SubmitCaseConfirmation resets the .mapButtons proparly  **
+**    and goes back to "default state"                        **
 ****************************************************************
 */
 //#region Section 5 /*Lets Visual studio collapse this section*/
@@ -388,13 +387,21 @@ document.querySelectorAll('.cancel-case-button').forEach(button => {
 
 document.querySelectorAll('.submit-case').forEach(button => {
     button.addEventListener('click', function () {
-        if (source.getFeatures().length > 0) {
-            createFeatureCollection();
-            clearMapOfFunctions();
+        if (source.getFeatures().length > 0) { //Maybe make a function for checking if any changes are made?
+            showPopup('submit-case-popup');
+            //createFeatureCollection();
+            //clearMapOfFunctions();
         } else {
-            console.log("No features to submit"); //for debugging
+            console.log("No features to submit"); //for debugging //Make a popup for no features to submit maybe
         }
     });
+});
+
+const submitCaseConfirmation = document.querySelector('.submit-case-confirmation').addEventListener('click', function () {
+    createFeatureCollection();
+    clearMapOfFunctions();
+    closePopupsAndOverlays();
+    showPopup('case-submitted');
 });
 
 document.querySelectorAll('.popup-close').forEach(button => {
