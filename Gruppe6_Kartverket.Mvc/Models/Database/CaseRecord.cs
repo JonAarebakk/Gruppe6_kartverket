@@ -32,12 +32,12 @@ namespace Gruppe6_Kartverket.Mvc.Models.Database
 
         [ForeignKey("LocationId")]
         public virtual CaseLocation CaseLocation { get; set; }
-
-
+        
         public int? UserId { get; set; }
 
         [ForeignKey("UserId")]
         public virtual User User { get; set; }
+        
     }
    
     public enum CaseStatus
