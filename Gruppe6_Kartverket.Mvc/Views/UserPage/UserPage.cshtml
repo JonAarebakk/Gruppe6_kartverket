@@ -1,8 +1,5 @@
 @model Gruppe6_Kartverket.Mvc.Models.Database.User
 
-
-
-
 @{
     ViewData["Title"] = "UserPage";
 }
@@ -11,86 +8,102 @@
 <link rel="stylesheet" href="~/css/userPage.css" />
 }
 
+        
 <div class="UP-container">
-    <div class="table-frame">
-        <div class="content-container">
-            <div class="tables-container">
-                <div class="Case-menu">
-                    <table class="UP-table" id="Inbox">
-                        <thead>
-                        <tr>
-                            <th>Status på sak</th>
-                            <th>Bruker-Id</th>
-                            <th>Brukernavn</th>
-                            <th>Saksdato</th>
-                            <th>Tittel</th>
-                            <th>Sakstype</th>
-                            <th>Beskrivelse</th>
-                        </tr>
-                        </thead>
-                        <tbody>
+    <div class="tab-container">
+        <div class="tab-buttons">
+            <button class="tab-button active" onclick="openTab(event, 'Inbox')">Inbox</button>
+            <button class="tab-button" onclick="openTab(event, 'ProfileSettings')">Profil-innstillinger</button>
+        </div>
+    </div>
+    <div id="Inbox" class="tab-content active user-inbox">
+        <div class="table-frame">
+            <div class="content-container">
+                <div class="tables-container">
+                    <div class="Case-menu">
+                        <table class="UP-table" id="Inbox">
+                            <thead>
+                            <tr>
+                                <th>Status på sak</th>
+                                <th>Bruker-Id</th>
+                                <th>Brukernavn</th>
+                                <th>Saksdato</th>
+                                <th>Tittel</th>
+                                <th>Sakstype</th>
+                                <th>Beskrivelse</th>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-                        
-                        @foreach (var caseRecord in Model.CaseRecords)
-                        {
-                        <tr>
-                            <td>@caseRecord.CaseStatus</td>
-                            <td>@Model.UserId</td>
-                            <td>@Model.UserName</td>
-                            <td>@caseRecord.CaseDate.ToString("yyyy-MM-dd")</td>
-                            <td>@caseRecord.CaseTitle</td>
-                            <td>@caseRecord.CaseIssueType</td>
-                            <td>@caseRecord.CaseDescription</td>
-                        </tr>
-                        }
-                        </tbody>
-                    </table>
+
+                            @foreach (var caseRecord in Model.CaseRecords)
+                            {
+                                <tr>
+                                    <td>@caseRecord.CaseStatus</td>
+                                    <td>@Model.UserId</td>
+                                    <td>@Model.UserName</td>
+                                    <td>@caseRecord.CaseDate.ToString("yyyy-MM-dd")</td>
+                                    <td>@caseRecord.CaseTitle</td>
+                                    <td>@caseRecord.CaseIssueType</td>
+                                    <td>@caseRecord.CaseDescription</td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="frame sort-and-filter-frame">
-        <div class="sort-and-filter-container">
-            <button class="sort-and-filter-button" onclick="toggleSortAndFilter()">Sorter og filtrer</button>
-            <div class="menu-option-group">
-                <div class="sort-options">
-                    <p>Sorter etter dato:</p>
-                    <div class="sortOrderAsc-radio">
-                        <input id="sortOrderAsc" name="sortOrder" type="radio" value="asc" />
-                        <label for="sortOrderAsc">Stigende</label>
+        <div class="frame sort-and-filter-frame">
+            <div class="sort-and-filter-container">
+                <button class="sort-and-filter-button" onclick="toggleSortAndFilter()">Sorter og filtrer</button>
+                <div class="menu-option-group">
+                    <div class="sort-options">
+                        <p>Sorter etter dato:</p>
+                        <div class="sortOrderAsc-radio">
+                            <input id="sortOrderAsc" name="sortOrder" type="radio" value="asc"/>
+                            <label for="sortOrderAsc">Stigende</label>
+                        </div>
+                        <div class="sortOrderDesc-radio">
+                            <input id="sortOrderDesc" name="sortOrder" type="radio" value="desc"/>
+                            <label for="sortOrderDesc">Synkende</label>
+                        </div>
                     </div>
-                    <div class="sortOrderDesc-radio">
-                        <input id="sortOrderDesc" name="sortOrder" type="radio" value="desc" />
-                        <label for="sortOrderDesc">Synkende</label>
-                    </div>
-                </div>
-            <br>
-                <div class="filter-options">
-                    <p>Filtrer etter status:</p>
-                    <div class="filterAll-radio">
-                        <input id="filterAll" name="filterStatus" type="radio" value="all" />
-                        <label for="filterAll">Alle</label>
-                    </div>
-                    <div class="filterOpen-radio">
-                        <input id="filterOpen" name="filterStatus" type="radio" value="open" />
-                        <label for="filterOpen">Åpnet</label>
-                    </div>
-                    <div class="filterActive-radio">
-                        <input id="filterActive" name="filterStatus" type="radio" value="active" />
-                        <label for="filterActive">Aktiv</label>
-                    </div>
-                    <div class="filterClosed-radio">
-                        <input id="filterClosed" name="filterStatus" type="radio" value="closed" />
-                        <label for="filterClosed">Lukket</label>
+                    <br>
+                    <div class="filter-options">
+                        <p>Filtrer etter status:</p>
+                        <div class="filterAll-radio">
+                            <input id="filterAll" name="filterStatus" type="radio" value="all"/>
+                            <label for="filterAll">Alle</label>
+                        </div>
+                        <div class="filterOpen-radio">
+                            <input id="filterOpen" name="filterStatus" type="radio" value="open"/>
+                            <label for="filterOpen">Åpnet</label>
+                        </div>
+                        <div class="filterActive-radio">
+                            <input id="filterActive" name="filterStatus" type="radio" value="active"/>
+                            <label for="filterActive">Aktiv</label>
+                        </div>
+                        <div class="filterClosed-radio">
+                            <input id="filterClosed" name="filterStatus" type="radio" value="closed"/>
+                            <label for="filterClosed">Lukket</label>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+    <div id="ProfileSettings" class="tab-content">
+        <!-- Innholdet for Profil-innstillinger -->
+        <div class="profile-settings-container">
+            <h2>Profil-innstillinger</h2>
+            <!-- Legg til innholdet for profil-innstillinger her -->
+        </div>
+    </div>
 
 @section Scripts {
-    <script>
+<script>
     function toggleSortAndFilter() {
         var menuOptionGroup = document.querySelector('.menu-option-group'); // The div with the sort and filter options
         menuOptionGroup.style.display = menuOptionGroup.style.display === 'none' ? 'flex' : 'none';
@@ -100,11 +113,11 @@
         console.log("Sorting cases...");
         var table = document.getElementById("Inbox");
         var rows = Array.from(table.rows).slice(1); // Exclude the header row
-        var sortOrder = document.getElementById("sortOrder").value;
+        var sortOrder = document.querySelector('input[name="sortOrder"]:checked').value;
 
         rows.sort(function(a, b) {
-            var dateA = new Date(a.cells[2].innerText);
-            var dateB = new Date(b.cells[2].innerText);
+            var dateA = new Date(a.cells[3].innerText);
+            var dateB = new Date(b.cells[3].innerText);
             return sortOrder === "asc" ? dateA - dateB : dateB - dateA;
         });
 
@@ -117,11 +130,11 @@
         console.log("Filtering cases...");
         var table = document.getElementById("Inbox");
         var rows = Array.from(table.rows).slice(1); // Exclude the header row
-        var filterValue = document.getElementById("categoryFilter").value;
+        var filterValue = document.querySelector('input[name="filterStatus"]:checked').value;
 
         rows.forEach(function(row) {
-            var issueType = row.cells[4].innerText.toLowerCase();
-            if (filterValue === "all" || issueType.includes(filterValue)) {
+            var caseStatus = row.cells[0].innerText.toLowerCase();
+            if (filterValue === "all" || caseStatus.includes(filterValue)) {
                 row.style.display = "";
             } else {
                 row.style.display = "none";
@@ -129,10 +142,27 @@
         });
     }
 
+    function openTab(evt, tabName) {
+        var i, tabcontent, tabbuttons;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tabbuttons = document.getElementsByClassName("tab-button");
+        for (i = 0; i < tabbuttons.length; i++) {
+            tabbuttons[i].className = tabbuttons[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "flex";
+        evt.currentTarget.className += " active";
+    }
+
+    // Default åpen fane
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById("Inbox").style.display = "flex";
+        document.querySelector('.tab-button').classList.add('active');
+    });
 </script>
 }
-
-
 
 @*
 **************************************

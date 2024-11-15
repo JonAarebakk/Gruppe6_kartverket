@@ -1,16 +1,67 @@
+
 /*
 **************************************
-***  Styling for the userPage view  ***
+***  Styling for the tab in general / faner ***
 **************************************
 */
 
+.tab-container {
+    width: 100%;
+    padding-top: 10px;
+}
+
+.tab-buttons {
+    display: flex;
+    border-bottom: 0;
+    overflow: hidden; /* Ensure the border-radius is applied */
+}
+
+.tab-button {
+    background-color: #f1f1f1;
+    border: none;
+    outline: none;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+    border-radius: 10px 10px 0 0; /* Round top corners */
+    font-size: 16px; /* Increase font size */
+    font-family: 'Mulish', sans-serif; /* Use Mulish font */
+    margin-right: 2px; /* Add some space between tabs */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Add shadow effect */
+}
+
+.tab-button:hover {
+    background-color: #ddd;
+}
+
+.tab-button.active {
+    background: #439CCD;
+    color: white; /* Change text color */
+    font-weight: bold; /* Make text bold */
+}
+
+.tab-content {
+    display: none;
+    padding: 20px;
+    border-radius: 0 10px 10px 10px; /* Round bottom corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow effect */
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/*
+**************************************
+***  Styling for the UP tab ***
+**************************************
+*/
 .UP-container {
     position: relative;    
     height: 100vh; /* Sets the height of the container to 100% of the viewport height */
     padding-top: 60px; /* Adds 60px padding to the top of the container */
-    margin-top: 10px;
     display: flex; /* Use flexbox layout */
-    flex-direction: row; /* Arrange children in a row */
+    flex-direction: column; /* Arrange children in a row */
     z-index: 0 !important;
 }
 
@@ -28,6 +79,14 @@
     z-index: -1;
 }
 
+.user-inbox {
+    display: flex; 
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+
+}
+
 .content-container {
     display: flex; /* Use flexbox layout */
     height: 100%; /* Ensure it takes the full height of the parent */
@@ -36,18 +95,19 @@
 }
 
 .table-frame {
-    flex: 3; /* Take 3/4 of the available space */
-    padding: 40px; /* Add some padding */
-    width: 100%; /* Ensure it takes the full width of its portion */
+    display: flex;
+    /*flex: 3; /* Take 3/4 of the available space */
+    padding: 20px; /* Add some padding */
+    width: 75%; /* Ensure it takes the full width of its portion */
     height: 100%; /* Ensure it takes the full height of its portion */
 }
 
 .sort-and-filter-frame {
-    flex: 1; /* Take 1/4 of the available space */
+    /*flex: 1; /* Take 1/4 of the available space */
     display: flex; /* Use flexbox layout */
-    padding: 40px; /* Add some padding */
+    padding: 20px; /* Add some padding */
     justify-content: center; /* Center content horizontally */
-    width: 100%; /* Ensure it takes the full width of its portion */
+    width: 25%; /* Ensure it takes the full width of its portion */
     height: 100%; /* Ensure it takes the full height of its portion */
 }
 /*
@@ -148,7 +208,7 @@
 
 /*
 **************************************
-***  Sort and filter (Caseworker page) ***
+***  Sort and filter  ***
 **************************************
 */
 
@@ -175,8 +235,8 @@
     flex-direction: column;
     border-radius: 10px; /* Adjust the value to control the roundness */
     background-color: white;
-    min-width: 250px; /* Øk maksimal bredde */
-    padding: 20px;
+    min-width: 150px; /* Øk maksimal bredde */
+    padding: 10px;
     margin: 20px auto;
 }
 
