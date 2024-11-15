@@ -6,7 +6,8 @@
 **  - Change color for drawn features       **
 **  - Implement fetch coordinates from user **
 ********************************************** 
-*/ 
+*/
+//#region Section 1 /*Lets Visual studio collapse this section*/
 
 //Sets the attribution to non-collapsible
 const attribution = new ol.control.Attribution({
@@ -43,22 +44,19 @@ const map = new ol.Map({
     }),
 });
 
-
+//#endregion
 /* 
 *********************************************************
 **  Section 2: Configure map buttons and interactions  **
 *********************************************************
 **  To do list:                                        **
-**  - make maxFeaturesWarning() give a popUp           **
 **  - make select.on to deactivate proparly            **
-**  - make deleteFeature give popup for no more objects**
 **  - remove console.log() debugging statements        **
 **  - for cancel-case-button add a popUp for are you   **
 **    sure? And if yes, clear the map                  **
 *********************************************************
 */
-
-
+//#region Section 2 /*Lets Visual studio collapse this section*/
 
 //Enables modification of the vector layer i.e. the ability to move the drawn objects
 const modify = new ol.interaction.Modify({ source: source });
@@ -94,12 +92,10 @@ function deleteFeature() {
     if (drawnFeatures > 0) {
         map.removeInteraction(modify);
         map.addInteraction(select);
-    } else {
-        //Give a message that there are no features to delete
-        /* Will be changed to give a popUp instead later */
-        
+    } else {    
         actionType.value = 'None';  //Set the actionType back to "None"
         resetInteractions();        //Reset the interactions
+        showPopup('delete-features'); //Gives a popup for no more features to delete
     }
 }
 
@@ -123,8 +119,7 @@ function drawFeature() {
 //Gives a warning when the user tries to draw more than 10 objects
 function maxFeaturesWarning() { 
     if (source.getFeatures().length <= 10) {
-        console.log("You can not draw more than 10 objects"); //for debugging
-        /* Will be changed to give a popUp instead later */
+        showPopup('max-features'); //Gives a popup for no more features to delete
     }
 }
 
@@ -186,42 +181,7 @@ function clearMapOfFunctions() {
     drawnFeatures = 0;
 }
 
-//Configures the buttons to change the type of interaction
-document.querySelectorAll('.map-button').forEach(button => {
-    button.addEventListener('click', function () {
-        var selectValue = this.dataset.select;
-        if (actionType.value == selectValue) {
-            selectValue = 'None';
-        }
-        actionType.value = selectValue;
-
-        const event = new Event('change', { bubbles: true });
-        actionType.dispatchEvent(event); // Dispatches the event to the actionType variable
-    });
-});
-
-// When the case is cancelled, set the actionType back to "None"
-document.querySelectorAll('.cancel-case-button').forEach(button => {
-    button.addEventListener('click', function () {
-        console.log("Case Cancelled"); //for debugging
-        actionType.value = 'None';     //Set the actionType back to "None"
-        setActiveMapButton();          //Resets the map buttons
-        clearMapOfFunctions();         //Clears the map of all features
-    });
-});
-
-document.querySelectorAll('.submit-case').forEach(button => {
-    button.addEventListener('click', function () {
-        if (source.getFeatures().length > 0) {
-            createFeatureCollection();
-            clearMapOfFunctions();
-        } else { 
-            console.log("No features to submit"); //for debugging
-        }
-    });
-});
-
-
+//#endregion
 /* 
 *****************************************************************
 **  Section 3: Takes drawn objects and make them into GeoJson  **
@@ -232,6 +192,7 @@ document.querySelectorAll('.submit-case').forEach(button => {
 **    data based on the coordinates of the drawn objects       **
 *****************************************************************
 */
+//#region Section 3 /*Lets Visual studio collapse this section*/
 
 var geoJsonFeatures = []; //Array to store the GeoJson objects
 
@@ -292,4 +253,163 @@ function createFeatureCollection() {
 }
 
 
-/* Function 3: Pushes the GeoJson object somewhere*/
+/* Function 3: Pushes the GeoJson object somewhere                               */
+/*             - Put the object after JSON.stringify into the hidden form input  */
+
+
+//#endregion
+
+/* 
+**************************************************
+**  Section 4: Configure overlays and popups    **
+**************************************************
+**  To do list:                                 **
+**  - In showPopup(), differentiate between     **
+**    the different overlays                    **
+**************************************************
+*/
+//#region Section 4 /*Lets Visual studio collapse this section*/
+
+//Toggle the elements that are displayed when a new case is started
+function startNewCase() {
+    //NB! Start with a if(logged in){do the things} else {give popup for log in/give number}
+
+    let newCase = document.getElementById("new-case");
+    let mapButtons = document.getElementById("map-button-group");
+    let caseInput = document.getElementById("case-input-wrapper");
+
+    newCase.style.display = "none";
+    mapButtons.style.display = "flex";
+    caseInput.style.display = "flex";
+}
+
+//Toggle the elements back to "default"
+function cancelCase() {
+    //Start with if(there are changes){give warning} else {cancelCase}
+
+    let newCase = document.getElementById("new-case"); 
+    let mapButtons = document.getElementById("map-button-group");
+    let caseInput = document.getElementById("case-input-wrapper");
+
+    newCase.style.display = "flex";
+    mapButtons.style.display = "none";
+    caseInput.style.display = "none";
+    CaseForm.reset(); //Resets the form to default values
+}
+
+
+// A close function for the popups and overlays
+function closePopupsAndOverlays() {
+    let popup = document.getElementsByClassName("popup");
+    for (let i = 0; i < popup.length; i++) {
+        popup[i].style.display = "none";
+    }
+    let overlay = document.getElementsByClassName("overlay");
+    for (let i = 0; i < overlay.length; i++) {
+        overlay[i].style.display = "none";
+    }
+}
+
+
+// Show the popup with the given ID //TODO: make the overlay different for the tlf popup
+function showPopup(popupID) {
+    closePopupsAndOverlays();
+    if (popupID != "insert-phone-number") {
+        let popupOverlay = document.getElementById("popup-overlay");
+        popupOverlay.style.display = "block";
+        let popup = document.getElementById(popupID);
+        popup.style.display = "block";
+    } else if (popupID == "insert-phone-number") {
+        let popupOverlay = document.getElementById("insert-phone-number-overlay");
+        popupOverlay.style.display = "block";
+        let popup = document.getElementById(popupID);
+        popup.style.display = "block";
+    }
+}
+
+//#endregion
+/*
+**************************************************
+**  Section 5: Give buttons functionality       **
+****************************************************************
+**  To do list:                                               **
+**  - Make one general function that initializes all buttons  **
+**  - Add if() on necCaseButton                               **
+**  - Add if() on cancelCaseButton                            **
+**  - Combine the two cancelCaseButton functions              **
+**  - change querySelectorAll to querySelector on elements    **
+**    where there is only one element                         **
+**  - SubmitCaseConfirmation resets the .mapButtons proparly  **
+**    and goes back to "default state"                        **
+****************************************************************
+*/
+//#region Section 5 /*Lets Visual studio collapse this section*/
+
+
+// Add event listener to the new-case-button
+const newCaseButton = document.getElementById('new-case-button');
+newCaseButton.addEventListener('click', function () {
+    //if(logged in) {startNewCase()} else {give popup for log in/give number}
+    startNewCase();
+    showPopup('new-case-explanation');
+});
+
+const toTlfPopup = document.getElementById('to-tlf-popup');
+toTlfPopup.addEventListener('click', function () {
+    showPopup('insert-phone-number');
+});
+
+//Configures the buttons to change the type of interaction
+document.querySelectorAll('.map-button').forEach(button => {
+    button.addEventListener('click', function () {
+        var selectValue = this.dataset.select;
+        if (actionType.value == selectValue) {
+            selectValue = 'None';
+        }
+        actionType.value = selectValue;
+
+        const event = new Event('change', { bubbles: true });
+        actionType.dispatchEvent(event); // Dispatches the event to the actionType variable
+    });
+});
+
+// When the case is cancelled, set the actionType back to "None"
+document.querySelectorAll('.cancel-case-button').forEach(button => {
+    button.addEventListener('click', function () {
+        console.log("Case Cancelled"); //for debugging
+        actionType.value = 'None';     //Set the actionType back to "None"
+        setActiveMapButton();          //Resets the map buttons
+        clearMapOfFunctions();         //Clears the map of all features
+
+        cancelCase();                  //Resets the case input form
+    });
+});
+
+document.querySelectorAll('.submit-case').forEach(button => {
+    button.addEventListener('click', function () {
+        if (source.getFeatures().length > 0) { //Maybe make a function for checking if any changes are made?
+            showPopup('submit-case-popup');
+            //createFeatureCollection();
+            //clearMapOfFunctions();
+        } else {
+            console.log("No features to submit"); //for debugging //Make a popup for no features to submit maybe
+        }
+    });
+});
+
+const submitCaseConfirmation = document.querySelector('.submit-case-confirmation').addEventListener('click', function () {
+    createFeatureCollection();
+    clearMapOfFunctions();
+    closePopupsAndOverlays();
+    showPopup('case-submitted');
+});
+
+document.querySelectorAll('.popup-close').forEach(button => {
+    button.addEventListener('click', function () {
+        closePopupsAndOverlays();
+    });
+});
+
+
+
+//#endregion

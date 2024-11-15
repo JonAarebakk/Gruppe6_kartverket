@@ -1,30 +1,54 @@
-﻿namespace Gruppe6_Kartverket.Mvc.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
+namespace Gruppe6_Kartverket.Mvc.Models.Database
 {
+ 
+    public class UserInfo
+
+    {
+        [Key]
+        [ForeignKey("User")]
+        public int UserId { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        public string Email { get; set; }
+
+        [StringLength(30)]
+        public string FirstName { get; set; }
+
+        [StringLength(30)]
+        public string LastName { get; set; }
+
+        [Required]
+        [StringLength(15)]
+        public string PhoneNumber { get; set; }
+
+        [Required]
+        public Gender Gender { get; set; }
+
+        [Required]
+        public DateTime RegistrationDate { get; set; }
+
+        [Required]
+        public UserStatus UserStatus { get; set; }
+
+        // Navigation property to User
+        public User User { get; set; }
+    }
     public enum Gender
     {
-        M, F, O
+        Man, 
+        Woman, 
+        Others
     }
 
     public enum UserStatus
     {
-        Active, Inactive
+        Active, 
+        Inactive,
+        Suspended
     }
 
-
-    public class UserInfo
-
-    {
-        public int UserId { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
-        public string PhoneNumber { get; set; }
-        public DateTime RegistrationDate { get; set; }
-        public Gender? Gender { get; set; }
-        public UserStatus? UserStatus { get; set; }
-
-
-        //Navigation property to User
-        public virtual User User { get; set; }
-    }
 }

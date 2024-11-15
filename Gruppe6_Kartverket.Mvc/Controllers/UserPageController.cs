@@ -14,7 +14,7 @@ public class UserPageController : Controller
         {
             UserName = "User Name",
             NewMessagesCount = 5,
-            //CaseRecords = GetCases() // Assuming GetCases is a method that retrieves cases for the user
+            Case = GetCases() // Assuming GetCases is a method that retrieves cases for the user
         };
         ViewBag.HideFooter = true; // Hide footer in this view
         return View(model);
@@ -37,13 +37,13 @@ public class UserPageController : Controller
         // Logic to handle logout
         return RedirectToAction("Index", "Home");
     }
-    /*
-    private List<CaseRecord> GetCases()
+
+    private List<Case> GetCases()
     {
-        return new List<CaseRecord>
+        return new List<Case>
         {
-            new CaseRecord { CaseId = 1, Title = "Case 1", Date = DateTime.Now, Status = "Open" },
-            new CaseRecord { CaseId = 2, Title = "Case 2", Date = DateTime.Now, Status = "Closed" }
+            new Case { Id = 1, Title = "Case 1", Date = DateTime.Now, Status = "Open" },
+            new Case { Id = 2, Title = "Case 2", Date = DateTime.Now, Status = "Closed" }
         };
-    }*/
+    }
 }
