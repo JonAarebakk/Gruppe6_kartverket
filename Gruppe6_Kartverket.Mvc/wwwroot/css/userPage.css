@@ -73,7 +73,7 @@
     padding: 0; /* Remove all padding */
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Adds a shadow effect to the table */
     background: white;
-    opacity: 0.5;
+    opacity: 0.8 !important;
 }
 
 
@@ -161,18 +161,23 @@
     height: fit-content; /* Adjust the height to fit the content */
 }
 .sort-and-filter-button {
-    padding: 8px 16px; /* Adds 8px padding to the top and bottom, and 16px padding to the left and right */
+    padding: 12px 18px; /* Adds 8px padding to the top and bottom, and 16px padding to the left and right */
     background-color: #3182ce; /* Sets the background color to a shade of blue */
     color: white; /* Sets the text color to white */
     border: none; /* Removes the border */
     cursor: pointer; /* Changes the cursor to a pointer when hovering over the button */
     font-size: 16px; /* Sets the font size to 16px */
-   
+    border-radius: 10px; /* Adjust the value to control the roundness */
+
 }
 .menu-option-group {
     display: none;
     flex-direction: column;
+    border-radius: 10px; /* Adjust the value to control the roundness */
     background-color: white;
+    min-width: 250px; /* Øk maksimal bredde */
+    padding: 20px;
+    margin: 20px auto;
 }
 
 .sort-options {
@@ -183,10 +188,42 @@
 .filter-options {
     display: flex;
     flex-direction: column;
+    margin-bottom: 10px;
 }
 
+.filter-options p {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
 
+.sort-options p {
+    font-weight: bold;
+}
 
+.filter-options .filterAll-radio,
+.filter-options .filterOpen-radio,
+.filter-options .filterActive-radio,
+.filter-options .filterClosed-radio {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.filter-options input[type="radio"] {
+    margin-right: 10px;
+}
+
+.sortOrderAsc-radio,
+.sortOrderDesc-radio {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.sortOrderAsc-radio input[type="radio"],
+.sortOrderDesc-radio input[type="radio"] {
+    margin-right: 10px;
+}
 
 
 

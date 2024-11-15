@@ -1,6 +1,6 @@
 
 using Microsoft.AspNetCore.Mvc;
-using Gruppe6_Kartverket.Mvc.Models;
+using Gruppe6_Kartverket.Mvc.Models.Database;
 
 namespace Gruppe6_Kartverket.Mvc.Controllers;
 
@@ -10,11 +10,11 @@ public class UserPageController : Controller
     // GET
     public IActionResult UserPage()
     {
-        var model = new UserPageModel
+        var model = new User
         {
             UserName = "User Name",
-            NewMessagesCount = 5,
-            Case = GetCases() // Assuming GetCases is a method that retrieves cases for the user
+            //NewMessagesCount = 5,
+            CaseRecords = GetCases() // Assuming GetCases is a method that retrieves cases for the user
         };
         ViewBag.HideFooter = true; // Hide footer in this view
         return View(model);
@@ -38,12 +38,12 @@ public class UserPageController : Controller
         return RedirectToAction("Index", "Home");
     }
 
-    private List<Case> GetCases()
+    private List<CaseRecord> GetCases()
     {
-        return new List<Case>
+        return new List<CaseRecord>
         {
-            new Case { Id = 1, Title = "Case 1", Date = DateTime.Now, Status = "Open" },
-            new Case { Id = 2, Title = "Case 2", Date = DateTime.Now, Status = "Closed" }
+            new CaseRecord { UserId = 1, CaseTitle = "Case 1", CaseDate = DateTime.Now, CaseStatus = "Open" },
+            new CaseRecord { UserId = 2, CaseTitle = "Case 2", CaseDate = DateTime.Now, CaseStatus = "Closed" }
         };
     }
 }
