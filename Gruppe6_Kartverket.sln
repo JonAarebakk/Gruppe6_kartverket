@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gruppe6_Kartverket.Mvc", "G
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{7C00794C-5AC2-423F-9125-4D6F79351AFC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gruppe6_Kartverket.Mvc.Tests", "Gruppe6_Kartverket.Mvc.Tests\Gruppe6_Kartverket.Mvc.Tests.csproj", "{B1BEEBC7-724F-4E84-B730-8ADE60DCA590}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{7C00794C-5AC2-423F-9125-4D6F79351AFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C00794C-5AC2-423F-9125-4D6F79351AFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C00794C-5AC2-423F-9125-4D6F79351AFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1BEEBC7-724F-4E84-B730-8ADE60DCA590}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1BEEBC7-724F-4E84-B730-8ADE60DCA590}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1BEEBC7-724F-4E84-B730-8ADE60DCA590}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1BEEBC7-724F-4E84-B730-8ADE60DCA590}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
