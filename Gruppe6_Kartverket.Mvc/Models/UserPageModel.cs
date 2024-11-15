@@ -5,7 +5,7 @@ public class UserPageModel
     public string UserName { get; set; }
     public string UserId { get; set; }
     public DateTime RegistrationDate { get; set; }
-    public List<Case> Cases { get; set; } = new List<Case>();
+    public List<Case> Case { get; set; } = new List<Case>();
     public int NewMessagesCount { get; set; }
     public List<Notification> Notifications { get; set; } = new List<Notification>();
 }

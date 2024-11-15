@@ -22,12 +22,12 @@
         <span>Issue-type</span>
         <span>Description</span>
     </div>
-    @foreach (var userCase in Model.Cases)
+    @foreach (var userCase in Model.Case)
     {
     <div class="inbox-item">
         <span>@Model.UserName</span>
         <span>@Model.UserId</span>
-        <span>@Model.RegistrationDate.ToShortDateString()</span>
+        <span></span> @* @userCase RegistrationDate *@
         <span>@userCase.IssueType</span>
         <span>@userCase.Description</span>
     </div>

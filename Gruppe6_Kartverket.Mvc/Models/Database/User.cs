@@ -1,17 +1,27 @@
-﻿namespace Gruppe6_Kartverket.Mvc.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
+namespace Gruppe6_Kartverket.Mvc.Models.Database
 {
     public class User
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }
-        public string UserType { get; set; }
-        public string UserName { get; set; }
-        public string UserPassword { get; set; }
 
-        // Navigation property to UserType
+        [StringLength(2)]
+        public string UserType { get; set; }
+
+        [ForeignKey("UserType")]
         public virtual UserTypes UserTypeNavigation { get; set; }
 
+        [StringLength(50)]
+        public string UserName { get; set; }
 
-        // Navigation property to UserInfo
+        [StringLength(100)]
+        public string UserPassword { get; set; }
+
         public virtual UserInfo UserInfo { get; set; }
+        public virtual ICollection<CaseRecord> CaseRecords { get; set; }
     }
 }

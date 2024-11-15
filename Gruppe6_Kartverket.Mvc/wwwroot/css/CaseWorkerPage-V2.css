@@ -1,0 +1,47 @@
+.grid-container{
+    display: grid;
+    grid-template-columns: 20% auto;
+    margin-top: 5%;
+    height: 100%; 
+    
+    
+}
+
+.grid-item1{
+    grid-row: 1 / span 2;
+
+    
+}
+.grid-item2{
+    border-bottom: 2px solid lightgrey;
+    height: 20%;
+}
+
+
+#SideBarV2-Flex{
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-items{
+    padding: 2rem;
+    border-bottom: 2px solid lightgrey;
+    border-right: 2px solid lightgrey;
+}
+
+body{
+    height: 100%;
+}
+
+#kategorier-flex{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    
+    
+}
+.kategorier-flex-items{
+    padding-top: 2rem;
+    border-right: 2px solid lightgrey;
+    padding-right: 2rem;
+}
