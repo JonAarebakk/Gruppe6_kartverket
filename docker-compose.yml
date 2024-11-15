@@ -1,12 +1,18 @@
-# services:
-#   gruppe6_kartverket.mvc:
-#     image: ${DOCKER_REGISTRY-}gruppe6kartverketmvc
-#     build:
-#       context: .
-#       dockerfile: Gruppe6_Kartverket.Mvc/Dockerfile
-version: '3.8'
-
 services:
+  gruppe6_kartverket.mvc:
+    image: ${DOCKER_REGISTRY-}gruppe6_kartverket.mvc_1
+    build:
+      context: .
+      dockerfile: gruppe6_Kartverket.mvc/Dockerfile
+    ports:
+      - "5000:80"
+    depends_on:
+      - mariadb
+    environment:
+      ConnectionStrings__DefaultConnection: "Server=mariadb;Database=kartverket_tables;User=root;Password=Mnarild12!"
+    networks:
+      - backend
+
   mariadb:
     image: mariadb:latest
     container_name: mariadb
@@ -18,26 +24,12 @@ services:
     ports:
       - "3307:3306"
     volumes:
-      - mariadb_data:/var/lib/mysql
-    networks:
-      - backend
-
-  gruppe6_kartverket.mvc:
-    image: ${DOCKER_REGISTRY-}gruppe6kartverketjorgenbranch2
-    build:
-      context: .
-      dockerfile: Gruppe6_Kartverket.Mvc/Dockerfile
-    ports:
-      - "5000:80"
-    depends_on:
-      - mariadb
-    environment:
-      ConnectionStrings__DefaultConnection: "Server=mariadb;Database=kartverket_tables;User=root;Password=Mnarild12!;"
+      - db_data:/var/lib/mysql
     networks:
       - backend
 
 volumes:
-  mariadb_data:
+  db_data:
 
 networks:
   backend:

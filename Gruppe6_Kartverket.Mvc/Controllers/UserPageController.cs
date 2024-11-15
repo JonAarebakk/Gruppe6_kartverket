@@ -14,7 +14,7 @@ public class UserPageController : Controller
         {
             UserName = "User Name",
             NewMessagesCount = 5,
-            Cases = GetCases() // Assuming GetCases is a method that retrieves cases for the user
+            Case = GetCases() // Assuming GetCases is a method that retrieves cases for the user
         };
         ViewBag.HideFooter = true; // Hide footer in this view
         return View(model);
