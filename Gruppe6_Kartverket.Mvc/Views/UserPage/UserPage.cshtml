@@ -25,15 +25,15 @@ ViewData["Title"] = "UserPage";
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach (var CaseRecords in Model.CaseRecords)
+                        @foreach (var userCase in Model.Case)
                         {
                         <tr>
                             <td>@Model.UserName</td>
                             <td>@Model.UserId</td>
                             <td>@Model.RegistrationDate.ToString("yyyy-MM-dd")</td>
-                            <td>@Model.Title</td>
-                            <td>@Model.IssueType</td>
-                            <td>@Model.Description</td>
+                            <td>@userCase.Title</td>
+                            <td>@userCase.IssueType</td>
+                            <td>@userCase.Description</td>
                         </tr>
                         }
                         </tbody>
