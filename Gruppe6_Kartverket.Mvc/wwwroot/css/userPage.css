@@ -1,26 +1,269 @@
-.UP-filter-button {
+/*
+**************************************
+***  Styling for the userPage view  ***
+**************************************
+*/
+
+.UP-container {
+    position: relative;    
+    height: 100vh; /* Sets the height of the container to 100% of the viewport height */
+    padding-top: 60px; /* Adds 60px padding to the top of the container */
+    margin-top: 10px;
+    display: flex; /* Use flexbox layout */
+    flex-direction: row; /* Arrange children in a row */
+    z-index: 0 !important;
+}
+
+.UP-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("../Images/kartverket-bakgrunssbilder/lofoten.jpg"); /* Sets a background image for the container */
+    background-size: cover; /* Ensures the background image covers the entire container */
+    background-position: center; /* Centers the background image */
+    opacity: 0.6; /* Sets the opacity of the background image to 60% */
+    z-index: -1;
+}
+
+.content-container {
+    display: flex; /* Use flexbox layout */
+    height: 100%; /* Ensure it takes the full height of the parent */
+    margin-left: 2%;
+    width: 100%; /* Ensure it takes the full width of the parent */
+}
+
+.table-frame {
+    flex: 3; /* Take 3/4 of the available space */
+    padding: 40px; /* Add some padding */
+    width: 100%; /* Ensure it takes the full width of its portion */
+    height: 100%; /* Ensure it takes the full height of its portion */
+}
+
+.sort-and-filter-frame {
+    flex: 1; /* Take 1/4 of the available space */
+    display: flex; /* Use flexbox layout */
+    padding: 40px; /* Add some padding */
+    justify-content: center; /* Center content horizontally */
+    width: 100%; /* Ensure it takes the full width of its portion */
+    height: 100%; /* Ensure it takes the full height of its portion */
+}
+/*
+*********************************
+***  Tables (Caseworker page) ***
+*********************************
+*/
+
+.tables-container {
+    width: fit-content;
+    height: 60%; 
+    overflow-y: auto; /* Add scroll if content overflows */
+    display: flex; /* Use flexbox layout */
+    flex-direction: column; /* Arrange children in a column */
+}
+
+.UP-table {
+    width: 100%; /* Set the width to 100% of the parent container */
+    height: 100%;
+    border-collapse: separate; /* Keeps the borders of the table cells separate */
+    border-radius: 5px; /* Rounds the corners of the table with a 5px radius */
+    margin: 0; /* Remove all margins */
+    padding: 0; /* Remove all padding */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Adds a shadow effect to the table */
+    background: white;
+    opacity: 0.8 !important;
+}
+
+
+.UP-table th, .UP-table td {
+    padding: 12px; /* Adds 12px padding to the table header and data cells */
+    text-align: left; /* Aligns the text to the left */
+    border: 1px solid #ddd; /* Adds a light gray border to the cells */
+}
+
+.UP-table th {
+    width: 200px; /* Sets the width of the table header cells to 200px */
+    font-size: 16px; /* Sets the font size to 16px */
+    font-weight: 400; /* Sets the font weight to 400 (normal) */
+    color: black; /* Sets the text color to black */
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5); /* Adds a shadow effect to the text */
+    background: #F7E6EB; /* Sets the background color to a light pink */
+}
+
+.UP-table th:hover {
+    background: rgba(21, 102, 48, 0.8); /* Changes the background color when hovering over the header cells */
+}
+
+.UP-table th:active {
+    background-color: #0056b3; /* Changes the background color when the header cells are active (clicked) */
+}
+
+.UP-table th:first-child {
+    border-top-left-radius: 5px; /* Rounds the top-left corner of the first header cell */
+}
+
+.UP-table th:last-child {
+    border-top-right-radius: 5px; /* Rounds the top-right corner of the last header cell */
+}
+
+.UP-table tbody tr:nth-child(even) {
+    background: #D0ECD6; /* Sets the background color of even rows to a light green */
+}
+
+.UP-table tbody tr td {
+    font-weight: 400; /* Sets the font weight to 400 (normal) */
+    color: #5f6062; /* Sets the text color to a dark gray */
+    font-size: 13px; /* Sets the font size to 13px */
+    padding: 12px; /* Adds 12px padding to the table data cells */
+    border-bottom: 1px solid #e0e0e0; /* Adds a light gray border to the bottom of the cells */
+}
+
+.UP-table tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 5px; /* Rounds the bottom-left corner of the first cell in the last row */
+}
+
+.UP-table tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 5px; /* Rounds the bottom-right corner of the last cell in the last row */
+}
+
+.UP-table tbody tr:hover {
+    background-color: #ddd; /* Changes the background color when hovering over the rows */
+}
+
+.UP-table tbody tr td {
+    opacity: 1; /* Sets the opacity to 100% */
+}
+
+.UP-table tbody:hover > tr td {
+    opacity: 0.5; /* Sets the opacity to 50% when hovering over the table body */
+}
+
+.UP-table tbody:hover > tr:hover td {
+    text-shadow: none; /* Removes the text shadow when hovering over the rows */
+    color: #2d2d2d; /* Sets the text color to a darker gray */
+    opacity: 1.0; /* Sets the opacity to 100% */
+}
+
+/*
+**************************************
+***  Sort and filter (Caseworker page) ***
+**************************************
+*/
+
+
+.sort-and-filter-container {
+    display: flex; /* Use flexbox layout */
+    flex-direction: column;
+    align-items: center; /* Align items vertically */
+    width: fit-content; /* Adjust the width to fit the content */
+    height: fit-content; /* Adjust the height to fit the content */
+}
+.sort-and-filter-button {
+    padding: 12px 18px; /* Adds 8px padding to the top and bottom, and 16px padding to the left and right */
+    background-color: #3182ce; /* Sets the background color to a shade of blue */
+    color: white; /* Sets the text color to white */
+    border: none; /* Removes the border */
+    cursor: pointer; /* Changes the cursor to a pointer when hovering over the button */
+    font-size: 16px; /* Sets the font size to 16px */
+    border-radius: 10px; /* Adjust the value to control the roundness */
+
+}
+.menu-option-group {
+    display: none;
+    flex-direction: column;
+    border-radius: 10px; /* Adjust the value to control the roundness */
+    background-color: white;
+    min-width: 250px; /* Øk maksimal bredde */
+    padding: 20px;
+    margin: 20px auto;
+}
+
+.sort-options {
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-options {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.filter-options p {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.sort-options p {
+    font-weight: bold;
+}
+
+.filter-options .filterAll-radio,
+.filter-options .filterOpen-radio,
+.filter-options .filterActive-radio,
+.filter-options .filterClosed-radio {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.filter-options input[type="radio"] {
+    margin-right: 10px;
+}
+
+.sortOrderAsc-radio,
+.sortOrderDesc-radio {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.sortOrderAsc-radio input[type="radio"],
+.sortOrderDesc-radio input[type="radio"] {
+    margin-right: 10px;
+}
+
+
+
+
+
+
+/*
+**************************************
+***  Old styling for the userPage view  ***
+**************************************
+*/
+
+
+
+
+
+/* .UP-filter-button {
     position: fixed;
     top: 70px; /* Adjust this value based on the height of your navbar */
-    right: 10px;
+/* right: 10px;
     background-color: #007bff;
     color: white;
     border: none;
     padding: 10px 20px;
     cursor: pointer;
     z-index: 1000; /* Ensure it stays on top */
+/* }
 }
 .UP-filter-menu {
     position: fixed;
     top: 60px; /* Adjust this value based on the height of your navbar */
-    right: -300px;
+/* right: -300px;
     width: 300px;
     height: calc(100vh - 70px); /* Adjust this value based on the height of your navbar */
-    background-color: #f8f9fa;
+/* background-color: #f8f9fa;
     transition: right 0.3s ease;
     padding: 30px;
     box-sizing: border-box;
     z-index: 999; /* Ensure this is higher than the navbar's z-index */
-    display: flex;
+/*    display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
@@ -39,28 +282,28 @@
     width: 100%;
     padding: 10px;
     margin: 0; /* Remove margin */
-    background-color: #E4F1F8; /* Color before hovering */
-    border: 0;
-    color: #000000;
-    text-align: left;
-    cursor: pointer;
-    font-size: 16px;
-    padding: 0;
+ /*   background-color: #E4F1F8; /* Color before hovering */
+/*   border: 0;
+  color: #000000;
+  text-align: left;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0;
 
 }
 
 .sidebar-button a {
-    text-decoration: none;
-    color: inherit;
-    display: block;
-    width: 100%;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  width: 100%;
 }
 
 .sidebar-button:hover {
-    background-color: #C2DEEF; /* Color after hovering */
-    color: black;
-    border-color: #C2DEEF; /* Ensure border has the same color */
-    padding: 0
+  background-color: #C2DEEF; /* Color after hovering */
+/*    color: black;
+   border-color: #C2DEEF; /* Ensure border has the same color */
+/*     padding: 0
 }
 
 .UP-filter-menu.open {
@@ -74,24 +317,24 @@
 }
 .inbox-header {
     background-color: #E4F1F8; /* Set the background color to light gray */
-}
 
-.UP-apply-button, .UP-reset-button {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    flex: 1;
-    margin: 0 5px;
-    text-align: center;
+
+/* .UP-apply-button, .UP-reset-button {
+   background-color: #28a745;
+   color: white;
+   border: none;
+   padding: 5px 10px;
+   cursor: pointer;
+   flex: 1;
+   margin: 0 5px;
+   text-align: center;
 }
 
 .content {
-    margin-top: 70px; /* Adjust this value as needed */
-}
+   margin-top: 70px; /* Adjust this value as needed */
 
-.UP-reset-button {
+
+/* .UP-reset-button {
     background-color: #dc3545;
 }
 
@@ -106,3 +349,5 @@
 .filter-toggle:checked ~ .UP-filter-button {
     display: none;
 }
+
+*/
