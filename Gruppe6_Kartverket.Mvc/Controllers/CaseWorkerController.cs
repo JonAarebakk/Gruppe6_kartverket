@@ -7,7 +7,7 @@ public class CaseWorkerController : Controller
     // GET
     public IActionResult CaseWorkerPage()
     {
-        return View();
+        return View("CaseWorkerPage-V2");
     }
 
     //// POST: Apply Filters
