@@ -27,4 +27,8 @@ RUN dotnet publish "./Gruppe6_Kartverket.Mvc.csproj" -c $BUILD_CONFIGURATION -o 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+ENV  AspnetCoreEnvironment=Docker
 ENTRYPOINT ["dotnet", "Gruppe6_Kartverket.Mvc.dll"]
+
+# Run Entity Framework migrations before starting the application
+#ENTRYPOINT ["bash", "-c", "dotnet ef database update && dotnet Gruppe6_Kartverket.Mvc.dll"]
