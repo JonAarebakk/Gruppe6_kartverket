@@ -1,18 +1,201 @@
-@model Gruppe6_Kartverket.Mvc.Models.UserPageModel
+@model Gruppe6_Kartverket.Mvc.Models.Database.User
 
-@section HeadContent {
-<link rel="stylesheet" href="~/css/userPage.css">
+@{
+    ViewData["Title"] = "UserPage";
 }
 
+@section HeadContent {
+<link rel="stylesheet" href="~/css/userPage.css" />
+}
+
+        
+<div class="UP-container">
+    <div class="tab-container">
+        <div class="tab-buttons">
+            <button class="tab-button active" onclick="openTab(event, 'Inbox')">Inbox</button>
+            <button class="tab-button" onclick="openTab(event, 'ProfileSettings')">Profil-innstillinger</button>
+        </div>
+    </div>
+    <div id="Inbox" class="tab-content active user-inbox">
+        <div class="table-frame">
+            <div class="content-container">
+                <div class="tables-container">
+                    <div class="Case-menu">
+                        <table class="UP-table" id="Inbox">
+                            <thead>
+                            <tr>
+                                <th>Status på sak</th>
+                                <th>Bruker-Id</th>
+                                <th>Brukernavn</th>
+                                <th>Saksdato</th>
+                                <th>Tittel</th>
+                                <th>Sakstype</th>
+                                <th>Beskrivelse</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+
+                            @foreach (var caseRecord in Model.CaseRecords)
+                            {
+                                <tr>
+                                    <td>@caseRecord.CaseStatus</td>
+                                    <td>@Model.UserId</td>
+                                    <td>@Model.UserName</td>
+                                    <td>@caseRecord.CaseDate.ToString("yyyy-MM-dd")</td>
+                                    <td>@caseRecord.CaseTitle</td>
+                                    <td>@caseRecord.CaseIssueType</td>
+                                    <td>@caseRecord.CaseDescription</td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="frame sort-and-filter-frame">
+            <div class="sort-and-filter-container">
+                <button class="sort-and-filter-button" onclick="toggleSortAndFilter()">Sorter og filtrer</button>
+                <div class="menu-option-group">
+                    <div class="sort-options">
+                        <p>Sorter etter dato:</p>
+                        <div class="sortOrderAsc-radio">
+                            <input id="sortOrderAsc" name="sortOrder" type="radio" value="asc"/>
+                            <label for="sortOrderAsc">Stigende</label>
+                        </div>
+                        <div class="sortOrderDesc-radio">
+                            <input id="sortOrderDesc" name="sortOrder" type="radio" value="desc"/>
+                            <label for="sortOrderDesc">Synkende</label>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="filter-options">
+                        <p>Filtrer etter status:</p>
+                        <div class="filterAll-radio">
+                            <input id="filterAll" name="filterStatus" type="radio" value="all"/>
+                            <label for="filterAll">Alle</label>
+                        </div>
+                        <div class="filterOpen-radio">
+                            <input id="filterOpen" name="filterStatus" type="radio" value="open"/>
+                            <label for="filterOpen">Åpnet</label>
+                        </div>
+                        <div class="filterActive-radio">
+                            <input id="filterActive" name="filterStatus" type="radio" value="active"/>
+                            <label for="filterActive">Aktiv</label>
+                        </div>
+                        <div class="filterClosed-radio">
+                            <input id="filterClosed" name="filterStatus" type="radio" value="closed"/>
+                            <label for="filterClosed">Lukket</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="ProfileSettings" class="tab-content">
+        <!-- Innholdet for Profil-innstillinger -->
+        <div class="profile-settings-container">
+            <h2>Profil-innstillinger</h2>
+            <!-- Legg til innholdet for profil-innstillinger her -->
+        </div>
+    </div>
+
+@section Scripts {
+<script>
+    function toggleSortAndFilter() {
+        var menuOptionGroup = document.querySelector('.menu-option-group'); // The div with the sort and filter options
+        menuOptionGroup.style.display = menuOptionGroup.style.display === 'none' ? 'flex' : 'none';
+    }
+
+    function sortCases() {
+        console.log("Sorting cases...");
+        var table = document.getElementById("Inbox");
+        var rows = Array.from(table.rows).slice(1); // Exclude the header row
+        var sortOrder = document.querySelector('input[name="sortOrder"]:checked').value;
+
+        rows.sort(function(a, b) {
+            var dateA = new Date(a.cells[3].innerText);
+            var dateB = new Date(b.cells[3].innerText);
+            return sortOrder === "asc" ? dateA - dateB : dateB - dateA;
+        });
+
+        rows.forEach(function(row) {
+            table.appendChild(row);
+        });
+    }
+
+    function filterCases() {
+        console.log("Filtering cases...");
+        var table = document.getElementById("Inbox");
+        var rows = Array.from(table.rows).slice(1); // Exclude the header row
+        var filterValue = document.querySelector('input[name="filterStatus"]:checked').value;
+
+        rows.forEach(function(row) {
+            var caseStatus = row.cells[0].innerText.toLowerCase();
+            if (filterValue === "all" || caseStatus.includes(filterValue)) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    }
+
+    function openTab(evt, tabName) {
+        var i, tabcontent, tabbuttons;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tabbuttons = document.getElementsByClassName("tab-button");
+        for (i = 0; i < tabbuttons.length; i++) {
+            tabbuttons[i].className = tabbuttons[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "flex";
+        evt.currentTarget.className += " active";
+    }
+
+    // Default åpen fane
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById("Inbox").style.display = "flex";
+        document.querySelector('.tab-button').classList.add('active');
+    });
+</script>
+}
+
+@*
+**************************************
+***  Old verison for the userPage view  ***
+**************************************
+*@
+
+
+
+@*
+@model Gruppe6_Kartverket.Mvc.Models.UserPageModel
+*@
+
+@*
+@section HeadContent {
+    <link rel="stylesheet" href="~/css/userPage.css">
+}
+*@
+
+@*
 <div class="sidebar" id="sidebar">
     <button class="sidebar-button"><a href="@Url.Action("MapPage", "MapPage")">Go to map/Register a new case</a></button>
     <button class="sidebar-button"><a href="@Url.Action("Profile", "UserPage")">Profile information</a></button>
     <button class="sidebar-button"><a href="@Url.Action("Settings", "UserPage")">Settings</a></button>
     <button class="sidebar-button"><a href="@Url.Action("Logout", "UserPage")">Log out</a></button>
 </div>
+*@
 
+@*
 <div class="menu-icon" id="menuIcon" onclick="toggleSidebar()"></div>
+*@
 
+@*
 <div class="content">
     <h2>Inbox</h2>
     <div class="inbox-header">
@@ -22,21 +205,25 @@
         <span>Issue-type</span>
         <span>Description</span>
     </div>
-    @foreach (var userCase in Model.Case)
+    @foreach (var userCase in Model.CaseRecords)
     {
-    <div class="inbox-item">
-        <span>@Model.UserName</span>
-        <span>@Model.UserId</span>
-        <span></span> @* @userCase RegistrationDate *@
-        <span>@userCase.IssueType</span>
-        <span>@userCase.Description</span>
-    </div>
-    }
+        <div class="inbox-item">
+            <span>@Model.UserName</span>
+            <span>@Model.UserId</span>
+            <span>@* @userCase.RegistrationDate 
+        @userCase.CaseStatus 
+<span>@userCase.CaseDescription</span>
 </div>
+}
+</div>
+*@
 
+@*
 <input type="checkbox" id="filterToggle" class="filter-toggle">
 <label for="filterToggle" class="UP-filter-button">Filter</label>
+*@
 
+@*
 <div class="UP-filter-menu" id="UP-filterMenu">
     <label for="filterToggle" class="close-button">&times;</label>
 
@@ -54,21 +241,15 @@
         <label>Fylke/kommune</label>
         <div class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="option1">
-            <label class="form-check-label" for="option1">
-                f/k-1
-            </label>
+            <label class="form-check-label" for="option1">f/k-1</label>
         </div>
         <div class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="option2">
-            <label class="form-check-label" for="option2">
-                f/k-2
-            </label>
+            <label class="form-check-label" for="option2">f/k-2</label>
         </div>
         <div class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="option3">
-            <label class="form-check-label" for="option3">
-                f/k-3
-            </label>
+            <label class="form-check-label" for="option3">f/k-3</label>
         </div>
     </div>
     <div class="UP-button-container">
@@ -76,48 +257,54 @@
         <button class="UP-apply-button" onclick="applyChanges()">Apply Changes</button>
     </div>
 </div>
+*@
 
+@*
 @section Scripts {
-<script>
-    function toggleUPSideNav() {
-        var x = document.getElementById("UP_inboxContent");
-        if (x.style.display === "none") {
-            x.style.display = "block";
-        } else {
-            x.style.display = "none";
+    <script>
+        function toggleUPSideNav() {
+            var x = document.getElementById("UP_inboxContent");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
         }
-    }
 
-    function toggleFilterMenu() {
-        var filterMenu = document.getElementById("UP-filterMenu");
-        filterMenu.classList.toggle("open");
-        if (filterMenu.classList.contains("open")) {
-            document.addEventListener("click", closeFilterMenuOnClickOutside);
-        } else {
-            document.removeEventListener("click", closeFilterMenuOnClickOutside);
+        function toggleFilterMenu() {
+            var filterMenu = document.getElementById("UP-filterMenu");
+            filterMenu.classList.toggle("open");
+            if (filterMenu.classList.contains("open")) {
+                document.addEventListener("click", closeFilterMenuOnClickOutside);
+            } else {
+                document.removeEventListener("click", closeFilterMenuOnClickOutside);
+            }
         }
-    }
 
-    function closeFilterMenuOnClickOutside(event) {
-        var filterMenu = document.getElementById("UP-filterMenu");
-        if (!filterMenu.contains(event.target) && !event.target.matches('.UP-filter-button')) {
+        function closeFilterMenuOnClickOutside(event) {
+            var filterMenu = document.getElementById("UP-filterMenu");
+            if (!filterMenu.contains(event.target) && !event.target.matches('.UP-filter-button')) {
+                filterMenu.classList.remove("open");
+                document.removeEventListener("click", closeFilterMenuOnClickOutside);
+            }
+        }
+
+        function applyChanges() {
+            var filterMenu = document.getElementById("UP-filterMenu");
             filterMenu.classList.remove("open");
             document.removeEventListener("click", closeFilterMenuOnClickOutside);
         }
-    }
 
-    function applyChanges() {
-        var filterMenu = document.getElementById("UP-filterMenu");
-        filterMenu.classList.remove("open");
-        document.removeEventListener("click", closeFilterMenuOnClickOutside);
-    }
-
-    function resetFilters() {
-        document.getElementById("categorySelect").selectedIndex = 0;
-        document.getElementById("option1").checked = false;
-        document.getElementById("option2").checked = false;
-        document.getElementById("option3").checked = false;
-        document.getElementById("rangeInput").value = document.getElementById("rangeInput").min;
-    }
-</script>
+        function resetFilters() {
+            document.getElementById("categorySelect").selectedIndex = 0;
+            document.getElementById("option1").checked = false;
+            document.getElementById("option2").checked = false;
+            document.getElementById("option3").checked = false;
+            document.getElementById("rangeInput").value = document.getElementById("rangeInput").min;
+        }
+    </script>
 }
+*@
+
+
+

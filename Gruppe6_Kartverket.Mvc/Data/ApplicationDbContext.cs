@@ -1,6 +1,7 @@
 ﻿using Gruppe6_Kartverket.Mvc.Models;
 using Microsoft.EntityFrameworkCore;
 using Gruppe6_Kartverket.Mvc.Models.Database;
+using Gruppe6_Kartverket.Mvc.Data;
 
 
 // This file is used to set up the connection to the database
