@@ -31,10 +31,12 @@ body {
 }
 
 /* A general wrapper that will get the content to be below the navbar */
+
 .site-wrapper {
     padding-top: 60px;
 }
 
+.navigation-bar,
 .navbar {
     position: fixed;
     top: 0;
@@ -47,6 +49,72 @@ body {
     height: 60px; /* Fixed height */
     margin: 0; /* Ensure no default margin */
 }
+
+/* Bootstrap class used to create a full-width container that spans the entire width of the viewport */
+.container-fluid {
+    display: flex; 
+    align-items: center;
+}
+
+.d-flex,
+.ms-auto {
+    flex-grow: 1; 
+    max-width: 300px;"
+}
+
+.form-control me-2 {
+    width: 100%;
+}
+
+/* Submit button */
+.btn {
+    background-color: #156630; 
+    color: white;
+}
+
+.btn-outline-secondary.ms-3 {
+    width: auto; /* Adjust width as needed */
+    height: auto; /* Adjust height as needed */
+    padding: 0.5rem 1rem; /* Adjust padding as needed */
+    font-size: 1rem; /* Adjust font size as needed */
+    color: white;
+}
+
+.user-icon-btn {
+    width: 30px; /* Adjust width as needed */
+    height: 30px; /* Adjust height as needed */
+    background-color: #156630; /* Set a background color */
+    color: white; /* Set the text/icon color */
+    border: none; /* Remove any border */
+    display: flex; /* Center the icon */
+    justify-content: center; /* Center the icon */
+    align-items: center; /* Center the icon */
+    border-radius: 50%; /* Make it circular if needed */
+    margin-left: 10px; /* Add some margin to the left */
+}
+
+.user-icon-btn img {
+    width: 100%; /* Ensure the image fits within the button */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 50%; /* Make the image circular if needed */
+}
+/* Settings Icon */
+
+.settings-container img {
+    width: 30px; /* Adjust width as needed */
+    height: 30px; /* Adjust height as needed */
+    border-radius: 50%; /* Make the image circular if needed */
+    margin-left: 15px; /* Add some margin to the left */
+    margin-right: 10px;
+    
+}
+
+.settingsIcon img{
+    width: 30px; /* Adjust width as needed */
+    height: 30px; /* Adjust height as needed */
+    border-radius: 50%; /* Make the image circular if needed */
+
+}    
 
 /* Add a box shadow to various elements when they are focused */
 .btn:focus,
