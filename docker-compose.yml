@@ -1,30 +1,31 @@
 services:
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_DATABASE: kartverket_tables
+      MYSQL_USER: root
+      MYSQL_PASSWORD: 123
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - backend  
+
   gruppe6_kartverket.mvc:
-    image: ${DOCKER_REGISTRY-}gruppe6_kartverket.mvc_1
     build:
       context: .
       dockerfile: gruppe6_Kartverket.mvc/Dockerfile
+    image: gruppe6_kartverket.mvc:latest
     ports:
       - "5000:80"
     depends_on:
       - mariadb
     environment:
+      ASPNETCORE_ENVIRONMENT: Development
       ConnectionStrings__DefaultConnection: "Server=mariadb;Database=kartverket_tables;User=root;Password=123"
-    networks:
-      - backend
-
-  mariadb:
-    image: mariadb:latest
-    container_name: mariadb
-    environment:
-      MYSQL_ROOT_PASSWORD: Mnarild12!
-      MYSQL_DATABASE: kartverket_tables
-      MYSQL_USER: root
-      MYSQL_PASSWORD: Mnarild12!
-    ports:
-      - "3307:3306"
-    volumes:
-      - db_data:/var/lib/mysql
     networks:
       - backend
 
