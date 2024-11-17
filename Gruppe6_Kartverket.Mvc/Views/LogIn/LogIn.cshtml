@@ -1,14 +1,66 @@
-﻿@section HeadContent {
-    <link rel="stylesheet" href="~/css/login.css">
+﻿@model Gruppe6_Kartverket.Mvc.Models.LogInModel
+
+@section HeadContent {
+<link rel="stylesheet" href="~/css/login.css">
 }
+
+@{
+ViewData["Title"] = "Logg inn";
+}
+
+<h2>@ViewData["Title"]</h2>
 
 
 <div class="login-wrapper">
     <div class="login-container">
         <h1>Logg inn</h1>
-        <input type="text" placeholder="Brukernavn" class="input-field">
-        <input type="password" placeholder="Passord" class="input-field">
+        <form asp-action="LogIn" method="post">
+        <div class="form-group">
+            <label asp-for="Email"><b>Email</b></label>
+            <input asp-for="Email" class="form-control" required autocomplete="email" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Password" class="control-label"><b>Password</b></label>
+            <input asp-for="Password" class="form-control" required autocomplete="current-password" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+        <a href="#" class="reset-link">Glemt passord?</a>
+    </div>
+</div>
+
+<!-- Gammel kode 
+<div class="login-wrapper">
+    <div class="login-container">
+        <h1>Logg inn</h1>
+        <input type="text" placeholder="Brukernavn" class="input-field" />
+        <input type="password" placeholder="Passord" class="input-field" />
         <button class="login-button">Logg inn</button>
         <a href="#" class="reset-link">Glemt passord?</a>
     </div>
 </div>
+-->
+
+<!-- Gammel kode 
+<form asp-action="Login" method="post">
+    <div class="form-group">
+        <label asp-for="Email"><b>Email</b></label>
+        <input asp-for="Email" class="form-control" required />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Password" class="control-label"><b>Password</b></label>
+        <input asp-for="Password" class="form-control" required />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Login</button>
+    </div>
+</form>
+-->
+
+@section Scripts {
+@await Html.PartialAsync("_ValidationScriptsPartial")
+}

@@ -29,7 +29,7 @@
         <form asp-action="CaseForm" id="CaseForm" method="post">
             <p>
                 <div>
-                    <label asp-for="CaseTitle">Tittel på case:</label>
+                    <label asp-for="CaseTitle">Tittel pÃ¥ case:</label>
                     <input asp-for="CaseTitle" placeholder="Skriv inn tittel" />
                     <span asp-validation-for="CaseTitle" class="text-danger"></span>
                 </div>
@@ -89,7 +89,7 @@
         <div>
             <input type="text" placeholder="Telefonnummer">
             <button>Verifiser</button>
-            <button style="display: none;">Gå videre</button>
+            <button style="display: none;">GÃ¥ videre</button>
             <button class="popup-close">Close</button> <!-- Change to are you sure or something idk -->
         </div>
     </div>
@@ -105,7 +105,7 @@
         </div>
     </div>
     <div class="popup" id="delete-features">
-        <h2>Det er ingen flere tegninger å slette</h2>
+        <h2>Det er ingen flere tegninger Ã¥ slette</h2>
         <button class="popup-close">Close</button>
     </div>
     <div class="popup" id="max-features">
@@ -126,7 +126,7 @@
     <div class="popup" id="submit-case-popup">
         <h2>Submit?</h2>
         <p>
-            Ønsker du å sende inn saken?
+            Ã˜nsker du Ã¥ sende inn saken?
         </p>
         <butto class="submit-case-confirmation">Send inn</butto>
         <button class="popup-close">Tilbake</button>
@@ -134,7 +134,7 @@
     <div class="popup" id="avbryt-case">
         <h2>Avbryt?</h2>
         <p>
-            Ønsker du å avbryte? Dette vil slette all informasjon som er lagt inn.
+            Ã˜nsker du Ã¥ avbryte? Dette vil slette all informasjon som er lagt inn.
         </p>
         <button>Avbryt</button>
         <button class="popup-close">Tilbake</button>
@@ -143,7 +143,7 @@
         <!-- Have a help button somewhere, and maybe show this after Log in/tlf -->
         <h2>Hvordan registrere sak</h2>
         <p>
-            "Legg inn forklaring/hjelp på hvordan sende inn case"
+            "Legg inn forklaring/hjelp pÃ¥ hvordan sende inn case"
         </p>
         <button class="popup-close">Close</button>
     </div>

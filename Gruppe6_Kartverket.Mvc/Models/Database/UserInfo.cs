@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Gruppe6_Kartverket.Mvc.Models.Database
 {
@@ -8,6 +9,7 @@ namespace Gruppe6_Kartverket.Mvc.Models.Database
 
     {
         [Key]
+        [BindNever]
         [ForeignKey("User")]
         public int UserId { get; set; }
 

@@ -34,8 +34,7 @@
         <div class="container-fluid" style="display: flex; align-items: center;">
 
             <!-- Logo Placeholder -->
-
-            <a href="@Url.Action("LandingPage", "LandingPage")" >
+            <a href="@Url.Action("LandingPage", "LandingPage")">
                 <img src="~/images/logo.svg" id="logoContainer" />
             </a>
 
@@ -53,26 +52,31 @@
                 </a>
             </div>
 
-            <!-- Log In Button -->
-            <a href="@Url.Action("LogIn", "LogIn")" class="btn btn-outline-secondary ms-3">
-                Log in</a>
-
-            <!-- Settings Icon -->
-            <a href="@Url.Action("Settings", "Settings")" class="ms-3" style="color: #555; font-size: 24px;">
-                <i class="fas fa-cog"></i>
-            </a>
+            <!-- Authentication Links -->
+            @if (User.Identity.IsAuthenticated)
+            {
+                <form asp-action="Logout" asp-controller="Account" method="post" class="form-inline">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-link nav-link" style="border: none; padding: 0;">Logout</button>
+                </form>
+            }
+            else
+            {
+                <a href="@Url.Action("Login", "LogIn")" class="btn btn-outline-secondary ms-3">Login</a>
+                <a href="@Url.Action("Register", "LogIn")" class="btn btn-outline-secondary ms-3">Register</a>
+            }
         </div>
     </nav>
 </header>
 
-    <div class="renderBody-div">
-        <main role="main">
-               @RenderBody()
-        </main>
-    </div>
+<div class="renderBody-div">
+    <main role="main">
+        @RenderBody()
+    </main>
+</div>
 
-    @if (ViewBag.HideFooter == null || ViewBag.HideFooter == false)
-    {
+@if (ViewBag.HideFooter == null || ViewBag.HideFooter == false)
+{
     <footer class="sitefooter">
         <!-- First Column: Logo -->
         <div class="sitefooter-column">
@@ -86,15 +90,15 @@
             <h4>Hjelp</h4>
             <p>Telefon: <a href="tel:32118000">32 11 80 00</a></p>
             <p>E-post: <a href="mailto:post@kartverket.no">post@kartverket.no</a></p>
-            <p><a href="/om-kartverket/kontakt-oss">Kontaktinfo og adresser</a></p> <!--NB! DENNE LINKEN FØRER INGEN STEDER-->
+            <p><a href="/om-kartverket/kontakt-oss">Kontaktinfo og adresser</a></p>
         </div>
-                
+
         <!-- Third Column: Help Links -->
         <div class="sitefooter-column">
             <h4>Hjelp</h4>
             <a href="http://status.kartverket.no/" rel="noopener nofollow">Driftsmeldinger</a><br>
-            <a href="/om-kartverket/faq" rel="noopener nofollow">Ofte stilte spørsmål</a><br> <!--NB! DENNE LINKEN FØRER INGEN STEDER-->
-            <a href="/eiendom/skjema/alleskjema" rel="noopener nofollow">Skjemaer</a> <!--NB! DENNE LINKEN FØRER INGEN STEDER-->
+            <a href="/om-kartverket/faq" rel="noopener nofollow">Ofte stilte spørsmål</a><br>
+            <a href="/eiendom/skjema/alleskjema" rel="noopener nofollow">Skjemaer</a>
         </div>
 
         <!-- Fourth Column: Follow Us and Social Links -->
@@ -107,17 +111,16 @@
             <a href="https://vimeo.com/kartverket/videos" rel="noopener nofollow">Video</a>
         </div>
     </footer>
-    }
+}
 
-
-    <!-- JavaScript-filer -->
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/lib/leaflet/leaflet.js"></script>
-    <script src="~/lib/leaflet/leaflet-geoman.js"></script>
-    <!--  USED FOR OPEN LAYERS WHICH IS CURRENTLY NOT BEING USED -->
-    <script src="~/lib/ol/dist/ol.js"></script>
+<!-- JavaScript-filer -->
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="~/lib/leaflet/leaflet.js"></script>
+<script src="~/lib/leaflet/leaflet-geoman.js"></script>
+<!--  USED FOR OPEN LAYERS WHICH IS CURRENTLY NOT BEING USED -->
+<script src="~/lib/ol/dist/ol.js"></script>
 
 @await RenderSectionAsync("Scripts", required: false)
 </body>

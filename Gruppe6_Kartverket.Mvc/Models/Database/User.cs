@@ -10,6 +10,7 @@ namespace Gruppe6_Kartverket.Mvc.Models.Database
         public int UserId { get; set; }
 
         [StringLength(2)]
+        [Required]
         public string UserType { get; set; }
 
         [ForeignKey("UserType")]

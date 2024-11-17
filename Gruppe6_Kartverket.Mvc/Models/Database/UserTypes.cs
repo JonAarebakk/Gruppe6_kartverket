@@ -1,5 +1,5 @@
-﻿
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+
 
 namespace Gruppe6_Kartverket.Mvc.Models.Database
 {
@@ -11,16 +11,13 @@ namespace Gruppe6_Kartverket.Mvc.Models.Database
 
         [Required]
         [StringLength(20)]
-        public string UserTypeDescription { get; set; }
-
-
+        public UserTypeEnum UserTypeDescription { get; set; }
 
         // Navigation property to list of Users
         public virtual ICollection<User> Users { get; set; }
     }
 
-
-    public enum UserTypeDescription
+    public enum UserTypeEnum
     {
         CaseWorker,
         CommonUser,
