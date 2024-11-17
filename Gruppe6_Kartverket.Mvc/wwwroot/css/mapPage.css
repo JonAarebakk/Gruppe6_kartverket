@@ -156,6 +156,10 @@
     display: none;
 }
 
+/* When form details are not valid */
+#case-not-valid.popup {
+    display: none;
+}
 /* Avbryt case */
 #avbryt-case.popup {
     display: none;
@@ -168,7 +172,7 @@
 
 /* Case submitted */
 #case-submitted.popup {
-    display: none;
+    display: block;
 }
 
 /* Max features */
