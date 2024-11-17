@@ -1,0 +1,62 @@
+.Case-View-container {
+    height: 100vh; /* Sets the height of the container to 100% of the viewport height */
+    background-image: url("../Images/kartverket-bakgrunssbilder/mountains.jpg");
+    padding-top: 60px; /* Adds 60px padding to the top of the container */
+    display: flex; /* Use Flexbox layout */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+}
+
+.caseInfo-container {
+    height: auto; /* Adjust height to fit content */
+    display: flex;
+    flex-direction: column; /* Arrange children in a column */
+    background-color: rgba(255, 255, 255, 0.8);
+    width: 40%;
+    border-radius: 10px; /* Adjust the value to control the roundness */
+    padding: 20px; /* Add padding inside the container */
+}
+
+.status-box,
+.title-box,
+.location-box,
+.issueType-box,
+.description-box {
+    text-align: left;
+    width: 100%; /* Make each box take full width of the container */
+    margin-bottom: 20px; /* Adds space between each box */
+    padding: 10px; /* Add padding inside each box */
+    background-color: #f9f9f9; /* Add background color to each box */
+    border: 1px solid #ddd; /* Add border to each box */
+    border-radius: 5px; /* Add border radius to each box */
+}
+
+.description-box {
+    height: auto; /* Adjust height to fit content */
+}
+
+.map-box {
+    text-align: left;
+    width: 100%; /* Make each box take full width of the container */
+    margin-bottom: 20px; /* Adds space between each box */
+    height: 200px; /* Set the height of the map */
+    padding: 10px; /* Add padding inside each box */
+    background-color: #f9f9f9; /* Add background color to each box */
+    border: 1px solid #ddd; /* Add border to each box */
+    border-radius: 5px; /* Add border radius to each box */
+    
+}
+
+.status-display
+{   
+    border-radius: 5px; /* Make the color box round */
+    display: inline-block; /* Make the color box inline */
+    margin-left: 10px; /* Add space between the color box and the text */
+    border: 0.2px solid black;
+    mso-border-shadow: yes;
+    padding: 5px 10px; /* Add padding inside the status-display */
+}
+
+.status-color {
+    background-color: lightgray;
+}

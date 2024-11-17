@@ -39,7 +39,7 @@
                             @foreach (var caseRecord in Model.CaseRecords)
                             {
                                 <tr>
-                                    <td>@caseRecord.CaseStatus</td>
+                                    <td class="status-color">@caseRecord.CaseStatus</td>
                                     <td>@Model.UserId</td>
                                     <td>@Model.UserName</td>
                                     <td>@caseRecord.CaseDate.ToString("yyyy-MM-dd")</td>
@@ -104,6 +104,20 @@
 
 @section Scripts {
 <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll('.status-color').forEach(element => {
+            const statusValue = element.innerText.trim();
+            if (statusValue === "Open") {
+                element.style.backgroundColor = "rgba(21,102,48,0.74)";
+            } else if (statusValue === "Closed") {
+                element.style.backgroundColor = "rgba(207,0,0,0.74)";
+            } else if (statusValue === "InProgress") {
+                element.style.backgroundColor = "#FFDD9D";
+            }
+        });
+    });
+</script>
+<script>
     function toggleSortAndFilter() {
         var menuOptionGroup = document.querySelector('.menu-option-group'); // The div with the sort and filter options
         menuOptionGroup.style.display = menuOptionGroup.style.display === 'none' ? 'flex' : 'none';
@@ -163,148 +177,3 @@
     });
 </script>
 }
-
-@*
-**************************************
-***  Old verison for the userPage view  ***
-**************************************
-*@
-
-
-
-@*
-@model Gruppe6_Kartverket.Mvc.Models.UserPageModel
-*@
-
-@*
-@section HeadContent {
-    <link rel="stylesheet" href="~/css/userPage.css">
-}
-*@
-
-@*
-<div class="sidebar" id="sidebar">
-    <button class="sidebar-button"><a href="@Url.Action("MapPage", "MapPage")">Go to map/Register a new case</a></button>
-    <button class="sidebar-button"><a href="@Url.Action("Profile", "UserPage")">Profile information</a></button>
-    <button class="sidebar-button"><a href="@Url.Action("Settings", "UserPage")">Settings</a></button>
-    <button class="sidebar-button"><a href="@Url.Action("Logout", "UserPage")">Log out</a></button>
-</div>
-*@
-
-@*
-<div class="menu-icon" id="menuIcon" onclick="toggleSidebar()"></div>
-*@
-
-@*
-<div class="content">
-    <h2>Inbox</h2>
-    <div class="inbox-header">
-        <span>User</span>
-        <span>User-Id</span>
-        <span>Registration-date</span>
-        <span>Issue-type</span>
-        <span>Description</span>
-    </div>
-    @foreach (var userCase in Model.CaseRecords)
-    {
-        <div class="inbox-item">
-            <span>@Model.UserName</span>
-            <span>@Model.UserId</span>
-            <span>@* @userCase.RegistrationDate 
-        @userCase.CaseStatus 
-<span>@userCase.CaseDescription</span>
-</div>
-}
-</div>
-*@
-
-@*
-<input type="checkbox" id="filterToggle" class="filter-toggle">
-<label for="filterToggle" class="UP-filter-button">Filter</label>
-*@
-
-@*
-<div class="UP-filter-menu" id="UP-filterMenu">
-    <label for="filterToggle" class="close-button">&times;</label>
-
-    <h3>Filter Options</h3>
-    <div class="form-group">
-        <label for="categorySelect">Dropdown </label>
-        <select class="form-control" id="categorySelect">
-            <option></option>
-            <option></option>
-            <option></option>
-        </select>
-    </div>
-
-    <div class="form-group">
-        <label>Fylke/kommune</label>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="option1">
-            <label class="form-check-label" for="option1">f/k-1</label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="option2">
-            <label class="form-check-label" for="option2">f/k-2</label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="option3">
-            <label class="form-check-label" for="option3">f/k-3</label>
-        </div>
-    </div>
-    <div class="UP-button-container">
-        <button class="UP-reset-button" onclick="resetFilters()">Reset Filters</button>
-        <button class="UP-apply-button" onclick="applyChanges()">Apply Changes</button>
-    </div>
-</div>
-*@
-
-@*
-@section Scripts {
-    <script>
-        function toggleUPSideNav() {
-            var x = document.getElementById("UP_inboxContent");
-            if (x.style.display === "none") {
-                x.style.display = "block";
-            } else {
-                x.style.display = "none";
-            }
-        }
-
-        function toggleFilterMenu() {
-            var filterMenu = document.getElementById("UP-filterMenu");
-            filterMenu.classList.toggle("open");
-            if (filterMenu.classList.contains("open")) {
-                document.addEventListener("click", closeFilterMenuOnClickOutside);
-            } else {
-                document.removeEventListener("click", closeFilterMenuOnClickOutside);
-            }
-        }
-
-        function closeFilterMenuOnClickOutside(event) {
-            var filterMenu = document.getElementById("UP-filterMenu");
-            if (!filterMenu.contains(event.target) && !event.target.matches('.UP-filter-button')) {
-                filterMenu.classList.remove("open");
-                document.removeEventListener("click", closeFilterMenuOnClickOutside);
-            }
-        }
-
-        function applyChanges() {
-            var filterMenu = document.getElementById("UP-filterMenu");
-            filterMenu.classList.remove("open");
-            document.removeEventListener("click", closeFilterMenuOnClickOutside);
-        }
-
-        function resetFilters() {
-            document.getElementById("categorySelect").selectedIndex = 0;
-            document.getElementById("option1").checked = false;
-            document.getElementById("option2").checked = false;
-            document.getElementById("option3").checked = false;
-            document.getElementById("rangeInput").value = document.getElementById("rangeInput").min;
-        }
-    </script>
-}
-*@
-
-
-
