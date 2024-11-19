@@ -20,7 +20,7 @@ services:
       dockerfile: gruppe6_Kartverket.mvc/Dockerfile
     image: gruppe6_kartverket.mvc:latest
     ports:
-      - "5001:5000"
+      - "5001:80"
     depends_on:
       - mariadb
     environment:
