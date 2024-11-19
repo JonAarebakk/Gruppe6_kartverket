@@ -24,7 +24,7 @@ namespace Gruppe6_Kartverket.Mvc.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseMySql(
-                "Server=localhost;Port=3306;Database=kartverket_tables;User=root;Password=Mnarild12!;SslMode=Preferred;",
+                "Server=localhost;Port=3306;Database=kartverket_tables;User=root;Password=123;SslMode=Preferred;",
                 new MySqlServerVersion(new Version(8, 0, 21)),
                 mySqlOptions => mySqlOptions.EnableRetryOnFailure(
                     maxRetryCount: 2,

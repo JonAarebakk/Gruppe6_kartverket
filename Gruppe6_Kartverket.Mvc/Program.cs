@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Gruppe6_Kartverket.Mvc.Data;
+using Microsoft.Extensions.Configuration;
+using MySqlConnector;
+using System.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +14,13 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
     new MySqlServerVersion(new Version(10, 5, 9))));
 
-//  The JSON serializer will use the exact property names as defined in your C# classes
+// Register the IDbConnection for Dapper
+builder.Services.AddScoped<IDbConnection>(sp => new MySqlConnection(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Register the DapperRepository
+builder.Services.AddScoped<DapperRepository>();
+
+// The JSON serializer will use the exact property names as defined in your C# classes
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
@@ -40,4 +49,3 @@ app.MapControllerRoute(
     pattern: "{controller=LandingPage}/{action=LandingPage}/{id?}");
 
 app.Run();
-

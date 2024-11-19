@@ -47,7 +47,6 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
             }
 
 
-            // Handles the registration of a new geographical area change by storing the geoJson and description in the database
 
 
 
