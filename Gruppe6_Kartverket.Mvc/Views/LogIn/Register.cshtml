@@ -22,11 +22,11 @@ ViewData["Title"] = "Registrer bruker";
                     @Html.AntiForgeryToken()
 
                     <p>
-                    <div>
-                        <label asp-for="FirstName">First Name:</label>
-                        <input asp-for="FirstName" placeholder="fornavn" autocomplete="given-name"/>
-                        <span asp-validation-for="FirstName" class="text-danger"></span>
-                    </div>
+                        <div>
+                            <label asp-for="FirstName">First Name:</label>
+                            <input asp-for="FirstName" placeholder="fornavn" autocomplete="given-name"/>
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
                     </p>
                     <p>
                     <div>

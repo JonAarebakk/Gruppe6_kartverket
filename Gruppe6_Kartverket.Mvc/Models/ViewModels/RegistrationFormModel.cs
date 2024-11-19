@@ -36,10 +36,11 @@ namespace Gruppe6_Kartverket.Mvc.Models
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
 
+        /*
         [Required(ErrorMessage = "Type of user is required")]
         [StringLength(20, ErrorMessage = "UserType must be less than 20 characters")]
         public string UserType { get; set; }
-
+*/
         public DateTime RegistrationDate { get; set; } = DateTime.UtcNow;
         public bool UserStatus { get; set; } = true; // Assuming default active status for new registrations
     }

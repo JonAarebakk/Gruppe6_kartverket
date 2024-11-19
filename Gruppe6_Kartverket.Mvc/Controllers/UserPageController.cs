@@ -42,8 +42,8 @@ public class UserPageController : Controller
     {
         return new List<CaseRecord>
         {
-            new CaseRecord { UserId = 1, CaseTitle = "Case 1", CaseDate = DateTime.Now, CaseStatus = "Open" },
-            new CaseRecord { UserId = 2, CaseTitle = "Case 2", CaseDate = DateTime.Now, CaseStatus = "Closed" }
+            new CaseRecord { UserId = "3", CaseTitle = "Case 1", CaseDate = DateTime.Now, CaseStatus = "Open" },
+            new CaseRecord { UserId = "8", CaseTitle = "Case 2", CaseDate = DateTime.Now, CaseStatus = "Closed" }
         };
     }
 }

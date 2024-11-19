@@ -12,15 +12,15 @@ services:
     volumes:
       - db_data:/var/lib/mysql
     networks:
-      - backend  
-
+      - backend
+  
   gruppe6_kartverket.mvc:
     build:
       context: .
       dockerfile: gruppe6_Kartverket.mvc/Dockerfile
     image: gruppe6_kartverket.mvc:latest
     ports:
-      - "5000:80"
+      - "5001:5000"
     depends_on:
       - mariadb
     environment:
@@ -28,6 +28,7 @@ services:
       ConnectionStrings__DefaultConnection: "Server=mariadb;Database=kartverket_tables;User=root;Password=123"
     networks:
       - backend
+    command: ["dotnet", "Gruppe6_Kartverket.Mvc.dll"]
 
 volumes:
   db_data:

@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
@@ -13,7 +14,8 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ApplicationDbContext _dbContext;
 
-        public LogInController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, ApplicationDbContext dbContext)
+        public LogInController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager,
+            ApplicationDbContext dbContext)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -34,7 +36,8 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
                 return View(model);
             }
 
-            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: false, lockoutOnFailure: false);
+            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: false,
+                lockoutOnFailure: false);
 
             if (result.Succeeded)
             {
@@ -54,6 +57,17 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegistrationFormModel model)
         {
+            // Validate email
+            if (string.IsNullOrEmpty(model.Email))
+            {
+                ModelState.AddModelError("Email", "Email is required.");
+            }
+            else if (!new EmailAddressAttribute().IsValid(model.Email))
+            {
+                ModelState.AddModelError("Email", "Invalid email format.");
+            }
+
+            // Check if the model state is valid after all validations
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -68,47 +82,40 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
                 // Create UserInfo entry
                 var userInfo = new UserInfo
                 {
-                    UserId = int.Parse(identityUser.Id), // Convert string Id to int
+                    UserId = identityUser.Id, // Use the same UserId as the Identity user
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     PhoneNumber = model.PhoneNumber,
                     Gender = Enum.Parse<Gender>(model.Gender),
                     RegistrationDate = DateTime.UtcNow,
-                    UserStatus = UserStatus.Active
+                    UserStatus = UserStatus.Active,
+                    Email = model.Email
+                };
+
+                var user = new User
+                {
+                    UserId = identityUser.Id, // Use the same UserId as the Identity user
+                    UserType = "CU",
+                    UserName = model.Username,
+                    UserPassword = model.Password
                 };
 
                 _dbContext.UserInfos.Add(userInfo);
+                _dbContext.Users.Add(user);
                 await _dbContext.SaveChangesAsync();
 
+                // Sign in the user
                 await _signInManager.SignInAsync(identityUser, isPersistent: false);
                 return RedirectToAction("Index", "Home");
             }
 
+            // Add any errors from the Identity user creation
             foreach (var error in result.Errors)
             {
                 ModelState.AddModelError(string.Empty, error.Description);
             }
 
             return View(model);
-        }
-
-        [HttpGet]
-        public IActionResult RegistrationSuccess()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult RegistrationForm(RegistrationFormModel userData)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View("Register", userData);
-            }
-
-            // Process the registration form data (e.g., save to database)
-
-            return RedirectToAction("RegistrationSuccess");
         }
     }
 }
