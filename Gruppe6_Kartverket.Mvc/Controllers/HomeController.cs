@@ -28,7 +28,7 @@ public class HomeController : Controller
     {
         var model = new HomeViewModel();
         model.Message = "It's scuffed, but it works";
-        return View("LandingPage", model);
+        return View("~/Views/LandingPage/LandingPage.cshtml", model);
     }
     // Var no rart med mapdata
 /*
