@@ -6,7 +6,6 @@ using Gruppe6_Kartverket.Mvc.Models;
 using Gruppe6_Kartverket.Mvc.Models.Database;
 using Gruppe6_Kartverket.Mvc.Data;
 
-
 namespace Gruppe6_Kartverket.Mvc.Controllers
 {
     public class LogInController : Controller
@@ -107,7 +106,7 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
 
                 // Sign in the user
                 await _signInManager.SignInAsync(identityUser, isPersistent: false);
-                return RedirectToAction("Index", "home");
+                return RedirectToAction("Index", "Home");
             }
 
             // Add any errors from the Identity user creation
@@ -118,6 +117,5 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
 
             return View(model);
         }
-        
     }
 }
