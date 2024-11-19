@@ -329,7 +329,9 @@ function hasFormChanged() {
     } else if (drawnFeatures != 0) {
         console.log("Features has changed");
         return true;
-    } 
+    } else {
+        return false;
+    }
 }
 
 
@@ -438,7 +440,7 @@ document.querySelectorAll('.cancel-case-button').forEach(button => {
         var formChanged = hasFormChanged();
         console.log(formChanged); //for debugging)
 
-        if (formChanged = true) {
+        if (formChanged) {
             showPopup('avbryt-case');
         }
     });
@@ -450,7 +452,8 @@ document.querySelectorAll('.cancel-case-confirmation').forEach(button => {
         console.log("Case Cancelled"); //for debugging
         actionType.value = 'None';     
         setActiveMapButton();          //Resets the map buttons
-        clearMapOfFunctions();         
+        clearMapOfFunctions();
+        closePopupsAndOverlays();
 
         cancelCase();                  //Resets the case input form
     });
