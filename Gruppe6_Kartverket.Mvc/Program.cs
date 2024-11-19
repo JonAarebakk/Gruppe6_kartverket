@@ -1,7 +1,6 @@
 using System.Data;
 using Microsoft.EntityFrameworkCore;
 using Gruppe6_Kartverket.Mvc.Data;
-using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using MySql.Data.MySqlClient;
 
@@ -14,10 +13,6 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
     new MySqlServerVersion(new Version(10, 5, 9))));
-
-builder.Services.AddDataProtection()
-    .PersistKeysToFileSystem(new DirectoryInfo(@"C:\path\to\key\directory"))
-    .SetApplicationName("YourAppName");
 
 // The JSON serializer will use the exact property names as defined in your C# classes
 builder.Services.AddControllers()

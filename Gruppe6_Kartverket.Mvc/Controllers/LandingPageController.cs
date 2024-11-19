@@ -10,7 +10,7 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
         [HttpGet]
         public IActionResult LandingPage()
         {
-            return View("LandingPage/LandingPage");
+            return View();
         }
         
         
