@@ -1,4 +1,4 @@
-﻿using Gruppe6_Kartverket.Mvc.Models;
+﻿using Gruppe6_Kartverket.Mvc.Models.Database;
 using Gruppe6_Kartverket.Mvc.Data;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -49,41 +49,6 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
 
             // Handles the registration of a new geographical area change by storing the geoJson and description in the database
 
-            [HttpPost]
-            public IActionResult RegisterAreaChange(string geoJson, string description)
-            {
-                try
-                {
-                    if (string.IsNullOrEmpty(geoJson) || string.IsNullOrEmpty(description))
-                    {
-                        return BadRequest("Invalid data.");
-                    }
-
-                    var newGeoChange = new GeoChange
-                    {
-                        GeoJson = geoJson,
-                        Description = description
-                    };
-                    _context.GeoChanges.Add(newGeoChange);
-                    _context.SaveChanges();
-                    return RedirectToAction("AreaChangeOverview");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error: {ex.Message}, Inner Exception: {ex.InnerException?.Message}");
-                    throw;
-                }
-
-            }
-
-
-
-            [HttpGet]
-            public IActionResult AreaChangeOverview()
-            {
-                var geoChanges = _context.GeoChanges.ToList();
-                return View(geoChanges);
-            }
 
 
             [HttpPost]
@@ -171,7 +136,7 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
             }
 
             [HttpPost]
-            public IActionResult RegisterCase(Case caseRecord)
+            public IActionResult RegisterCase(CaseRecord caseRecord)
             {
                 try
                 {
