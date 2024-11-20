@@ -8,11 +8,12 @@ services:
       MYSQL_USER: root
       MYSQL_PASSWORD: 123
     ports:
-      - "3307:3306"
+      - "3307:3306"  # Exposing port 3306 inside the container as port 3307 on the host
     volumes:
-      - db_data:/var/lib/mysql
+      - db_data:/var/lib/mysql  # Ensuring data persists between container restarts
     networks:
       - backend
+  
   
   gruppe6_kartverket.mvc:
     build:
@@ -20,18 +21,24 @@ services:
       dockerfile: gruppe6_Kartverket.mvc/Dockerfile
     image: gruppe6_kartverket.mvc:latest
     ports:
-      - "5001:80"
+      - "5001:80"  # Exposing the MVC app on port 5001 of the host
     depends_on:
       - mariadb
     environment:
       ASPNETCORE_ENVIRONMENT: Development
-      ConnectionStrings__DefaultConnection: "Server=mariadb;Database=kartverket_tables;User=root;Password=123"
+      ConnectionStrings__DefaultConnection: "Server=mariadb;Port=3306;Database=kartverket_tables;User=root;Password=123"
     networks:
       - backend
-    command: ["dotnet", "Gruppe6_Kartverket.Mvc.dll"]
+    volumes:
+      - ~/.microsoft/usersecrets:/home/app/.microsoft/usersecrets:ro
+      - ~/.aspnet/https:/home/app/.aspnet/https:ro
+      - ./Gruppe6_Kartverket.Mvc/keys:/app/keys # Map Keys folder
 
-volumes:
-  db_data:
 
 networks:
   backend:
+    driver: bridge  # Ensures containers are connected to the same network
+
+volumes:
+  db_data:  # Ensures that the database data persists even if the container is removed
+  
