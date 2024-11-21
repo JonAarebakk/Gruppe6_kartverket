@@ -51,7 +51,7 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
         [HttpGet]
         public IActionResult Register()
         {
-            return View();
+            return View("Register");
         }
 
         [HttpPost]

@@ -13,8 +13,7 @@ services:
       - db_data:/var/lib/mysql  # Ensuring data persists between container restarts
     networks:
       - backend
-  
-  
+
   gruppe6_kartverket.mvc:
     build:
       context: .
@@ -27,6 +26,7 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ConnectionStrings__DefaultConnection: "Server=mariadb;Port=3306;Database=kartverket_tables;User=root;Password=123"
+    # command: bash -c "for i in \$(seq 1 30); do dotnet ef database update && break || (echo 'Waiting for DB...'; sleep 5); done; dotnet WebApplication1.dll"  # Apply migrations and run the app
     networks:
       - backend
     volumes:
@@ -34,11 +34,9 @@ services:
       - ~/.aspnet/https:/home/app/.aspnet/https:ro
       - ./Gruppe6_Kartverket.Mvc/keys:/app/keys # Map Keys folder
 
-
 networks:
   backend:
     driver: bridge  # Ensures containers are connected to the same network
 
 volumes:
   db_data:  # Ensures that the database data persists even if the container is removed
-  
