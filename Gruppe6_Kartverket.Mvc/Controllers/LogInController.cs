@@ -75,6 +75,7 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
 
             // Create Identity user
             var identityUser = new IdentityUser { UserName = model.Username, Email = model.Email };
+            identityUser.Id = Guid.NewGuid().ToString();
             var result = await _userManager.CreateAsync(identityUser, model.Password);
 
             if (result.Succeeded)
@@ -82,7 +83,7 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
                 // Create UserInfo entry
                 var userInfo = new UserInfo
                 {
-                    UserId = identityUser.Id, // Use the same UserId as the Identity user
+                    UserId = identityUser.Id, 
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     PhoneNumber = model.PhoneNumber,
@@ -94,8 +95,8 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
 
                 var user = new User
                 {
-                    UserId = identityUser.Id, // Use the same UserId as the Identity user
-                    UserType = "CU",
+                    UserId = identityUser.Id,
+                    UserType = "Us",
                     UserName = model.Username,
                     UserPassword = model.Password
                 };
@@ -106,7 +107,7 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
 
                 // Sign in the user
                 await _signInManager.SignInAsync(identityUser, isPersistent: false);
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("LandingPage", "LandingPage");
             }
 
             // Add any errors from the Identity user creation

@@ -19,9 +19,7 @@ namespace Gruppe6_Kartverket.Mvc.Models.Database
 
     public enum UserTypeEnum
     {
-        CaseWorker,
-        CommonUser,
-        Prioritised,
-        Administrator
+        Admin,
+        User
     }
 }

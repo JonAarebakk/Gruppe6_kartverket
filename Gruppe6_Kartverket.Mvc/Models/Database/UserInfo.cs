@@ -11,7 +11,7 @@ namespace Gruppe6_Kartverket.Mvc.Models.Database
         [Key]
         [BindNever]
         [ForeignKey("User")]
-        public String UserId { get; set; }
+        public string UserId { get; set; }
 
         [Required]
         [StringLength(100)]

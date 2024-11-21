@@ -8,35 +8,39 @@ services:
       MYSQL_USER: root
       MYSQL_PASSWORD: 123
     ports:
-      - "3307:3306"  # Exposing port 3306 inside the container as port 3307 on the host
+      - "3307:3306"
     volumes:
-      - db_data:/var/lib/mysql  # Ensuring data persists between container restarts
+      - db_data:/var/lib/mysql
     networks:
-      - backend
+      - mynetwork
 
   gruppe6_kartverket.mvc:
     build:
       context: .
-      dockerfile: gruppe6_Kartverket.mvc/Dockerfile
+      dockerfile: Gruppe6_Kartverket.Mvc/Dockerfile
     image: gruppe6_kartverket.mvc:latest
     ports:
-      - "5001:80"  # Exposing the MVC app on port 5001 of the host
+      - "5001:80"
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_started   # Wait for mariadb to start
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ConnectionStrings__DefaultConnection: "Server=mariadb;Port=3306;Database=kartverket_tables;User=root;Password=123"
-    # command: bash -c "for i in \$(seq 1 30); do dotnet ef database update && break || (echo 'Waiting for DB...'; sleep 5); done; dotnet WebApplication1.dll"  # Apply migrations and run the app
+      PATH: "$PATH:/root/.dotnet/tools"
     networks:
-      - backend
+      mynetwork:
+        aliases:
+          - gruppe6_kartverket.mvc
     volumes:
       - ~/.microsoft/usersecrets:/home/app/.microsoft/usersecrets:ro
       - ~/.aspnet/https:/home/app/.aspnet/https:ro
-      - ./Gruppe6_Kartverket.Mvc/keys:/app/keys # Map Keys folder
+      - ./Gruppe6_Kartverket.Mvc/keys:/app/keys
+    entrypoint: ["/app/wait-for-mariadb.sh", "dotnet", "ef", "database", "update", "--project", "/src/Gruppe6_Kartverket.Mvc/Gruppe6_Kartverket.Mvc.csproj"]
 
 networks:
-  backend:
-    driver: bridge  # Ensures containers are connected to the same network
+  mynetwork:
+    driver: bridge
 
 volumes:
-  db_data:  # Ensures that the database data persists even if the container is removed
+  db_data:

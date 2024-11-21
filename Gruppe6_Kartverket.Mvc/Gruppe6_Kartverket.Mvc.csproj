@@ -9,7 +9,9 @@
     <UserSecretsId>b1f54614-7f47-4f0f-a9a5-786a2e9c5e11</UserSecretsId>
   </PropertyGroup>
 
-  <ItemGroup>    <PackageReference Include="leaflet" Version="0.7.3" />    <PackageReference Include="Microsoft.AspNetCore.DataProtection" Version="9.0.0" />    <PackageReference Include="Microsoft.AspNetCore.DataProtection.Abstractions" Version="9.0.0" />    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.10" />    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
+  <ItemGroup>    <PackageReference Include="leaflet" Version="0.7.3" />    <PackageReference Include="Microsoft.AspNetCore.DataProtection" Version="9.0.0" />    <PackageReference Include="Microsoft.AspNetCore.DataProtection.Abstractions" Version="9.0.0" />    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.10" />    <PackageReference Include="Microsoft.AspNetCore.Metadata" Version="9.0.0" />    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
   <PrivateAssets>all</PrivateAssets>
   <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 </PackageReference>    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.10">
@@ -24,7 +26,6 @@
 
   <ItemGroup>
     <Folder Include="keys\" />
-    <Folder Include="Migrations\" />
     <Folder Include="wwwroot\fonts\" />
   </ItemGroup>
 

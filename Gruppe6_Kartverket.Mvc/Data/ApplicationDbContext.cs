@@ -16,7 +16,7 @@ namespace Gruppe6_Kartverket.Mvc.Data
 
         // DbSets for your application entities
         public DbSet<UserInfo> UserInfos { get; set; }
-        public DbSet<User> Users { get; set; }
+        public new DbSet<User> Users { get; set; } // Use 'new' keyword to hide inherited member
         public DbSet<UserTypes> UserTypes { get; set; }
         public DbSet<CaseLocation> CaseLocations { get; set; }
         public DbSet<CaseRecord> CaseRecords { get; set; }
@@ -29,7 +29,7 @@ namespace Gruppe6_Kartverket.Mvc.Data
                 new MySqlServerVersion(new Version(8, 0, 21)),
                 mySqlOptions => mySqlOptions.EnableRetryOnFailure(
                     maxRetryCount: 2,
-                    maxRetryDelay: TimeSpan.FromSeconds(30), 
+                    maxRetryDelay: TimeSpan.FromSeconds(30),
                     errorNumbersToAdd: null
                 )
             );

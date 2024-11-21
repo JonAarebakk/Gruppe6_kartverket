@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Identity;
 using MySql.Data.MySqlClient;
 using Microsoft.AspNetCore.DataProtection;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -13,9 +12,22 @@ builder.Services.AddControllersWithViews();
 
 // Configure Entity Framework with MariaDB
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
-    new MySqlServerVersion(new Version(10, 5, 9))));
-
+{
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    options.UseMySql(connectionString,
+            new MySqlServerVersion(new Version(10, 5, 9)),
+            mySqlOptions =>
+            {
+                mySqlOptions.EnableRetryOnFailure(
+                    maxRetryCount: 5,
+                    maxRetryDelay: TimeSpan.FromSeconds(30),
+                    errorNumbersToAdd: null
+                );
+                mySqlOptions.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
+            })
+        .EnableSensitiveDataLogging()
+        .EnableDetailedErrors();
+});
 // The JSON serializer will use the exact property names as defined in your C# classes
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
@@ -66,6 +78,33 @@ builder.Services.AddTransient<IDbConnection>((sp) =>
 
 // Build the app
 var app = builder.Build();
+
+// In Program.cs, before app.Run()
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<ApplicationDbContext>();
+
+        // Log and apply pending migrations
+        var pendingMigrations = context.Database.GetPendingMigrations();
+        if (pendingMigrations.Any())
+        {
+            Console.WriteLine($"Pending migrations: {string.Join(", ", pendingMigrations)}");
+            context.Database.Migrate();
+            Console.WriteLine("Database migrations applied successfully.");
+        }
+        else
+        {
+            Console.WriteLine("No pending migrations.");
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"An error occurred while migrating the database: {ex}");
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
