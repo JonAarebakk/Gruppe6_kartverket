@@ -1,11 +1,11 @@
-﻿/* 
+﻿/*
 *************************************
 **  Section 1: Setting up the map  **
 **********************************************
 **  To do list:                             **
 **  - Change color for drawn features       **
 **  - Implement fetch coordinates from user **
-********************************************** 
+**********************************************
 */
 //#region Section 1 /*Lets Visual studio collapse this section*/
 
@@ -20,9 +20,9 @@ const raster = new ol.layer.Tile({
 });
 
 //The source for the vector layer that will be drawn on the map
-const source = new ol.source.Vector();
+const vectorSource = new ol.source.Vector();
 const vector = new ol.layer.Vector({
-    source: source,
+    source: vectorSource,
     style: {
         'fill-color': 'rgba(255, 255, 255, 0.2)', // White with 20% opacity
         'stroke-color': '#ffcc33',  // (255,204,51) Sunglow
@@ -45,7 +45,7 @@ const map = new ol.Map({
 });
 
 //#endregion
-/* 
+/*
 *********************************************************
 **  Section 2: Configure map buttons and interactions  **
 *********************************************************
@@ -59,11 +59,10 @@ const map = new ol.Map({
 //#region Section 2 /*Lets Visual studio collapse this section*/
 
 //Enables modification of the vector layer i.e. the ability to move the drawn objects
-const modify = new ol.interaction.Modify({ source: source });
+const modify = new ol.interaction.Modify({ source: vectorSource });
 map.addInteraction(modify);
 
 const select = new ol.interaction.Select(); //Lets you select a feature on the map so we can delete it later
-
 
 let draw, snap; // global so we can remove it later
 var actionType = document.getElementById('actionType'); // What the user wants to do to
@@ -88,11 +87,11 @@ function chooseInteractions() {
 };
 
 // Function to delete a feature
-function deleteFeature() { 
+function deleteFeature() {
     if (drawnFeatures > 0) {
         map.removeInteraction(modify);
         map.addInteraction(select);
-    } else {    
+    } else {
         actionType.value = 'None';  //Set the actionType back to "None"
         resetInteractions();        //Reset the interactions
         showPopup('delete-features'); //Gives a popup for no more features to delete
@@ -102,7 +101,7 @@ function deleteFeature() {
 //Function to draw a feature
 function drawFeature() {
     draw = new ol.interaction.Draw({
-        source: source,
+        source: vectorSource,
         type: actionType.value,
     });
     draw.on('drawend', function () {       //What to do when a feature is drawn
@@ -111,14 +110,13 @@ function drawFeature() {
     });
 
     map.addInteraction(draw);
-    snap = new ol.interaction.Snap({ source: source });
+    snap = new ol.interaction.Snap({ source: vectorSource });
     map.addInteraction(snap);
 }
 
-
 //Gives a warning when the user tries to draw more than 10 objects
-function maxFeaturesWarning() { 
-    if (source.getFeatures().length <= 10) {
+function maxFeaturesWarning() {
+    if (vectorSource.getFeatures().length <= 10) {
         showPopup('max-features'); //Gives a popup for no more features to delete
     }
 }
@@ -140,24 +138,22 @@ function resetInteractions() {
     chooseInteractions();  //Runs the chooseInteractions to decide what to do
 }
 
-
 var featureCount = 0; //A counter to set IDs for new features
 
 //Gives newly drawn features a unique ID from featureCount
-source.on("addfeature", function (evt) {
+vectorSource.on("addfeature", function (evt) {
     featureCount = featureCount + 1;
     var feature = evt.feature;
     feature.setId(featureCount);
 });
 
-
 //When a feature is selected, remove it from the source
-select.on('select', function (evt) {  
+select.on('select', function (evt) {
     if ((evt.selected !== null) && (evt.selected.length > 0)) { //Check if a feature is selected
         var featureID = evt.selected[0].getId();        //Get the ID of the selected feature
-        var feature = source.getFeatureById(featureID); //Uses the featureID to get the feature
+        var feature = vectorSource.getFeatureById(featureID); //Uses the featureID to get the feature
 
-        source.removeFeature(feature);    //Remove the feature from the source
+        vectorSource.removeFeature(feature);    //Remove the feature from the source
         drawnFeatures = drawnFeatures - 1;  //Subtract to keep track of feature amount
         resetInteractions();
     }
@@ -176,13 +172,13 @@ function setActiveMapButton() {
 }
 
 //Clears the source of all features and resets the drawnFeatures counter
-function clearMapOfFunctions() { 
-    source.clear();
+function clearMapOfFunctions() {
+    vectorSource.clear();
     drawnFeatures = 0;
 }
 
 //#endregion
-/* 
+/*
 *****************************************************************
 **  Section 3: Takes drawn objects and make them into GeoJson  **
 *****************************************************************
@@ -196,13 +192,13 @@ function clearMapOfFunctions() {
 
 var geoJsonFeatures = []; //Array to store the GeoJson objects
 
-/*  
+/*
 *  Gets the features from the source and makes GeoJson objects from them
 *  Transforms the coordinates from EPSG:3857 to EPSG:4326
 */
 function featureToGeoJson() {
-    if (source.getFeatures().length > 0) {
-        source.getFeatures().forEach(function (feature) {
+    if (vectorSource.getFeatures().length > 0) {
+        vectorSource.getFeatures().forEach(function (feature) {
             var coords = feature.getGeometry().getCoordinates();
             var featureType = feature.getGeometry().getType();
 
@@ -223,7 +219,7 @@ function featureToGeoJson() {
             }
 
             console.log(coords); //for debugging
-           
+
             let geoJsonFeature = {
                 type: 'Feature',
                 properties: {},
@@ -233,12 +229,10 @@ function featureToGeoJson() {
                 }
             }
             geoJsonFeatures.push(geoJsonFeature); //Pushes the GeoJson object to the array
-        }); 
-        console.log(geoJsonFeatures); //for debugging 
+        });
+        console.log(geoJsonFeatures); //for debugging
     }
 }
-
-
 
 /* Collects the GeoJson objects into one FeatureCollection*/
 function createFeatureCollection() {
@@ -252,14 +246,17 @@ function createFeatureCollection() {
     console.log(geoJsonString);
 }
 
-
-/* Function 3: Pushes the GeoJson object somewhere                               */
-/*             - Put the object after JSON.stringify into the hidden form input  */
-
+/* Function to get GeoJSON from the map */
+function getGeoJsonFromMap() {
+    var features = vectorSource.getFeatures();
+    var geoJsonFormat = new ol.format.GeoJSON();
+    var geoJsonData = geoJsonFormat.writeFeatures(features);
+    return geoJsonData;
+}
 
 //#endregion
 
-/* 
+/*
 **************************************************
 **  Section 4: Configure overlays and popups    **
 **************************************************
@@ -287,7 +284,7 @@ function startNewCase() {
 function cancelCase() {
     //Start with if(there are changes){give warning} else {cancelCase}
 
-    let newCase = document.getElementById("new-case"); 
+    let newCase = document.getElementById("new-case");
     let mapButtons = document.getElementById("map-button-group");
     let caseInput = document.getElementById("case-input-wrapper");
 
@@ -296,7 +293,6 @@ function cancelCase() {
     caseInput.style.display = "none";
     CaseForm.reset(); //Resets the form to default values
 }
-
 
 // A close function for the popups and overlays
 function closePopupsAndOverlays() {
@@ -309,7 +305,6 @@ function closePopupsAndOverlays() {
         overlay[i].style.display = "none";
     }
 }
-
 
 // Show the popup with the given ID //TODO: make the overlay different for the tlf popup
 function showPopup(popupID) {
@@ -344,7 +339,6 @@ function showPopup(popupID) {
 ****************************************************************
 */
 //#region Section 5 /*Lets Visual studio collapse this section*/
-
 
 // Add event listener to the new-case-button
 const newCaseButton = document.getElementById('new-case-button');
@@ -387,7 +381,7 @@ document.querySelectorAll('.cancel-case-button').forEach(button => {
 
 document.querySelectorAll('.submit-case').forEach(button => {
     button.addEventListener('click', function () {
-        if (source.getFeatures().length > 0) { //Maybe make a function for checking if any changes are made?
+        if (vectorSource.getFeatures().length > 0) { //Maybe make a function for checking if any changes are made?
             showPopup('submit-case-popup');
             //createFeatureCollection();
             //clearMapOfFunctions();
@@ -409,7 +403,5 @@ document.querySelectorAll('.popup-close').forEach(button => {
         closePopupsAndOverlays();
     });
 });
-
-
 
 //#endregion

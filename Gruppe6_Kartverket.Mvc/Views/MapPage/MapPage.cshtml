@@ -29,7 +29,7 @@
         <form asp-controller="MapPage" asp-action="MapPage" id="CaseForm" method="post">
             <p>
             <div>
-                <label asp-for="CaseTitle">Tittel pÃ¥ case:</label>
+                <label asp-for="CaseTitle">Tittel på case:</label>
                 <input asp-for="CaseTitle" placeholder="Skriv inn tittel" />
                 <span asp-validation-for="CaseTitle" class="text-danger"></span>
             </div>
@@ -49,14 +49,13 @@
             </div>
             </p>
             <p>
-            <div>
-                <label asp-for="Beskrivelse">Beskrivelse:</label>
-                <input asp-for="Beskrivelse" placeholder="Beskriv problemet her" />
-                <span asp-validation-for="Beskrivelse" class="text-danger"></span>
-            </div>
+                <div>
+                    <label asp-for="Beskrivelse">Beskrivelse:</label>
+                    <input asp-for="Beskrivelse" placeholder="Beskriv problemet her" />
+                    <span asp-validation-for="Beskrivelse" class="text-danger"></span>
+                </div>
             </p>
-            <input asp-for="GeoJson" type="hidden" id="geoJsonInput"/>
-            <button type="submit" class="btn btn-primary">Testing</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
         </form>
 
         <p>Input for case info will be placed in here</p>
@@ -64,7 +63,7 @@
             <button class="cancel-case-button" id="cancel-case-button">Avbryt</button>
 
             <!-- Gray the button out intill we are able to submit -->
-            <button class="submit-case">Submit</button> <!-- Maybe have input type="submit" & type="reset"? -->
+            <button class="submit-case">Ikke Bruk</button> <!-- Maybe have input type="submit" & type="reset"? -->
         </div>
     </div>
 </div>
@@ -176,4 +175,12 @@
             form.reset();
         };
     </script>
+    <script>
+        function setGeoJson() {
+            // Assuming you have a function getGeoJsonFromMap() that returns the GeoJSON data
+            var geoJsonData = getGeoJsonFromMap();
+            document.getElementById("geoJsonInput").value = geoJsonData;
+        }
+    </script>
+    
 }

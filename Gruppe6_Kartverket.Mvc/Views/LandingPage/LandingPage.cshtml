@@ -29,7 +29,16 @@ Layout = "_Layout";
                 <p>Opprett en ny konto for å lagre dine kartpreferanser.</p>
                 <a href="@Url.Action("Register", "LogIn")" class="card-button">Register</a>
             </div>
-        
+
+        @if (User.Identity.IsAuthenticated)
+            {
+                <div class="card">
+                    <h2>Mine Cases</h2>
+                    <p>Sjekk og forandre på dine eksisterende cases</p>
+                    <a href="@Url.Action("UserPage", "UserPage")" class="card-button">Dine Cases</a>
+                </div>
+            }
+
         </div>
     </div>
     <div>
