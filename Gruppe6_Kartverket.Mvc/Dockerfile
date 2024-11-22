@@ -24,8 +24,8 @@ ENV PATH="$PATH:/root/.dotnet/tools"
 RUN apt-get update && apt-get install -y netcat-openbsd
 
 # Add a wait script
-COPY Gruppe6_Kartverket.Mvc/wait-for-it.sh /usr/local/bin/wait-for-it.sh
-RUN chmod +x /usr/local/bin/wait-for-it.sh
+# COPY Gruppe6_Kartverket.Mvc/wait-for-it.sh /usr/local/bin/wait-for-it.sh
+# RUN chmod +x /usr/local/bin/wait-for-it.sh
 
 # Use the runtime image to run the app
 FROM base AS final

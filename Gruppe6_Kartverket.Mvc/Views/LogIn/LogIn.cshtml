@@ -28,6 +28,15 @@ ViewData["Title"] = "Logg inn";
         <button type="submit" class="btn btn-primary">Login</button>
         </form>
         <a href="#" class="reset-link">Glemt passord?</a>
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="alert alert-danger">
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <p>@error.ErrorMessage</p>
+                }
+            </div>
+        }
     </div>
 </div>
 

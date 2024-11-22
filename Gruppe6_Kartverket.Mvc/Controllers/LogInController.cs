@@ -54,7 +54,14 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
                     if (result.Succeeded)
                     {
                         return RedirectToAction("LandingPage", "LandingPage");
+                    } 
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     }
+                }else
+                {
+                    ModelState.AddModelError(string.Empty, "User not found.");
                 }
             }
             return View(model);
@@ -95,7 +102,7 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
                 // Create UserInfo entry
                 var userInfo = new UserInfo
                 {
-                    UserId = identityUser.Id, 
+                    UserId = Guid.Parse(identityUser.Id), 
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     PhoneNumber = model.PhoneNumber,
@@ -107,7 +114,7 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
 
                 var user = new User
                 {
-                    UserId = identityUser.Id,
+                    UserId = Guid.Parse(identityUser.Id),
                     UserType = "Us",
                     UserName = model.Username,
                     UserPassword = model.Password

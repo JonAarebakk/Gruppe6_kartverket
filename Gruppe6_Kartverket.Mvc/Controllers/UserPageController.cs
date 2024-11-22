@@ -1,23 +1,51 @@
-
 using Microsoft.AspNetCore.Mvc;
-using Gruppe6_Kartverket.Mvc.Models.Database;
+using Microsoft.EntityFrameworkCore;
+using Gruppe6_Kartverket.Mvc.Models.ViewModels;
+using Gruppe6_Kartverket.Mvc.Data; 
+using System.Security.Claims;
 
 namespace Gruppe6_Kartverket.Mvc.Controllers;
 
 public class UserPageController : Controller
 {
+    private readonly ApplicationDbContext _context;
+
+    // Constructor that injects the ApplicationDbContext for database access
+    public UserPageController(ApplicationDbContext context)
+    {
+        _context = context;
+    }
 
     // GET
-    public IActionResult UserPage()
+    public async Task<IActionResult> UserPage()
     {
-        var model = new User
+        try
         {
-            UserName = "User Name",
-            //NewMessagesCount = 5,
-            // CaseRecords = GetCases() // Assuming GetCases is a method that retrieves cases for the user
-        };
-        ViewBag.HideFooter = true; // Hide footer in this view
-        return View(model);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            
+            var caseRecords = await _context.CaseRecords
+                .Include(c => c.CaseLocation)
+                .Include(c => c.User)
+                .ToListAsync();
+
+            if (caseRecords == null || !caseRecords.Any())
+            {
+                Console.WriteLine("No case records found.");
+            }
+
+            var viewModel = new CaseWorkerPageV2ViewModel
+            {
+                CaseRecords = caseRecords
+            };
+
+            return View(viewModel);
+        }
+        catch (Exception ex)
+        {
+            // Log the exception to the console or a file
+            Console.WriteLine($"Error: {ex.Message}");
+            return StatusCode(500, "Internal server error. Please try again later.");
+        }
     }
 
     public IActionResult Settings()

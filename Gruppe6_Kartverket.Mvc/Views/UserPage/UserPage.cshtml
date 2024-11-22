@@ -1,4 +1,4 @@
-@model Gruppe6_Kartverket.Mvc.Models.Database.User
+@model Gruppe6_Kartverket.Mvc.Models.ViewModels.CaseWorkerPageV2ViewModel
 
 @{
     ViewData["Title"] = "UserPage";
@@ -26,28 +26,35 @@
                             <tr>
                                 <th>Status på sak</th>
                                 <th>Bruker-Id</th>
-                                <th>Brukernavn</th>
                                 <th>Saksdato</th>
                                 <th>Tittel</th>
-                                <th>Sakstype</th>
                                 <th>Beskrivelse</th>
+                                <th>SaksType</th>
                             </tr>
                             </thead>
                             <tbody>
 
-
-                            @foreach (var caseRecord in Model.CaseRecords)
+                            @if (Model != null && Model.CaseRecords != null && Model.CaseRecords.Any())
+                            {
+                                foreach (var caseRecord in Model.CaseRecords)
+                                {
+                                    <tr>
+                                        <td>@caseRecord.CaseStatus</td>
+                                        <td>@caseRecord.UserId</td>
+                                        <td>@caseRecord.CaseDate.ToString("yyyy-MM-dd")</td>
+                                        <td>@caseRecord.CaseTitle</td>
+                                        <td>@caseRecord.CaseDescription</td>
+                                        <td>@caseRecord.CaseIssueType</td>
+                                    </tr>
+                                }
+                            }
+                            else
                             {
                                 <tr>
-                                    <td>@caseRecord.CaseStatus</td>
-                                    <td>@Model.UserId</td>
-                                    <td>@Model.UserName</td>
-                                    <td>@caseRecord.CaseDate.ToString("yyyy-MM-dd")</td>
-                                    <td>@caseRecord.CaseTitle</td>
-                                    <td>@caseRecord.CaseIssueType</td>
-                                    <td>@caseRecord.CaseDescription</td>
+                                    <td colspan="7">Ingen saker å vise.</td>
                                 </tr>
                             }
+                            
                             </tbody>
                         </table>
                     </div>

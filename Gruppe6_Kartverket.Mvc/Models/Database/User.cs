@@ -6,7 +6,7 @@ namespace Gruppe6_Kartverket.Mvc.Models.Database
     public class User
     {
         [Key]
-        public string UserId { get; set; }
+        public Guid UserId { get; set; }
 
         [StringLength(2)]
         [Required]
