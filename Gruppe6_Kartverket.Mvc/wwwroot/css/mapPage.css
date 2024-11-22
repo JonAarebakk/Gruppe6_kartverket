@@ -42,9 +42,8 @@
 .control-button-bar {
     width: 100%;
     height: 10%;
-    background: blue;
+    background: D0ECD6;
     display: flex;
-
 }
 
 /* The button group for the map */
