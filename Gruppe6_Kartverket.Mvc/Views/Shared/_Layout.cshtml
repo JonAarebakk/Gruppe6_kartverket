@@ -55,7 +55,7 @@
             <!-- Authentication Links -->
             @if (User.Identity.IsAuthenticated)
             {
-                <form asp-action="Logout" asp-controller="Account" method="post" class="form-inline">
+                <form asp-action="Logout" asp-controller="LogIn" method="post" class="form-inline">
                     @Html.AntiForgeryToken()
                     <button type="submit" class="btn btn-link nav-link" style="border: none; padding: 0;">Logout</button>
                 </form>
