@@ -21,10 +21,10 @@ namespace Gruppe6_Kartverket.Mvc.Models.Database
         public string CaseIssueType { get; set; }    //IssueType - add Enum of what kind of types there are
 
         [Required]
-        [StringLength(300)]
+       [StringLength(300)]
         public string CaseDescription { get; set; }
 
-        [Required]
+       [Required]
         public string CaseStatus { get; set; }
 
 
@@ -33,7 +33,7 @@ namespace Gruppe6_Kartverket.Mvc.Models.Database
         [ForeignKey("LocationId")]
         public virtual CaseLocation CaseLocation { get; set; }
         
-        public int? UserId { get; set; }
+        public string? UserId { get; set; }
 
         [ForeignKey("UserId")]
         public virtual User User { get; set; }
@@ -42,17 +42,17 @@ namespace Gruppe6_Kartverket.Mvc.Models.Database
    
     public enum CaseStatus
     {
-        Open,
+       Open,
         Closed,
         InProgress,
         Resolved
     }
 
-    // public enum CaseIssueType
-    // {
-    //     IssueType1,
-    //     IssueType2,
-    //     IssueType3,
-    //     IssueType4
-    // }
+     public enum CaseIssueType
+     {
+         IssueType1,
+         IssueType2,
+         IssueType3,
+         IssueType4
+     }
 }
