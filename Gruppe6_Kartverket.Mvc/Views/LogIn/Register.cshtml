@@ -1,0 +1,100 @@
+﻿@model Gruppe6_Kartverket.Mvc.Models.RegistrationFormModel
+
+@{
+Layout = "~/Views/Shared/_Layout.cshtml";
+ViewData["Title"] = "Registrer bruker";
+}
+
+@section HeadContent {
+<link rel="stylesheet" href="~/css/login.css">
+}
+
+<div class="site-wrapper">
+    <div class="RFwrapper">
+        <div class="RFcontainer">
+            <div id="containerhead">
+                <h1>Create account</h1>
+                <p>Already have an account? <a asp-controller="LogIn" asp-action="LogIn">Log in</a></p>
+            </div>
+
+            <div id="containerbody">
+                <form asp-action="Register" asp-controller="LogIn" method="post">
+                    @Html.AntiForgeryToken()
+
+                    <p>
+                        <div>
+                            <label asp-for="FirstName">First Name:</label>
+                            <input asp-for="FirstName" placeholder="fornavn" autocomplete="given-name"/>
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+                    </p>
+                    <p>
+                    <div>
+                        <label asp-for="LastName">Last Name:</label>
+                        <input asp-for="LastName" placeholder="etternavn" autocomplete="family-name"/>
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                    </p>
+                    <p>
+                    <div>
+                        <label asp-for="PhoneNumber">Phone number:</label>
+                        <input asp-for="PhoneNumber" placeholder="telefon-nummer" autocomplete="tel"/>
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div>
+                    </p>
+                    <p>
+                    <div>
+                        <label asp-for="Email">Email:</label>
+                        <input asp-for="Email" placeholder="epost" autocomplete="email"/>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    </p>
+                    <p>
+                    <div>
+                        <label asp-for="Gender">Gender:</label>
+                        <select asp-for="Gender" autocomplete="sex">
+                            <option value="Man">Man</option>
+                            <option value="Woman">Woman</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    </p>
+
+                    <p>
+                    <div>
+                        <label asp-for="Username">Username:</label>
+                        <input asp-for="Username" placeholder="brukernavn" autocomplete="username"/>
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+                    </p>
+                    <p>
+                    <div>
+                        <label asp-for="Password">Password:</label>
+                        <input asp-for="Password" placeholder="passord" type="password" autocomplete="new-password"/>
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    </p>
+                    <p>
+                    <div>
+                        <label asp-for="ConfirmPassword">Confirm password:</label>
+                        <input asp-for="ConfirmPassword" placeholder="gjenta passord" type="password" autocomplete="new-password"/>
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+                    </p>
+
+                    <button type="submit" class="btn btn-primary">Create User</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+@{
+await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+}

@@ -38,6 +38,9 @@
             <!-- Logo Placeholder -->
             <a href="@Url.Action("LandingPage", "LandingPage")">
                 <img src="~/images/logo.svg" id="logoContainer"/>
+                <img src="~/images/logo.svg" id="logoContainer" />
+                <img src="~/images/logo.svg" id="logoContainer" />
+                <img src="~/images/logo.svg" id="logoContainer" />
             </a>
 
             <!-- Search Box -->
@@ -51,49 +54,46 @@
             <div class="HeaderTopLinks">
                 <a href="@Url.Action("ContactUs", "ContactUs")" class="btn btn-outline-secondary ms-3">
                     Contact Us
-                </a>
-            </div>
-
-            @if (ViewBag.LoggedIn == true || true)
+            <!-- Authentication Links -->
+            @if (User.Identity.IsAuthenticated)
             {
+                <form asp-action="Logout" asp-controller="Account" method="post" class="form-inline">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-link nav-link" style="border: none; padding: 0;">Logout</button>
+                </form>
                 <a href="@Url.Action("UserPage", "UserPage")" class="user-icon-btn">
                     <img src="~/icons/user.png" alt="userIcon"/>
                 </a>
-
             }
             else
             {
-
-                <!-- Log In Button -->
-                <a href="@Url.Action("LogIn", "LogIn")" class="btn btn-outline-secondary ms-3">
-                    Log in</a>
+                <a href="@Url.Action("Login", "LogIn")" class="btn btn-outline-secondary ms-3">Login</a>
+                <a href="@Url.Action("Register", "LogIn")" class="btn btn-outline-secondary ms-3">Register</a>
+                <!-- Settings Icon -->
+                <a href="@Url.Action("Settings", "Settings")" class="settings-container">
+                    <img src="~/icons/settings.png" alt="settingsIcon"/>
+                </a>
             }
-
-            <!-- Settings Icon -->
-            <a href="@Url.Action("Settings", "Settings")" class="settings-container">
-                <img src="~/icons/settings.png" alt="settingsIcon"/>
+            <a href="@Url.Action("Settings", "Settings")" class="ms-3" style="color: #555; font-size: 24px;">
+                <i class="fas fa-cog"></i>
             </a>
         </div>
     </nav>
 </header>
 
-    <div class="renderBody-div">
-        <main role="main">
-               @RenderBody()
-        </main>
-    </div>
-
-    @if (ViewBag.HideFooter == null || ViewBag.HideFooter == false)
-    {
-        <footer class="sitefooter">
-            
-            <!-- First Column: Logo -->
-            <div class="sitefooter-column">
-                <a href="/" class="sitefooter-logolink" title="Gå til forsiden">
-                    <img src="~/images/logo.svg" id="logoContainer"/>
-                </a>
-            </div>
-
+<div class="renderBody-div">
+    <main role="main">
+        @RenderBody()
+@if (ViewBag.HideFooter == null || ViewBag.HideFooter == false)
+{
+    <footer class="sitefooter">
+        <!-- First Column: Logo -->
+        <div class="sitefooter-column">
+            <a href="/" class="sitefooter-logolink" title="Gå til forsiden">
+                <img src="~/images/logo.svg" id="logoContainer" />
+            </a>
+        </div>
+                <img src="~/images/logo.svg" id="logoContainer" />
             <!-- Second Column: Contact Info -->
             <div class="sitefooter-column">
                 <h4>Hjelp</h4>
@@ -109,7 +109,7 @@
                 <a href="/om-kartverket/faq" rel="noopener nofollow">Ofte stilte spørsmål</a><br> <!--NB! DENNE LINKEN FØRER INGEN STEDER-->
                 <a href="/eiendom/skjema/alleskjema" rel="noopener nofollow">Skjemaer</a> <!--NB! DENNE LINKEN FØRER INGEN STEDER-->
             </div>
-
+            <a href="/om-kartverket/faq" rel="noopener nofollow">Ofte stilte spørsmål</a><br> <!--NB! DENNE LINKEN FØRER INGEN STEDER-->
             <!-- Fourth Column: Follow Us and Social Links -->
             <div class="sitefooter-column">
                 <h4>Følg oss</h4>
@@ -121,16 +121,18 @@
             </div>
         </footer>
     }
+        </div>
+    </footer>
+    }
 
-
-    <!-- JavaScript-filer -->
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/lib/leaflet/leaflet.js"></script>
-    <script src="~/lib/leaflet/leaflet-geoman.js"></script>
-    <!--  USED FOR OPEN LAYERS WHICH IS CURRENTLY NOT BEING USED -->
-    <script src="~/lib/ol/dist/ol.js"></script>
+<!-- JavaScript-filer -->
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="~/lib/leaflet/leaflet.js"></script>
+<script src="~/lib/leaflet/leaflet-geoman.js"></script>
+<!--  USED FOR OPEN LAYERS WHICH IS CURRENTLY NOT BEING USED -->
+<script src="~/lib/ol/dist/ol.js"></script>
 
 @await RenderSectionAsync("Scripts", required: false)
 </body>
