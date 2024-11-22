@@ -8,9 +8,6 @@
     <!-- Standard CSS og biblioteker -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/lib/leaflet/leaflet.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/lib/leaflet/leaflet-geoman.css" asp-append-version="true" />
-    <!--  USED FOR OPEN LAYERS WHICH IS CURRENTLY NOT BEING USED -->
     <link rel="stylesheet" href="~/lib/ol/ol.css" asp-append-version="true" />
 
     @await RenderSectionAsync("HeadContent", required: false)
@@ -38,13 +35,10 @@
             <!-- Logo Placeholder -->
             <a href="@Url.Action("LandingPage", "LandingPage")">
                 <img src="~/images/logo.svg" id="logoContainer"/>
-                <img src="~/images/logo.svg" id="logoContainer" />
-                <img src="~/images/logo.svg" id="logoContainer" />
-                <img src="~/images/logo.svg" id="logoContainer" />
             </a>
 
             <!-- Search Box -->
-            <form action="@Url.Action("Index", "Home")" method="get" class="d-flex ms-auto">
+            <form action="@Url.Action("LandingPage", "LandingPage")" method="get" class="d-flex ms-auto">
                 <input type="text" name="search" placeholder="Søk" aria-label="Søk" class="form-control me-2"/>
                 <button type="submit" class="btn">
                     <i class="fas fa-search"></i>
@@ -67,15 +61,12 @@
             }
             else
             {
-                <a href="@Url.Action("Login", "LogIn")" class="btn btn-outline-secondary ms-3">Login</a>
-                <a href="@Url.Action("Register", "LogIn")" class="btn btn-outline-secondary ms-3">Register</a>
-                <!-- Settings Icon -->
-                <a href="@Url.Action("Settings", "Settings")" class="settings-container">
-                    <img src="~/icons/settings.png" alt="settingsIcon"/>
-                </a>
+                <a href="@Url.Action("Login", "Account")" class="btn btn-outline-secondary ms-3">Login</a>
+                <a href="@Url.Action("Register", "Account")" class="btn btn-outline-secondary ms-3">Register</a>
             }
-            <a href="@Url.Action("Settings", "Settings")" class="ms-3" style="color: #555; font-size: 24px;">
-                <i class="fas fa-cog"></i>
+            <!-- Settings Icon -->
+            <a href="@Url.Action("Settings", "Settings")" class="settings-container">
+                <img src="~/icons/settings.png" alt="settingsIcon" />
             </a>
         </div>
     </nav>

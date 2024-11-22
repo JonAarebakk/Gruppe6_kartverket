@@ -22,6 +22,7 @@ namespace Gruppe6_Kartverket.Mvc.Data
         public DbSet<CaseRecord> CaseRecords { get; set; }
 
         // Configures the connection to the database with retry on failure
+        /*
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseMySql(
@@ -33,7 +34,7 @@ namespace Gruppe6_Kartverket.Mvc.Data
                     errorNumbersToAdd: null
                 )
             );
-        }
+        }*/
 
         // Configures the relationships between tables and models
         protected override void OnModelCreating(ModelBuilder modelBuilder)

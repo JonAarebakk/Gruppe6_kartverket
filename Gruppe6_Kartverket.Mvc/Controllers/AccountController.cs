@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
@@ -22,6 +22,14 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
             _dbContext = dbContext;
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> LogOut()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("LandingPage", "LandingPage");
+        }
+
         [HttpGet]
         public IActionResult LogIn()
         {
@@ -29,22 +37,26 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> LogIn(LogInModel model)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return View(model);
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user != null)
+                {
+                    var result = await _signInManager.PasswordSignInAsync(
+                        userName: model.Email,
+                        password: model.Password,
+                        isPersistent: false,
+                        lockoutOnFailure: false);
+
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("LandingPage", "LandingPage");
+                    }
+                }
             }
-
-            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: false,
-                lockoutOnFailure: false);
-
-            if (result.Succeeded)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             return View(model);
         }
 
@@ -83,7 +95,7 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
                 // Create UserInfo entry
                 var userInfo = new UserInfo
                 {
-                    UserId = identityUser.Id, 
+                    UserId = identityUser.Id,
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     PhoneNumber = model.PhoneNumber,

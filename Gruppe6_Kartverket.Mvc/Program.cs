@@ -4,8 +4,13 @@ using Gruppe6_Kartverket.Mvc.Data;
 using Microsoft.AspNetCore.Identity;
 using MySql.Data.MySqlClient;
 using Microsoft.AspNetCore.DataProtection;
+using System.IO;
+using System.Text.Json;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -14,8 +19,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-    options.UseMySql(connectionString,
-            new MySqlServerVersion(new Version(10, 5, 9)),
+        options.UseMySql(connectionString,
+            ServerVersion.AutoDetect(connectionString),
             mySqlOptions =>
             {
                 mySqlOptions.EnableRetryOnFailure(
@@ -28,6 +33,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         .EnableSensitiveDataLogging()
         .EnableDetailedErrors();
 });
+
+
 // The JSON serializer will use the exact property names as defined in your C# classes
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
@@ -59,8 +66,8 @@ builder.Services.AddAntiforgery(options =>
 // Configure cookies for application (for authentication)
 builder.Services.ConfigureApplicationCookie(options =>
 {
-    options.LoginPath = "/Account/Login";
-    options.AccessDeniedPath = "/Account/AccessDenied";
+    options.LoginPath = "/Account/LogIn";
+    options.AccessDeniedPath = "/LandingPage/LandingPage";
 });
 
 // Configure shared data protection keys (for distributed applications)

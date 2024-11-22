@@ -72,7 +72,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: url("../Images/kartverket-bakgrunssbilder/lofoten.jpg"); /* Sets a background image for the container */
+    background-image: url("../images/kartverket-bakgrunssbilder/lofoten.jpg"); /* Sets a background image for the container */
     background-size: cover; /* Ensures the background image covers the entire container */
     background-position: center; /* Centers the background image */
     opacity: 0.6; /* Sets the opacity of the background image to 60% */
