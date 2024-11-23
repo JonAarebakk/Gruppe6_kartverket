@@ -1,6 +1,4 @@
 {
   "dependencies": {
-    "@geoman-io/leaflet-geoman-free": "^2.17.0",
-    "leaflet-draw": "^1.0.4"
   }
 }

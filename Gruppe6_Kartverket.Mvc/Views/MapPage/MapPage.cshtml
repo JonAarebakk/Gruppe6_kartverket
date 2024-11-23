@@ -26,10 +26,10 @@
         </div>
     </div>
     <div class="case-input-wrapper" id="case-input-wrapper">
-        <form asp-action="CaseForm" id="CaseForm" method="post">
+        <form asp-controller="MapPage" asp-action="MapPage" id="CaseForm" method="post">
             <p>
                 <div>
-                    <label asp-for="CaseTitle">Tittel på case:</label>
+                    <label asp-for="CaseTitle">Tittel pÃ¥ case:</label>
                     <input asp-for="CaseTitle" placeholder="Skriv inn tittel" />
                     <span asp-validation-for="CaseTitle" class="text-danger"></span>
                 </div>
@@ -55,19 +55,15 @@
                     <span asp-validation-for="Beskrivelse" class="text-danger"></span>
                 </div>
             </p>
-            <p>
-                <div>
-                    <label>Bilde:</label> 
-                    <br />
-                    <button disabled>Legg til bilde</button> <!-- "Disabled" so it won't make problems (placedholder) -->
-                </div>
-            </p>
-            <input asp-for="GeoJson" type="hidden" id="GeoJsonInput"/>
+            <input asp-for="GeoJson" type="hidden" id="geoJsonInput"/>
+            <button type="submit" class="btn btn-primary">Testing</button>
         </form>
         
         <p>Input for case info will be placed in here</p>
         <div class="submit-cancel-wrapper">
             <button class="cancel-case-button" id="cancel-case-button">Avbryt</button>
+
+            <!-- Gray the button out intill we are able to submit -->
             <button class="submit-case">Submit</button> <!-- Maybe have input type="submit" & type="reset"? -->
         </div>
     </div>
@@ -89,7 +85,7 @@
         <div>
             <input type="text" placeholder="Telefonnummer">
             <button>Verifiser</button>
-            <button style="display: none;">Gå videre</button>
+            <button style="display: none;">GÃ¥ videre</button>
             <button class="popup-close">Close</button> <!-- Change to are you sure or something idk -->
         </div>
     </div>
@@ -105,7 +101,7 @@
         </div>
     </div>
     <div class="popup" id="delete-features">
-        <h2>Det er ingen flere tegninger å slette</h2>
+        <h2>Det er ingen flere tegninger Ã¥ slette</h2>
         <button class="popup-close">Close</button>
     </div>
     <div class="popup" id="max-features">
@@ -115,41 +111,69 @@
         </p>
         <button class="popup-close">Close</button>
     </div>
-    <div class="popup" id="case-submitted">
-        <h2>Case submitted</h2>
-        <p>
-            "Case submitted text" <br />
-            "Info fra innsendingen"
-        </p>
-        <button class="popup-close">Close</button>
-    </div>
     <div class="popup" id="submit-case-popup">
         <h2>Submit?</h2>
         <p>
-            Ønsker du å sende inn saken?
+            Ã˜nsker du Ã¥ sende inn saken?
         </p>
-        <butto class="submit-case-confirmation">Send inn</butto>
+        <button class="submit-case-confirmation">Send inn</button>
         <button class="popup-close">Tilbake</button>
+    </div>
+    <div class="popup" id="case-not-valid">
+        <h2>Ikke alle felt er fylt inn</h2>
+        <p>
+            Pass på at alle feltene er fylt inn og at det er tegnet en figur på kartet.
+        </p>
+        <button class="popup-close">Ok</button>
     </div>
     <div class="popup" id="avbryt-case">
         <h2>Avbryt?</h2>
         <p>
-            Ønsker du å avbryte? Dette vil slette all informasjon som er lagt inn.
+            Ã˜nsker du Ã¥ avbryte? Dette vil slette all informasjon som er lagt inn.
         </p>
-        <button>Avbryt</button>
+        <button class="cancel-case-confirmation">Avbryt</button>
         <button class="popup-close">Tilbake</button>
     </div>
     <div class="popup" id="case-submit-help">
         <!-- Have a help button somewhere, and maybe show this after Log in/tlf -->
         <h2>Hvordan registrere sak</h2>
         <p>
-            "Legg inn forklaring/hjelp på hvordan sende inn case"
+            "Legg inn forklaring/hjelp pÃ¥ hvordan sende inn case"
         </p>
         <button class="popup-close">Close</button>
     </div>
+    @if (ViewBag.ShowSubmittedPopup == true)
+    {
+        <div class="popup" id="case-submitted">
+            <h2>Case submitted</h2>
+            <p>
+                "Case submitted text" <br />
+                "Info fra innsendingen"
+            </p>
+            <button class="popup-close">Close</button>
+        </div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                document.getElementById("popup-overlay").style.display = "block";
+                function resetCaseForm() {
+                    var form = document.getElementById("CaseForm");
+                    form.reset();
+                };
+                resetCaseForm();
+            });
+        </script>
+    }
 </div>
+
+<p hidden id="loggedIn">@ViewBag.LoggedIn</p>
 
 
 @section Scripts {
     <script type="module" src="~/js/ol_map5.js"></script>
+    <script>
+        function resetCaseForm() {
+            var form = document.getElementById("CaseForm");
+            form.reset();
+        };
+    </script>
 }

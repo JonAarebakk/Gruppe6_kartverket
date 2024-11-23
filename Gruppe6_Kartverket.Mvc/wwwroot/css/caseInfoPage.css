@@ -1,6 +1,6 @@
 .Case-View-container {
     height: 100vh; /* Sets the height of the container to 100% of the viewport height */
-    background-image: url("../Images/kartverket-bakgrunssbilder/mountains.jpg");
+    background-image: url("../images/kartverket-bakgrunssbilder/mountains.jpg");
     padding-top: 60px; /* Adds 60px padding to the top of the container */
     display: flex; /* Use Flexbox layout */
     justify-content: center; /* Center horizontally */

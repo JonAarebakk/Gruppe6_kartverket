@@ -250,12 +250,9 @@ function createFeatureCollection() {
     console.log(featureCollection);
     var geoJsonString = JSON.stringify(featureCollection);
     console.log(geoJsonString);
+
+    document.getElementById("geoJsonInput").value = geoJsonString;
 }
-
-
-/* Function 3: Pushes the GeoJson object somewhere                               */
-/*             - Put the object after JSON.stringify into the hidden form input  */
-
 
 //#endregion
 
@@ -294,8 +291,66 @@ function cancelCase() {
     newCase.style.display = "flex";
     mapButtons.style.display = "none";
     caseInput.style.display = "none";
-    CaseForm.reset(); //Resets the form to default values
+    CaseForm.reset();
 }
+
+
+//Checks if all form inputs have changed from their initial values
+function isFormValid() {
+    if (!CaseForm.CaseTitle.value) {
+        console.log("CaseTitle is not valid");
+        return false;
+    } else if (!CaseForm.Kategori.value) {
+        console.log("CaseCategory is not valid1");
+        return false;
+    } else if (!CaseForm.Beskrivelse.value) {
+        console.log("CaseDescription is not valid");
+        return false;
+    } else if (drawnFeatures == 0) {
+        console.log("Features are not valid");
+        return false;
+    } else { 
+        console.log("Form is valid");
+        return true;
+    }
+}
+
+//Checks if any form inputs have changed from their initial values
+function hasFormChanged() {
+    if (CaseForm.CaseTitle.value) {
+        console.log("CaseTitle is not valid");
+        return true;
+    } else if (CaseForm.Kategori.value) {
+        console.log("CaseCategory is not valid1");
+        return true;
+    } else if (CaseForm.Beskrivelse.value) {
+        console.log("CaseDescription is not valid");
+        return true;
+    } else if (drawnFeatures != 0) {
+        console.log("Features has changed");
+        return true;
+    } 
+}
+
+
+function submitCase() { 
+    var formValidity = isFormValid();
+
+    if (formValidity) {
+        createFeatureCollection();
+        clearMapOfFunctions();
+        closePopupsAndOverlays();
+
+        document.getElementById("CaseForm").submit();
+        CaseForm.reset();
+
+        //showPopup('case-submitted');
+    } else {
+        closePopupsAndOverlays();
+        showPopup('case-not-valid');
+    }
+}
+
 
 
 // A close function for the popups and overlays
@@ -349,9 +404,13 @@ function showPopup(popupID) {
 // Add event listener to the new-case-button
 const newCaseButton = document.getElementById('new-case-button');
 newCaseButton.addEventListener('click', function () {
-    //if(logged in) {startNewCase()} else {give popup for log in/give number}
-    startNewCase();
-    showPopup('new-case-explanation');
+    var isUserLoggedIn = document.getElementById('loggedIn').textContent;
+
+    if (isUserLoggedIn = true) {
+        startNewCase();
+    } else {
+        showPopup('new-case-explanation');
+    }
 });
 
 const toTlfPopup = document.getElementById('to-tlf-popup');
@@ -376,32 +435,41 @@ document.querySelectorAll('.map-button').forEach(button => {
 // When the case is cancelled, set the actionType back to "None"
 document.querySelectorAll('.cancel-case-button').forEach(button => {
     button.addEventListener('click', function () {
+        var formChanged = hasFormChanged();
+        console.log(formChanged); //for debugging)
+
+        if (formChanged = true) {
+            showPopup('avbryt-case');
+        }
+    });
+});
+
+document.querySelectorAll('.cancel-case-confirmation').forEach(button => {
+    button.addEventListener('click', function () {
+
         console.log("Case Cancelled"); //for debugging
-        actionType.value = 'None';     //Set the actionType back to "None"
+        actionType.value = 'None';     
         setActiveMapButton();          //Resets the map buttons
-        clearMapOfFunctions();         //Clears the map of all features
+        clearMapOfFunctions();         
 
         cancelCase();                  //Resets the case input form
     });
 });
 
+
 document.querySelectorAll('.submit-case').forEach(button => {
     button.addEventListener('click', function () {
-        if (source.getFeatures().length > 0) { //Maybe make a function for checking if any changes are made?
+        var caseValidity = isFormValid();
+        if (caseValidity) {
             showPopup('submit-case-popup');
-            //createFeatureCollection();
-            //clearMapOfFunctions();
         } else {
-            console.log("No features to submit"); //for debugging //Make a popup for no features to submit maybe
+            showPopup('case-not-valid');
         }
     });
 });
 
 const submitCaseConfirmation = document.querySelector('.submit-case-confirmation').addEventListener('click', function () {
-    createFeatureCollection();
-    clearMapOfFunctions();
-    closePopupsAndOverlays();
-    showPopup('case-submitted');
+    submitCase();
 });
 
 document.querySelectorAll('.popup-close').forEach(button => {
