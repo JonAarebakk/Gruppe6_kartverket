@@ -36,8 +36,8 @@ services:
       - ~/.microsoft/usersecrets:/home/app/.microsoft/usersecrets:ro
       - ~/.aspnet/https:/home/app/.aspnet/https:ro
       - ./Gruppe6_Kartverket.Mvc/keys:/app/keys
-    command: ["dotnet", "ef", "database", "update", "--project", "/src/Gruppe6_Kartverket.Mvc/Gruppe6_Kartverket.Mvc.csproj"]
-
+    command: [ "dotnet", "ef", "database", "update", "--project", "/src/Gruppe6_Kartverket.Mvc/Gruppe6_Kartverket.Mvc.csproj" ]
+    
 networks:
   mynetwork:
     driver: bridge

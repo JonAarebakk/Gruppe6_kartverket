@@ -75,7 +75,7 @@
     background-image: url("../Images/kartverket-bakgrunssbilder/lofoten.jpg"); /* Sets a background image for the container */
     background-size: cover; /* Ensures the background image covers the entire container */
     background-position: center; /* Centers the background image */
-    opacity: 0.6; /* Sets the opacity of the background image to 60% */
+    opacity: 0.; /* Sets the opacity of the background image to 60% */
     z-index: -1;
 }
 
@@ -133,7 +133,7 @@
     padding: 0; /* Remove all padding */
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Adds a shadow effect to the table */
     background: white;
-    opacity: 0.8 !important;
+    opacity: 0.9 !important;
 }
 
 

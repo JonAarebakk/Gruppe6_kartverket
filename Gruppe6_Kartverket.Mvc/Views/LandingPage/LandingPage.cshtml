@@ -1,10 +1,18 @@
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.EntityFrameworkCore
+@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<IdentityUser> SignInManager
+@inject Gruppe6_Kartverket.Mvc.Data.ApplicationDbContext _dbContext
+
 @{
-ViewBag.Title = "Landing Page";
-Layout = "_Layout";
+    ViewBag.Title = "Landing Page";
+    Layout = "_Layout";
+
+    var identityUser = await UserManager.GetUserAsync(User);
+    var user = identityUser != null ? await _dbContext.Users.FirstOrDefaultAsync(u => u.UserId == Guid.Parse(identityUser.Id)) : null;
 }
 
-
-@section HeadContent { 
+@section HeadContent {
     <link rel="stylesheet" href="~/css/landingPage.css" /> <!-- Link to combined CSS file -->
 }
 
@@ -30,15 +38,22 @@ Layout = "_Layout";
                 <a href="@Url.Action("Register", "LogIn")" class="card-button">Register</a>
             </div>
 
-        @if (User.Identity.IsAuthenticated)
+            @if (user != null && user.UserType == "Ad")
+            {
+                <div class="card">
+                    <h2>Mine Cases</h2>
+                    <p>Administrere cases</p>
+                    <a href="@Url.Action("CaseWorkerPageV2", "CaseWorker")" class="card-button">Dine Cases</a>
+                </div>
+            }
+            else if (user != null && user.UserType == "Us")
             {
                 <div class="card">
                     <h2>Mine Cases</h2>
                     <p>Sjekk og forandre på dine eksisterende cases</p>
-                    <a href="@Url.Action("UserPage", "UserPage")" class="card-button">Dine Cases</a>
+                    <a href="@Url.Action("UserPage", "UserPage")" class="card-button">Go to User Page</a>
                 </div>
             }
-
         </div>
     </div>
     <div>

@@ -1,12 +1,15 @@
 
 /* Sentraliserings-styling for login-wrapper */
+
 .login-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
     padding: 1rem;
-    background-color: #D0ECD6 !important; /* Lys grønn bakgrunn for hele siden */
+    background-image: url("../Images/kartverket-bakgrunssbilder/norway.jpg"); /* Path to the background image */
+    background-size: cover; /* Ensure the image covers the entire background */
+    background-position: center; /* Center the background image */
 }
 
 /* Wrapper for innloggingsskjemaet */
@@ -89,7 +92,7 @@
     justify-content: center;
     padding: 1rem;
     /*padding-top: 60px;*/
-    background-color: #D0ECD6; /* Set the background color to green */
+    /*background-color: #D0ECD6; /* Set the background color to green */
 }
 
 .RFcontainer {

@@ -6,10 +6,11 @@ ViewData["Title"] = "Registrer bruker";
 }
 
 @section HeadContent {
-<link rel="stylesheet" href="~/css/login.css">
+    <link rel="stylesheet" href="~/css/login.css">
+    <link rel="stylesheet" href="~/css/Registreing.css">
 }
 
-<div class="site-wrapper">
+<div class="registrering-wrapper">
     <div class="RFwrapper">
         <div class="RFcontainer">
             <div id="containerhead">
@@ -75,12 +76,22 @@ ViewData["Title"] = "Registrer bruker";
                     </div>
                     </p>
                     <p>
+                        <div>
+                            <label asp-for="ConfirmPassword">Confirm password:</label>
+                            <input asp-for="ConfirmPassword" placeholder="gjenta passord" type="password" autocomplete="new-password"/>
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+                    </p>
+                    <p>
                     <div>
-                        <label asp-for="ConfirmPassword">Confirm password:</label>
-                        <input asp-for="ConfirmPassword" placeholder="gjenta passord" type="password" autocomplete="new-password"/>
-                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        <label asp-for="UserType">User Type:</label>
+                        <select asp-for="UserType">
+                            <option value="Us">Normal User</option>
+                            <option value="Ad">Admin User</option>
+                        </select>
                     </div>
                     </p>
+                    
 
                     <button type="submit" class="btn btn-primary">Create User</button>
 

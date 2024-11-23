@@ -55,10 +55,14 @@
             <!-- Authentication Links -->
             @if (User.Identity.IsAuthenticated)
             {
-                <form asp-action="Logout" asp-controller="LogIn" method="post" class="form-inline">
-                    @Html.AntiForgeryToken()
-                    <button type="submit" class="btn btn-link nav-link" style="border: none; padding: 0;">Logout</button>
-                </form>
+                
+                    <form asp-action="Logout" asp-controller="LogIn" method="post" class="form-inline">
+                        @Html.AntiForgeryToken()
+                        <div class="headertoplinks">
+                        <button type="submit" class="btn btn-outline-secondary ms-3" >Logout</button>
+                        </div>
+                    </form>
+                
             }
             else
             {
