@@ -93,6 +93,9 @@ ENTRYPOINT ["dotnet", "Gruppe6_Kartverket.Mvc.dll"]
 #ENTRYPOINT ["/app/wait-for-mariadb.sh", "dotnet", "ef", "database", "update", "--project", "/src/Gruppe6_Kartverket.Mvc/Gruppe6_Kartverket.Mvc.csproj", "&&", "dotnet", "Gruppe6_Kartverket.Mvc.dll"]
 
 
+# Add a wait script
+# COPY Gruppe6_Kartverket.Mvc/wait-for-it.sh /usr/local/bin/wait-for-it.sh
+# RUN chmod +x /usr/local/bin/wait-for-it.sh
 
 # Use the runtime image to run the app
 #FROM base AS final

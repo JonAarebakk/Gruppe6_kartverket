@@ -4,8 +4,7 @@ using Gruppe6_Kartverket.Mvc.Models.Database;
 using Gruppe6_Kartverket.Mvc.Models.ViewModels;
 using System.Threading.Tasks;
 using System.Linq;
-using Gruppe6_Kartverket.Mvc.Data; 
-
+using Gruppe6_Kartverket.Mvc.Data;
 
 namespace Gruppe6_Kartverket.Mvc.Controllers
 {
@@ -49,5 +48,33 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
             }
         }
 
+        // Action method to fetch the details of a specific case record
+        public IActionResult CaseDetails(int caseRecordId)
+        {
+            var caseRecord = _context.CaseRecords
+                .Include(c => c.CaseLocation)
+                .Include(c => c.User)
+                .FirstOrDefault(c => c.CaseRecordId == caseRecordId);
+
+            if (caseRecord == null)
+            {
+                return NotFound();
+            }
+
+            var viewModel = new CaseDetailsViewModel
+            {
+                CaseRecordId = caseRecord.CaseRecordId,
+                CaseDate = caseRecord.CaseDate,
+                CaseTitle = caseRecord.CaseTitle,
+                CaseIssueType = caseRecord.CaseIssueType,
+                CaseDescription = caseRecord.CaseDescription,
+                CaseStatus = caseRecord.CaseStatus,
+                LocationId = caseRecord.LocationId,
+                CaseLocation = caseRecord.CaseLocation,
+                User = caseRecord.User
+            };
+
+            return View(viewModel);
+        }
     }
 }

@@ -1,0 +1,117 @@
+@model Gruppe6_Kartverket.Mvc.Models.ViewModels.CaseDetailsViewModel
+
+@{
+    Layout = "~/Views/Shared/_CaseWorkerLayout.cshtml";
+    ViewData["Title"] = "CaseWorkerPage-V2";
+}
+
+@section HeadContent {
+    <link rel="stylesheet" href="~/css/caseWorkerPage-V2.css">
+}
+
+<div class="grid-container">
+    <!-- Sidebar - Grid Item 1 -->
+    <div class="grid-item1">
+        <div id="SideBarV2-Flex">
+            <div class="kategorier-flex-items" id="Kategorier-flex-items1">Inbox</div>
+            <div class="kategorier-flex-items" id="Kategorier-flex-items2">Sent</div>
+            <div class="kategorier-flex-items" id="Kategorier-flex-items3">Drafts</div>
+            <div class="kategorier-flex-items" id="Kategorier-flex-items4">Spam</div>
+            <div class="kategorier-flex-items" id="Kategorier-flex-items5">Trash</div>
+            <div class="kategorier-flex-items" id="Kategorier-flex-items6">Important</div>
+        </div>
+    </div>
+    
+
+<!-- Categories - Grid Item 2 (Horizontal layout) -->
+<div class="grid-item2">
+    <div class="frame sort-and-filter-frame">
+        <div class="sort-and-filter-container">
+            <button class="sort-and-filter-button" onclick="toggleSortAndFilter()">Sorter og filtrer</button>
+            <div class="menu-option-group">
+                <div class="sort-options">
+                    <p>Sorter etter dato:</p>
+                    <div class="sortOrderAsc-radio">
+                        <input id="sortOrderAsc" name="sortOrder" type="radio" value="asc" />
+                        <label for="sortOrderAsc">Stigende</label>
+                    </div>
+                    <div class="sortOrderDesc-radio">
+                        <input id="sortOrderDesc" name="sortOrder" type="radio" value="desc" />
+                        <label for="sortOrderDesc">Synkende</label>
+                    </div>
+                </div>
+                <br>
+                <div class="filter-options">
+                    <p>Filtrer etter status:</p>
+                    <div class="filterAll-radio">
+                        <input id="filterAll" name="filterStatus" type="radio" value="all" />
+                        <label for="filterAll">Alle</label>
+                    </div>
+                    <div class="filterOpen-radio">
+                        <input id="filterOpen" name="filterStatus" type="radio" value="open" />
+                        <label for="filterOpen">Åpnet</label>
+                    </div>
+                    <div class="filterActive-radio">
+                        <input id="filterActive" name="filterStatus" type="radio" value="active" />
+                        <label for="filterActive">Aktiv</label>
+                    </div>
+                    <div class="filterClosed-radio">
+                        <input id="filterClosed" name="filterStatus" type="radio" value="closed" />
+                        <label for="filterClosed">Lukket</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main Content - Grid Item 3 -->
+<div class="grid-item3">
+    @if (Model == null)
+    {
+        <p>Case record not found.</p>
+    }
+    else
+    {
+        <table class="UP-table">
+            <tr>
+                <th>CaseRecordId</th>
+                <td>@Model.CaseRecordId</td>
+            </tr>
+            <tr>
+                <th>CaseDate</th>
+                <td>@Model.CaseDate</td>
+            </tr>
+            <tr>
+                <th>CaseTitle</th>
+                <td>@Model.CaseTitle</td>
+            </tr>
+            <tr>
+                <th>CaseIssueType</th>
+                <td>@Model.CaseIssueType</td>
+            </tr>
+            <tr>
+                <th>CaseDescription</th>
+                <td>@Model.CaseDescription</td>
+            </tr>
+            <tr>
+                <th>CaseStatus</th>
+                <td>@Model.CaseStatus</td>
+            </tr>
+            <tr>
+                <th>LocationId</th>
+                <td>@Model.LocationId</td>
+            </tr>
+            <tr>
+                <th>CaseLocation</th>
+                <td>@Model.CaseLocation?.Municipality</td>
+            </tr>
+            <tr>
+                <th>UserId</th>
+                <td>@Model.User?.UserName</td>
+            </tr>
+        </table>
+    }
+</div>
+
+</div>

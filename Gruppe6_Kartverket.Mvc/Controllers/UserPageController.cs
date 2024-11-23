@@ -1,50 +1,45 @@
-
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Gruppe6_Kartverket.Mvc.Models.Database;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
+using Gruppe6_Kartverket.Mvc.Data;
+using Gruppe6_Kartverket.Mvc.Models.ViewModels;
 
-namespace Gruppe6_Kartverket.Mvc.Controllers;
-
-public class UserPageController : Controller
+namespace Gruppe6_Kartverket.Mvc.Controllers
 {
-
-    // GET
-    public IActionResult UserPage()
+    [Authorize]
+    public class UserPageController : Controller
     {
-        var model = new User
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly ApplicationDbContext _dbContext;
+
+        public UserPageController(UserManager<IdentityUser> userManager, ApplicationDbContext dbContext)
         {
-            UserName = "User Name",
-            //NewMessagesCount = 5,
-            // CaseRecords = GetCases() // Assuming GetCases is a method that retrieves cases for the user
-        };
-        ViewBag.HideFooter = true; // Hide footer in this view
-        return View(model);
-    }
+            _userManager = userManager;
+            _dbContext = dbContext;
+        }
 
-    public IActionResult Settings()
-    {
-        // Logic to load settings
-        return View("Settings");
-    }
-
-    public IActionResult Profile()
-    {
-        // Logic to load user profile
-        return View("Profile");
-    }
-
-    public IActionResult Logout()
-    {
-        // Logic to handle logout
-        return RedirectToAction("Index", "Home");
-    }
-
-    /*private List<CaseRecord> GetCases()
-    {
-        return new List<CaseRecord>
+        public async Task<IActionResult> UserPage()
         {
-            
-            new CaseRecord { UserId = "3", CaseTitle = "Case 1", CaseDate = DateTime.Now, CaseStatus = "Open" },
-            new CaseRecord { UserId = "8", CaseTitle = "Case 2", CaseDate = DateTime.Now, CaseStatus = "Closed" } 
-        };
-    }*/
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return RedirectToAction("LogIn", "LogIn");
+            }
+
+            var userId = Guid.Parse(user.Id);
+            var caseRecords = await _dbContext.CaseRecords
+                .Where(cr => cr.UserId == userId)
+                .ToListAsync();
+
+            var viewModel = new CaseWorkerPageV2ViewModel
+            {
+                CaseRecords = caseRecords
+            };
+
+            return View(viewModel);
+        }
+    }
 }
