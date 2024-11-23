@@ -47,7 +47,7 @@
 
             <div class="HeaderTopLinks">
                 <a href="@Url.Action("ContactUs", "ContactUs")" class="btn btn-outline-secondary ms-3">
-                    Contact Us
+                    Contact Us </a>
             <!-- Authentication Links -->
             @if (User.Identity.IsAuthenticated)
             {
@@ -69,11 +69,13 @@
                 <img src="~/icons/settings.png" alt="settingsIcon" />
             </a>
         </div>
+        </div>
     </nav>
 </header>
 
-<div class="renderBody-div">
-    <main role="main">
+    <footer>
+    <div class="renderBody-div">
+     <main role="main">
         @RenderBody()
 @if (ViewBag.HideFooter == null || ViewBag.HideFooter == false)
 {
@@ -111,7 +113,7 @@
                 <a href="https://vimeo.com/kartverket/videos" rel="noopener nofollow">Video</a>
             </div>
         </footer>
-    }
+    }  </main>
         </div>
     </footer>
     }
