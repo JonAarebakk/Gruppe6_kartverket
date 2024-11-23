@@ -246,14 +246,6 @@ function createFeatureCollection() {
     console.log(geoJsonString);
 }
 
-/* Function to get GeoJSON from the map */
-function getGeoJsonFromMap() {
-    var features = vectorSource.getFeatures();
-    var geoJsonFormat = new ol.format.GeoJSON();
-    var geoJsonData = geoJsonFormat.writeFeatures(features);
-    return geoJsonData;
-}
-
 //#endregion
 
 /*
