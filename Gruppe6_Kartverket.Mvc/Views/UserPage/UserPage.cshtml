@@ -13,7 +13,7 @@
     <div class="tab-container">
         <div class="tab-buttons">
             <button class="tab-button active" onclick="openTab(event, 'Inbox')">Inbox</button>
-            <button class="tab-button" onclick="openTab(event, 'ProfileSettings')">Profil-innstillinger</button>
+            <button class="tab-button" onclick="openTab(event, 'Profil_instillinger')">Profil innstillinger</button>
         </div>
     </div>
     <div id="Inbox" class="tab-content active user-inbox">
@@ -93,14 +93,22 @@
             </div>
         </div>
     </div>
-</div>
-    <div id="ProfileSettings" class="tab-content">
-        <!-- Innholdet for Profil-innstillinger -->
+    <div id="Profil_instillinger" class="tab-content">
         <div class="profile-settings-container">
             <h2>Profil-innstillinger</h2>
-            <!-- Legg til innholdet for profil-innstillinger her -->
         </div>
     </div>
+</div>
+
+<div id="ProfileSettings" class="tab-content">
+    <!-- Innholdet for Profil-innstillinger -->
+    <div class="profile-settings-container">
+        <h2>Profil-innstillinger</h2>
+
+        </div>
+</div>
+
+
 
 @section Scripts {
 <script>

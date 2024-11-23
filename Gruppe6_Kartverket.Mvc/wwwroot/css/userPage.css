@@ -1,7 +1,7 @@
 
 /*
 **************************************
-***  Styling for the tab in general / faner ***
+***  Styling for the tab in general ***
 **************************************
 */
 
@@ -43,7 +43,7 @@
 .tab-content {
     display: none;
     padding: 20px;
-    border-radius: 0 10px 10px 10px; /* Round bottom corners */
+   /* border-radius: 0 10px 10px 10px; */ /* Round bottom corners */ 
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow effect */
 }
 
@@ -285,3 +285,20 @@
     margin-right: 10px;
 }
 
+/*
+**************************************
+***  Profile settings-tab ***
+**************************************
+*/
+
+.profile-settings-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center vertically */
+    align-items: flex-start; /* Align items to the left */
+    width: 60%;
+    height: 600%;
+    padding: 20px;
+    background: white;
+    margin: auto; /* Center horizontally within its parent */
+}
