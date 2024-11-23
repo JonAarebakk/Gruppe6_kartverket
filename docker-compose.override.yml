@@ -8,7 +8,7 @@ services:
       - "8080"
       - "8081"
     volumes:
-     - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro #Windows
-     - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro                  #Windows
-     #- ${HOME}/.microsoft/usersecrets:/home/app/.microsoft/usersecrets:ro   #Mac and Linux
-     #- ${HOME}/.aspnet/https:/home/app/.aspnet/https:ro                     #Mac and Linux
+     # ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro  #Windows
+     #- ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro                  #Windows
+     - ${HOME}/.microsoft/usersecrets:/home/app/.microsoft/usersecrets:ro   #Mac and Linux
+     - ${HOME}/.aspnet/https:/home/app/.aspnet/https:ro                     #Mac and Linux
