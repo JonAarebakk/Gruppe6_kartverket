@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Gruppe6_Kartverket.Mvc.Models;
 using Gruppe6_Kartverket.Mvc.Models.Database;
 using Gruppe6_Kartverket.Mvc.Data;
@@ -42,21 +43,48 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await _userManager.FindByEmailAsync(model.Email);
-                if (user != null)
+                var identityUser = await _userManager.FindByEmailAsync(model.Email);
+                if (identityUser != null)
                 {
-                    var result = await _signInManager.PasswordSignInAsync(
-                        userName: model.Email,
-                        password: model.Password,
-                        isPersistent: false,
-                        lockoutOnFailure: false);
+                    var user = await _dbContext.Users
+                        .FirstOrDefaultAsync(u => u.UserId == Guid.Parse(identityUser.Id) && u.UserPassword == model.Password);
 
-                    if (result.Succeeded)
+                    if (user != null)
                     {
-                        return RedirectToAction("LandingPage", "LandingPage");
+                        var result = await _signInManager.PasswordSignInAsync(
+                            userName: identityUser.UserName,
+                            password: model.Password,
+                            isPersistent: false,
+                            lockoutOnFailure: false);
+
+                        if (result.Succeeded)
+                        {
+                            var roles = await _userManager.GetRolesAsync(identityUser);
+                            if (user.UserType == "Ad")
+                            {
+                                return RedirectToAction("LandingPage", "LandingPage");
+                            }
+                            else if (user.UserType == "Us")
+                            {
+                                return RedirectToAction("LandingPage", "LandingPage");
+                            }
+                        }
+                        else
+                        {
+                            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                        }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Invalid password.");
                     }
                 }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "User not found.");
+                }
             }
+
             return View(model);
         }
 
@@ -67,9 +95,9 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegistrationFormModel model)
         {
-            // Validate email
             if (string.IsNullOrEmpty(model.Email))
             {
                 ModelState.AddModelError("Email", "Email is required.");
@@ -79,23 +107,35 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
                 ModelState.AddModelError("Email", "Invalid email format.");
             }
 
-            // Check if the model state is valid after all validations
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            // Create Identity user
-            var identityUser = new IdentityUser { UserName = model.Username, Email = model.Email };
-            identityUser.Id = Guid.NewGuid().ToString();
+            var existingUser = await _dbContext.UserInfos
+                .Include(ui => ui.User)
+                .FirstOrDefaultAsync(ui => ui.Email == model.Email || ui.User.UserName == model.Username);
+            if (existingUser != null)
+            {
+                ModelState.AddModelError(string.Empty, "User with this email or username already exists.");
+                return View(model);
+            }
+
+            var identityUser = new IdentityUser
+            {
+                UserName = model.Username,
+                Email = model.Email,
+                NormalizedEmail = model.Email.ToUpper(),
+                NormalizedUserName = model.Username.ToUpper()
+            };
+
             var result = await _userManager.CreateAsync(identityUser, model.Password);
 
             if (result.Succeeded)
             {
-                // Create UserInfo entry
                 var userInfo = new UserInfo
                 {
-                    UserId = identityUser.Id,
+                    UserId = Guid.Parse(identityUser.Id),
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     PhoneNumber = model.PhoneNumber,
@@ -105,24 +145,21 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
                     Email = model.Email
                 };
 
-                var user = new User
+                var users = new User
                 {
-                    UserId = identityUser.Id,
-                    UserType = "Us",
                     UserName = model.Username,
-                    UserPassword = model.Password
+                    UserPassword = model.Password,
+                    UserId = Guid.Parse(identityUser.Id),
+                    UserType = model.UserType
                 };
-
+                _dbContext.Users.Add(users);
                 _dbContext.UserInfos.Add(userInfo);
-                _dbContext.Users.Add(user);
                 await _dbContext.SaveChangesAsync();
 
-                // Sign in the user
                 await _signInManager.SignInAsync(identityUser, isPersistent: false);
                 return RedirectToAction("LandingPage", "LandingPage");
             }
 
-            // Add any errors from the Identity user creation
             foreach (var error in result.Errors)
             {
                 ModelState.AddModelError(string.Empty, error.Description);

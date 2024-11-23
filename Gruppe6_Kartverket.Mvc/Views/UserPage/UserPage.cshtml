@@ -1,11 +1,12 @@
-@model Gruppe6_Kartverket.Mvc.Models.Database.User
+@model Gruppe6_Kartverket.Mvc.Models.ViewModels.CaseWorkerPageV2ViewModel
 
 @{
     ViewData["Title"] = "UserPage";
 }
 
 @section HeadContent {
-<link rel="stylesheet" href="~/css/userPage.css" />
+    <link rel="stylesheet" href="~/css/userPage.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 }
 
         
@@ -26,28 +27,54 @@
                             <tr>
                                 <th>Status på sak</th>
                                 <th>Bruker-Id</th>
-                                <th>Brukernavn</th>
                                 <th>Saksdato</th>
                                 <th>Tittel</th>
-                                <th>Sakstype</th>
                                 <th>Beskrivelse</th>
+                                <th>SaksType</th>
                             </tr>
                             </thead>
                             <tbody>
 
-
-                            @foreach (var caseRecord in Model.CaseRecords)
+                            @if (Model != null && Model.CaseRecords != null && Model.CaseRecords.Any())
+                            {
+                                foreach (var caseRecord in Model.CaseRecords)
+                                {
+                                    <tr>
+                                        <td>@caseRecord.CaseStatus</td>
+                                        <td>@caseRecord.UserId</td>
+                                        <td>@caseRecord.CaseDate.ToString("yyyy-MM-dd")</td>
+                                        <td>@caseRecord.CaseTitle</td>
+                                        <td>
+                                            <span class="description-text">@caseRecord.CaseDescription</span>
+                                            <form asp-action="EditCaseDescription" asp-controller="MapPage" method="post" class="edit-form" style="display:none;">
+                                                <input type="hidden" name="caseId" value="@caseRecord.CaseRecordId"/>
+                                                <input type="text" name="newDescription" value="@caseRecord.CaseDescription"/>
+                                                <button type="submit" class="btn btn-primary">Save</button>
+                                            </form>
+                                            <button class="btn btn-primary edit-button" onclick="toggleEditForm(this)">
+                                                <i class="fas fa-edit"></i> Edit
+                                            </button>
+                                        </td>
+                                        <td>@caseRecord.CaseIssueType</td>
+                                        <td>
+                                            <form asp-action="DeleteCase" asp-controller="MapPage" method="post">
+                                                <input type="hidden" name="caseId" value="@caseRecord.CaseRecordId" />
+                                                <button class="btn btn-danger delete-button" onclick="return confirm('Are you sure you want to delete this case?');">
+                                                    <i class="fas fa-trash-alt"></i> Delete
+                                                </button>
+                                            </form>
+                                        </td>
+                                        
+                                    </tr>
+                                }
+                            }
+                            else
                             {
                                 <tr>
-                                    <td class="status-color">@caseRecord.CaseStatus</td>
-                                    <td>@Model.UserId</td>
-                                    <td>@Model.UserName</td>
-                                    <td>@caseRecord.CaseDate.ToString("yyyy-MM-dd")</td>
-                                    <td>@caseRecord.CaseTitle</td>
-                                    <td>@caseRecord.CaseIssueType</td>
-                                    <td>@caseRecord.CaseDescription</td>
+                                    <td colspan="7">Ingen saker å vise.</td>
                                 </tr>
                             }
+                            
                             </tbody>
                         </table>
                     </div>
@@ -184,4 +211,20 @@
         document.querySelector('.tab-button').classList.add('active');
     });
 </script>
+
+    <script>
+        function toggleEditForm(button) {
+            var form = button.previousElementSibling;
+            var descriptionText = form.previousElementSibling;
+            if (form.style.display === "none") {
+                form.style.display = "block";
+                descriptionText.style.display = "none";
+                button.innerHTML = '<i class="fas fa-times"></i> Cancel';
+            } else {
+                form.style.display = "none";
+                descriptionText.style.display = "block";
+                button.innerHTML = '<i class="fas fa-edit"></i> Edit';
+            }
+        }
+    </script>
 }

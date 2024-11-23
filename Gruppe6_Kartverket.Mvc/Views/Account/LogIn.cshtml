@@ -25,9 +25,18 @@ ViewData["Title"] = "Logg inn";
             <input asp-for="Password" class="form-control" required autocomplete="current-password" />
             <span asp-validation-for="Password" class="text-danger"></span>
         </div>
-        <button type="submit" class="btn btn-primary">Login</button>
+        <button type="submit" class="btn btn-primary" style="margin-top: 10px">Login</button>
         </form>
         <a href="#" class="reset-link">Glemt passord?</a>
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="alert alert-danger">
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <p>@error.ErrorMessage</p>
+                }
+            </div>
+        }
     </div>
 </div>
 

@@ -73,8 +73,8 @@ ViewData["Title"] = "CaseWorkerPage-V2";
         }
         else
         {
-        <table>
-            <thead>
+        <table class="UP-table">
+            <thead class="UP-table-head">
             <tr>
                 <th>CaseRecordId</th>
                 <th>CaseDate</th>
@@ -90,12 +90,12 @@ ViewData["Title"] = "CaseWorkerPage-V2";
             <tbody>
             @foreach (var caseRecord in Model.CaseRecords)
             {
-            <tr>
+            <tr class="expandable">
                 <td>@caseRecord.CaseRecordId</td>
                 <td>@caseRecord.CaseDate</td>
                 <td>@caseRecord.CaseTitle</td>
                 <td>@caseRecord.CaseIssueType</td>
-                <td>@caseRecord.CaseDescription</td>
+                <td class="description">@caseRecord.CaseDescription</td>
                 <td>@caseRecord.CaseStatus</td>
                 <td>@caseRecord.LocationId</td>
                 <td>@caseRecord.CaseLocation?.Municipality</td>
@@ -147,5 +147,18 @@ ViewData["Title"] = "CaseWorkerPage-V2";
             }
         });
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const rows = document.querySelectorAll('.expandable');
+
+        rows.forEach(row => {
+            row.addEventListener('click', function() {
+                const caseRecordId = this.querySelector('td').innerText;
+                window.location.href = `/CaseWorker/CaseDetails?caseRecordId=${caseRecordId}`;
+            });
+        });
+    });
+    
+    
 </script>
 }

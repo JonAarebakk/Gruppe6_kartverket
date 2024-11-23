@@ -1,10 +1,18 @@
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.EntityFrameworkCore
+@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<IdentityUser> SignInManager
+@inject Gruppe6_Kartverket.Mvc.Data.ApplicationDbContext _dbContext
+
 @{
-ViewBag.Title = "Landing Page";
-Layout = "_Layout";
+    ViewBag.Title = "Landing Page";
+    Layout = "_Layout";
+
+    var identityUser = await UserManager.GetUserAsync(User);
+    var user = identityUser != null ? await _dbContext.Users.FirstOrDefaultAsync(u => u.UserId == Guid.Parse(identityUser.Id)) : null;
 }
 
-
-@section HeadContent { 
+@section HeadContent {
     <link rel="stylesheet" href="~/css/landingPage.css" /> <!-- Link to combined CSS file -->
 }
 
@@ -12,24 +20,52 @@ Layout = "_Layout";
     <div class="landingPage-wrapper">
         <div class="cards-container">
             <div class="card">
-                <h2>Gå til kartet uten bruker</h2>
-                <p>Utforsk kartet uten å logge inn.</p>
-                <br />
-                <a href="@Url.Action("MapPage", "MapPage")" class="card-button">Gå til kartet</a>
+                @if(identityUser != null)
+                {
+                    <h2>Gå til kartet</h2>
+                    <p>Utforsk kartet og meld inn en case</p>
+                    <br/>
+                    <a href="@Url.Action("MapPage", "MapPage")" class="card-button">Gå til kartet</a>
+                }
+                else
+                {
+                    <h2>Gå til kartet uten bruker</h2>
+                    <p>Utforsk kartet uten å logge inn.</p>
+                    <br/>
+                    <a href="@Url.Action("MapPage", "MapPage")" class="card-button">Gå til kartet</a>
+                }
             </div>
-
+                
             <div class="card">
                 <h2>Logg inn</h2>
                 <p>Logg inn for å få tilgang til dine kartdata.</p>
                 <a href="@Url.Action("LogIn", "LogIn")" class="card-button">Logg inn</a>
             </div>
 
-            <div class="card">
+            @if (user != null && user.UserType == "Ad")
+            {
+                <div class="card">
+                    <h2>Mine Cases</h2>
+                    <p>Administrere cases</p>
+                    <a href="@Url.Action("CaseWorkerPageV2", "CaseWorker")" class="card-button">Dine Cases</a>
+                </div>
+            }
+            else if (user != null && user.UserType == "Us")
+            {
+                <div class="card">
+                    <h2>Mine Cases</h2>
+                    <p>Sjekk og forandre på dine eksisterende cases</p>
+                    <a href="@Url.Action("UserPage", "UserPage")" class="card-button">Go to User Page</a>
+                </div>
+            }
+            else
+            {
+                <div class="card">
                 <h2>Registrer en bruker her</h2>
                 <p>Opprett en ny konto for å lagre dine kartpreferanser.</p>
                 <a href="@Url.Action("Register", "LogIn")" class="card-button">Register</a>
-            </div>
-        
+                </div>
+            }
         </div>
     </div>
     <div>

@@ -4,22 +4,18 @@ namespace Gruppe6_Kartverket.Mvc.Models
 {
     public class CaseRegistrationModel
     {
-        [Required(ErrorMessage = "Case Title is required")]
-        [StringLength(35, ErrorMessage = "Case Title must be less than 35 characters")]
-        public required string CaseTitle { get; set; }
-        
-        
+        [Required(ErrorMessage = "Case title is required.")]
+        [StringLength(100, ErrorMessage = "Case title cannot be longer than 100 characters.")]
+        public string CaseTitle { get; set; }
 
-        public required string Kategori { get; set; }
+        [Required(ErrorMessage = "Category is required.")]
+        public string Kategori { get; set; }
 
-        [Required(ErrorMessage = "Beskrivelse is required")]
-        [StringLength(300, ErrorMessage = "Beskrivelse must be less than 300 characters")]
-        public required string Beskrivelse { get; set; }
+        [Required(ErrorMessage = "Description is required.")]
+        [StringLength(500, ErrorMessage = "Description cannot be longer than 500 characters.")]
+        public string Beskrivelse { get; set; }
 
-        public required string GeoJson { get; set; }
-
-
-
-        /* Maybe have image as well? */
+        // [Required(ErrorMessage = "GeoJson is required.")]
+        // public string GeoJson { get; set; }
     }
 }

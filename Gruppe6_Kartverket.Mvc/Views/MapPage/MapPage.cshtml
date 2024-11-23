@@ -10,7 +10,7 @@
 }
 
 <div class="map-page-wrapper">
-    <div class="map-and-control-wrapper"> 
+    <div class="map-and-control-wrapper">
         <div class="map" id="map"></div>
         <div class="control-button-bar">
             <div class="new-case" id="new-case">
@@ -28,25 +28,25 @@
     <div class="case-input-wrapper" id="case-input-wrapper">
         <form asp-controller="MapPage" asp-action="MapPage" id="CaseForm" method="post">
             <p>
-                <div>
-                    <label asp-for="CaseTitle">Tittel på case:</label>
-                    <input asp-for="CaseTitle" placeholder="Skriv inn tittel" />
-                    <span asp-validation-for="CaseTitle" class="text-danger"></span>
-                </div>
+            <div>
+                <label asp-for="CaseTitle">Tittel p� case:</label>
+                <input asp-for="CaseTitle" placeholder="Skriv inn tittel" />
+                <span asp-validation-for="CaseTitle" class="text-danger"></span>
+            </div>
             </p>
             <p>
-                <div>
-                    <label asp-for="Kategori">Kategori:</label>
-                    <select asp-for="Kategori">
-                        <option value="" selected disabled>Velg kategori</option>
-                        <option value="Hindring">Hindring</option>
-                        <option value="Vei">Vei</option>
-                        <option value="Sti">Sti</option>
-                        <option value="Adresse">Adresse</option>
-                        <option value="Tunell">Tunell</option>
-                        <option value="Annet">Annet</option>
-                    </select>
-                </div>
+            <div>
+                <label asp-for="Kategori">Kategori:</label>
+                <select asp-for="Kategori">
+                    <option value="" selected disabled>Velg kategori</option>
+                    <option value="Hindring">Hindring</option>
+                    <option value="Vei">Vei</option>
+                    <option value="Sti">Sti</option>
+                    <option value="Adresse">Adresse</option>
+                    <option value="Tunell">Tunell</option>
+                    <option value="Annet">Annet</option>
+                </select>
+            </div>
             </p>
             <p>
                 <div>
@@ -58,7 +58,7 @@
             <input asp-for="GeoJson" type="hidden" id="geoJsonInput"/>
             <button type="submit" class="btn btn-primary">Testing</button>
         </form>
-        
+
         <p>Input for case info will be placed in here</p>
         <div class="submit-cancel-wrapper">
             <button class="cancel-case-button" id="cancel-case-button">Avbryt</button>
@@ -85,7 +85,7 @@
         <div>
             <input type="text" placeholder="Telefonnummer">
             <button>Verifiser</button>
-            <button style="display: none;">Gå videre</button>
+            <button style="display: none;">GÃ¥ videre</button>
             <button class="popup-close">Close</button> <!-- Change to are you sure or something idk -->
         </div>
     </div>
@@ -95,13 +95,13 @@
             "Legg til praktisk info her"
         </p>
         <div>
-            <button onclick="location.href='@Url.Action("LogIn", "LogIn")'">Logg inn</button>
+            <button onclick="location.href='@Url.Action("LogIn", "Account")'">Logg inn</button>
             <button id="to-tlf-popup">Telefonnummer</button>
             <button class="popup-close">Close</button>
         </div>
     </div>
     <div class="popup" id="delete-features">
-        <h2>Det er ingen flere tegninger å slette</h2>
+        <h2>Det er ingen flere tegninger Ã¥ slette</h2>
         <button class="popup-close">Close</button>
     </div>
     <div class="popup" id="max-features">
@@ -122,14 +122,21 @@
     <div class="popup" id="case-not-valid">
         <h2>Ikke alle felt er fylt inn</h2>
         <p>
-            Pass p� at alle feltene er fylt inn og at det er tegnet en figur p� kartet.
+            Pass på at alle feltene er fylt inn og at det er tegnet en figur på kartet.
+        </p>
+        <button class="popup-close">Ok</button>
+    </div>
+    <div class="popup" id="case-not-valid">
+        <h2>Ikke alle felt er fylt inn</h2>
+        <p>
+            Pass på at alle feltene er fylt inn og at det er tegnet en figur på kartet.
         </p>
         <button class="popup-close">Ok</button>
     </div>
     <div class="popup" id="avbryt-case">
         <h2>Avbryt?</h2>
         <p>
-            Ønsker du å avbryte? Dette vil slette all informasjon som er lagt inn.
+            Ã˜nsker du Ã¥ avbryte? Dette vil slette all informasjon som er lagt inn.
         </p>
         <button class="cancel-case-confirmation">Avbryt</button>
         <button class="popup-close">Tilbake</button>
