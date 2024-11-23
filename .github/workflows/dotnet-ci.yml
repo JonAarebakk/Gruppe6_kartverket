@@ -48,9 +48,10 @@ jobs:
   build:
     strategy:
       matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
         configuration: [Debug, Release]
 
-    runs-on: windows-latest
+    runs-on: ${{ matrix.os }}
 
     env:
       Solution_Name: Gruppe6_Kartverket.sln
@@ -67,11 +68,15 @@ jobs:
       with:
         dotnet-version: 8.0.x
 
-    - name: Setup MSBuild.exe
+    - name: Setup MSBuild.exe (Windows only)
+      if: runner.os == 'Windows'
       uses: microsoft/setup-msbuild@v2
 
     - name: Execute unit tests
       run: dotnet test ${{ env.Test_Project_Path }} --configuration ${{ matrix.configuration }}
 
     - name: Restore the application
-      run: msbuild ${{ env.Solution_Name }} /t:Restore /p:Configuration=${{ matrix.configuration }}
+      run: dotnet restore ${{ env.Solution_Name }}
+
+    - name: Build the application
+      run: dotnet build ${{ env.Solution_Name }} --configuration ${{ matrix.configuration }}
