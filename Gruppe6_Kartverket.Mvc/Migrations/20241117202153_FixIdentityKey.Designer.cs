@@ -4,6 +4,7 @@ using Gruppe6_Kartverket.Mvc.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gruppe6_Kartverket.Mvc.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241117202153_FixIdentityKey")]
+    partial class FixIdentityKey
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,8 +85,8 @@ namespace Gruppe6_Kartverket.Mvc.Migrations
                     b.Property<int?>("LocationId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("varchar(255)");
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("CaseRecordId");
 
@@ -96,9 +99,11 @@ namespace Gruppe6_Kartverket.Mvc.Migrations
 
             modelBuilder.Entity("Gruppe6_Kartverket.Mvc.Models.Database.User", b =>
                 {
-                    b.Property<string>("UserId")
+                    b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("UserId"));
 
                     b.Property<string>("UserName")
                         .IsRequired()
@@ -124,8 +129,8 @@ namespace Gruppe6_Kartverket.Mvc.Migrations
 
             modelBuilder.Entity("Gruppe6_Kartverket.Mvc.Models.Database.UserInfo", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("varchar(255)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .IsRequired()
