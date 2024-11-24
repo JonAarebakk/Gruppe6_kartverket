@@ -16,6 +16,6 @@ namespace Gruppe6_Kartverket.Mvc.Models
         public string Beskrivelse { get; set; }
 
         [Required(ErrorMessage = "GeoJson is required.")]
-        public string GeoJson { get; set; }
+         public string GeoJson { get; set; }
     }
 }

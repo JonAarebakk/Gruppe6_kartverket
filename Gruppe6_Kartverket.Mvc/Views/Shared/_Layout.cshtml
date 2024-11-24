@@ -27,7 +27,7 @@
 
 <body>
 <header>
-    
+
     <!-- The many class names in the class attribute are used to apply specific styles and behaviors from the Bootstrap framework. -->
     <nav id="navigation-bar" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
         <div class="container-fluid">
@@ -47,36 +47,47 @@
 
             <div class="HeaderTopLinks">
                 <a href="@Url.Action("ContactUs", "ContactUs")" class="btn btn-outline-secondary ms-3">
-                    Contact Us </a>
+                    Contact Us
+                </a>
+            </div>
+
             <!-- Authentication Links -->
             @if (User.Identity.IsAuthenticated)
             {
-                <form asp-action="Logout" asp-controller="Account" method="post" class="form-inline">
-                    @Html.AntiForgeryToken()
-                    <button type="submit" class="btn btn-link nav-link" style="border: none; padding: 0;">Logout</button>
-                </form>
+                <div class="HeaderTopLinks">
+                    <form asp-action="Logout" asp-controller="Account" method="post" class="form-inline">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-outline-secondary ms-3" style="border: none; padding: 0;">Logout</button>
+                    </form>
+                </div>
                 <a href="@Url.Action("UserPage", "UserPage")" class="user-icon-btn">
                     <img src="~/icons/user.png" alt="userIcon"/>
                 </a>
             }
             else
             {
-                <a href="@Url.Action("Login", "Account")" class="btn btn-outline-secondary ms-3">Login</a>
-                <a href="@Url.Action("Register", "Account")" class="btn btn-outline-secondary ms-3">Register</a>
+                <div class="HeaderTopLinks">
+                    <a href="@Url.Action("Login", "Account")" class="btn btn-outline-secondary ms-3">Login</a>
+                </div>
+                <div class="HeaderTopLinks">
+                    <a href="@Url.Action("Register", "Account")" class="btn btn-outline-secondary ms-3">Register</a>
+                </div>
             }
             <!-- Settings Icon -->
             <a href="@Url.Action("Settings", "Settings")" class="settings-container">
                 <img src="~/icons/settings.png" alt="settingsIcon" />
             </a>
         </div>
-        </div>
+
     </nav>
 </header>
 
-    <footer>
-    <div class="renderBody-div">
-     <main role="main">
+
+<div class="renderBody-div">
+    <main role="main">
         @RenderBody()
+    </main>
+</div>
 @if (ViewBag.HideFooter == null || ViewBag.HideFooter == false)
 {
     <footer class="sitefooter">
@@ -86,37 +97,36 @@
                 <img src="~/images/logo.svg" id="logoContainer" />
             </a>
         </div>
-                <img src="~/images/logo.svg" id="logoContainer" />
-            <!-- Second Column: Contact Info -->
-            <div class="sitefooter-column">
-                <h4>Hjelp</h4>
-                <p>Telefon: <a href="tel:32118000">32 11 80 00</a></p>
-                <p>E-post: <a href="mailto:post@kartverket.no">post@kartverket.no</a></p>
-                <p><a href="/om-kartverket/kontakt-oss">Kontaktinfo og adresser</a></p> <!--NB! DENNE LINKEN FØRER INGEN STEDER-->
-            </div>
+        <!-- Second Column: Contact Info -->
+        <div class="sitefooter-column">
+            <h4>Hjelp</h4>
+            <p>Telefon: <a href="tel:32118000">32 11 80 00</a></p>
+            <p>E-post: <a href="mailto:post@kartverket.no">post@kartverket.no</a></p>
+            <p><a href="/om-kartverket/kontakt-oss">Kontaktinfo og adresser</a></p> <!--NB! DENNE LINKEN FØRER INGEN STEDER-->
+        </div>
 
-            <!-- Third Column: Help Links -->
-            <div class="sitefooter-column">
-                <h4>Hjelp</h4>
-                <a href="http://status.kartverket.no/" rel="noopener nofollow">Driftsmeldinger</a><br>
-                <a href="/om-kartverket/faq" rel="noopener nofollow">Ofte stilte spørsmål</a><br> <!--NB! DENNE LINKEN FØRER INGEN STEDER-->
-                <a href="/eiendom/skjema/alleskjema" rel="noopener nofollow">Skjemaer</a> <!--NB! DENNE LINKEN FØRER INGEN STEDER-->
-            </div>
+
+        <!-- Third Column: Help Links -->
+        <div class="sitefooter-column">
+            <h4>Hjelp</h4>
+            <a href="http://status.kartverket.no/" rel="noopener nofollow">Driftsmeldinger</a><br>
             <a href="/om-kartverket/faq" rel="noopener nofollow">Ofte stilte spørsmål</a><br> <!--NB! DENNE LINKEN FØRER INGEN STEDER-->
-            <!-- Fourth Column: Follow Us and Social Links -->
-            <div class="sitefooter-column">
-                <h4>Følg oss</h4>
-                <a href="https://www.facebook.com/kartverket.no" rel="noopener nofollow">Facebook</a><br>
-                <a href="https://www.instagram.com/kartverket.no" rel="noopener nofollow">Instagram</a><br>
-                <a href="https://www.linkedin.com/company/65713?trk=NUS_CMPY_TWIT" rel="noopener nofollow">LinkedIn</a><br>
-                <a href="https://pub.dialogapi.no/s/3403d74a-8e34-4ab5-a221-1bf58c425982" rel="noopener nofollow">Nyhetsbrev</a><br>
-                <a href="https://vimeo.com/kartverket/videos" rel="noopener nofollow">Video</a>
-            </div>
-        </footer>
-    }  </main>
+            <a href="/eiendom/skjema/alleskjema" rel="noopener nofollow">Skjemaer</a> <!--NB! DENNE LINKEN FØRER INGEN STEDER-->
+        </div>
+        <a href="/om-kartverket/faq" rel="noopener nofollow">Ofte stilte spørsmål</a><br> <!--NB! DENNE LINKEN FØRER INGEN STEDER-->
+        <!-- Fourth Column: Follow Us and Social Links -->
+        <div class="sitefooter-column">
+            <h4>Følg oss</h4>
+            <a href="https://www.facebook.com/kartverket.no" rel="noopener nofollow">Facebook</a><br>
+            <a href="https://www.instagram.com/kartverket.no" rel="noopener nofollow">Instagram</a><br>
+            <a href="https://www.linkedin.com/company/65713?trk=NUS_CMPY_TWIT" rel="noopener nofollow">LinkedIn</a><br>
+            <a href="https://pub.dialogapi.no/s/3403d74a-8e34-4ab5-a221-1bf58c425982" rel="noopener nofollow">Nyhetsbrev</a><br>
+            <a href="https://vimeo.com/kartverket/videos" rel="noopener nofollow">Video</a>
         </div>
     </footer>
-    }
+}
+
+
 
 <!-- JavaScript-filer -->
 <script src="~/lib/jquery/dist/jquery.min.js"></script>

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gruppe6_Kartverket.Mvc.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241117202153_FixIdentityKey")]
-    partial class FixIdentityKey
+    [Migration("20241123211521_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -85,8 +85,8 @@ namespace Gruppe6_Kartverket.Mvc.Migrations
                     b.Property<int?>("LocationId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("char(36)");
 
                     b.HasKey("CaseRecordId");
 
@@ -99,11 +99,9 @@ namespace Gruppe6_Kartverket.Mvc.Migrations
 
             modelBuilder.Entity("Gruppe6_Kartverket.Mvc.Models.Database.User", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<Guid>("UserId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("UserId"));
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("UserName")
                         .IsRequired()
@@ -129,8 +127,8 @@ namespace Gruppe6_Kartverket.Mvc.Migrations
 
             modelBuilder.Entity("Gruppe6_Kartverket.Mvc.Models.Database.UserInfo", b =>
                 {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("Email")
                         .IsRequired()

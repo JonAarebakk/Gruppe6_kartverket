@@ -39,8 +39,9 @@
             <div class="card">
                 <h2>Logg inn</h2>
                 <p>Logg inn for å få tilgang til dine kartdata.</p>
-                <a href="@Url.Action("LogIn", "LogIn")" class="card-button">Logg inn</a>
+                <a href="@Url.Action("LogIn", "Account")" class="card-button">Logg inn</a>
             </div>
+
 
             @if (user != null && user.UserType == "Ad")
             {
@@ -63,7 +64,7 @@
                 <div class="card">
                 <h2>Registrer en bruker her</h2>
                 <p>Opprett en ny konto for å lagre dine kartpreferanser.</p>
-                <a href="@Url.Action("Register", "LogIn")" class="card-button">Register</a>
+                <a href="@Url.Action("Register", "Account")" class="card-button">Register</a>
                 </div>
             }
         </div>

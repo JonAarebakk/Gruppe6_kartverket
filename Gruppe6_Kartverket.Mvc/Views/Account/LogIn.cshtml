@@ -14,7 +14,7 @@ ViewData["Title"] = "Logg inn";
 <div class="login-wrapper">
     <div class="login-container">
         <h1>Logg inn</h1>
-        <form asp-action="LogIn" method="post">
+        <form asp-controller="Account" asp-action="LogIn" method="post">
         <div class="form-group">
             <label asp-for="Email"><b>Email</b></label>
             <input asp-for="Email" class="form-control" required autocomplete="email" />
