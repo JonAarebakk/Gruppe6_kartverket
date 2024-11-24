@@ -6,7 +6,7 @@ ViewData["Title"] = "CaseInfo";
 }
 
 @section HeadContent {
-    <link rel="stylesheet" href="~/css/caseInfoPage.css">
+<link rel="stylesheet" href="~/css/caseInfoPage.css" xmlns="http://www.w3.org/1999/html">
 }
 
 
@@ -15,31 +15,29 @@ ViewData["Title"] = "CaseInfo";
         <div class="status-box">
             <label>Status:</label>
             <div class="status-display status-color">
-                InProgress <!-- Placeholder for testing -->
                 @Model.CaseStatus
-            </div> <!-- 123 Have an if(usertype == caseWorker) {caseworker can edit status} -->
+            </div> 
         </div>
         <div class="title-box">
-            <label>Title:</label>
+            <label>Tittel:</label>
             <p>@Model.CaseTitle</p>
         </div>
         <div class="location-box">
-            <label>Location:</label>
+            <label>Sted:</label>
             <p>@Model.CaseLocation?.Municipality @Model.CaseLocation?.County</p>
         </div>
         <div class="issueType-box">
-            <label>Issue Type:</label>
+            <label>Sakstype:</label>
             <p>@Model.CaseIssueType</p>
         </div>
         <div class="description-box">
-            <label>Description:</label>
+            <label>Beskrivelse:</label>
             <p>@Model.CaseDescription</p>
         </div>
         <div class="map-box">
-            <label>Map:</label>
+            <label>Kart:</label>
         </div>
     </div>
-    
 </div>
 
 @section Scripts

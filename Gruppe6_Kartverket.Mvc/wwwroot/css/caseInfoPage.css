@@ -1,10 +1,13 @@
 .Case-View-container {
-    height: 100vh; /* Sets the height of the container to 100% of the viewport height */
-    background-image: url("../images/kartverket-bakgrunssbilder/mountains.jpg");
-    padding-top: 60px; /* Adds 60px padding to the top of the container */
-    display: flex; /* Use Flexbox layout */
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
+        height: 100vh; /* Sets the height of the container to 100% of the viewport height */
+        background-image: url("../images/kartverket-bakgrunssbilder/mountains.jpg");
+        background-repeat: no-repeat; /* Prevents the background image from repeating */
+        background-size: cover; /* Ensures the background image covers the entire container */
+        padding-top: 60px; /* Adds 60px padding to the top of the container */
+        display: flex; /* Use Flexbox layout */
+        justify-content: center; /* Center horizontally */
+        align-items: center; /* Center vertically */
+    
 }
 
 .caseInfo-container {
@@ -31,8 +34,13 @@
     border-radius: 5px; /* Add border radius to each box */
 }
 
-.description-box {
-    height: auto; /* Adjust height to fit content */
+.status-box label,
+.title-box label,
+.location-box label,
+.issueType-box label,
+.description-box label,
+.map-box label {
+    font-weight: bold;
 }
 
 .map-box {

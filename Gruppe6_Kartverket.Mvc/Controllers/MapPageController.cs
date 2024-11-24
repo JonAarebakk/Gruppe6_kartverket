@@ -16,7 +16,6 @@ public class MapPageController : Controller
     private readonly UserManager<IdentityUser> _userManager;
     private readonly ApplicationDbContext _dbContext;
 
-
     public MapPageController(UserManager<IdentityUser> userManager, ApplicationDbContext dbContext)
     {
         _userManager = userManager;
@@ -40,10 +39,9 @@ public class MapPageController : Controller
     // Handles the form submission to register a new case
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> MapPage(CaseRegistrationModel model)
+    public async Task<IActionResult> MapPage(CaseRegistrationModel model, IFormFile file)
     {
         ViewBag.HideFooter = true;
-
 
         if (!ModelState.IsValid)
         {
@@ -76,7 +74,6 @@ public class MapPageController : Controller
                     GeoJSON = model.GeoJson,
                     Municipality = "", // Placeholder, could be fetched via an API
                     County = "" // Placeholder, could be fetched via an API
-
                 };
 
                 var userId = Guid.Parse(identityUser.Id);
@@ -91,6 +88,16 @@ public class MapPageController : Controller
                     CaseLocation = caseLocation,
                     User = _dbContext.Users.FirstOrDefault(u => u.UserId == userId)
                 };
+
+                if (file != null && file.Length > 0)
+                {
+                    var filePath = Path.Combine("wwwroot/uploads", file.FileName);
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+                    // Save the file path or name to the database if needed
+                }
 
                 _dbContext.CaseRecords.Add(caseRecord);
                 _dbContext.CaseLocations.Add(caseLocation);

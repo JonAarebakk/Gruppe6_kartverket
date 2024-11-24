@@ -293,16 +293,17 @@
 .profile-settings-container {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start; /* Align items to the top */
-    align-items: stretch; /* Stretch items to fill the container width */
+    justify-content: flex-start;
+    align-items: stretch;
     width: 60%;
     padding: 20px;
     background: white;
-    margin: auto; /* Center horizontally within its parent */
+    margin: auto;
     background-color: #f9f9f9;
-    gap: 15px; /* Add space between elements */
+    gap: 15px;
+    min-height: 800px; /* Adjust the value to control the height */
+    margin-bottom: 60px;
 }
-
 .profile-settings-container div {
     width: 100%; /* Ensure each child element takes the full width */
 }
@@ -320,4 +321,19 @@
     border: 1px solid #ccc; /* Add border */
     border-radius: 5px; /* Round the corners */
     box-sizing: border-box; /* Include padding and border in element's total width and height */
+}
+
+.cancel-button {
+    padding: 10px 15px;
+    background-color: #d9534f; /* Red color */
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.cancel-button:hover {
+    background-color: #c9302c; /* Darker red on hover */
 }
