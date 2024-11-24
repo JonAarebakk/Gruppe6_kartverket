@@ -85,5 +85,17 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
 
             return View(viewModel); // Returns the view with the populated ViewModel
         }
+        [HttpPost]
+        public IActionResult UpdateStatus(int caseRecordId, string caseStatus)
+        {
+            var caseRecord = _context.CaseRecords.Find(caseRecordId);
+            if (caseRecord != null)
+            {
+                caseRecord.CaseStatus = caseStatus;
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("CaseDetails", new { caseRecordId = caseRecordId });        }
+        
     }
 }

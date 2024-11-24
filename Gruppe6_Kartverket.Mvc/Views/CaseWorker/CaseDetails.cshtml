@@ -1,3 +1,6 @@
+To merge the suggested code into the existing `CaseDetails.cshtml` file, you need to update the table to make the `td` elements scrollable sideways and add the map placeholder. Here is the merged code:
+
+```razor
 @model Gruppe6_Kartverket.Mvc.Models.ViewModels.CaseDetailsViewModel
 
 @{
@@ -21,97 +24,134 @@
             <div class="kategorier-flex-items" id="Kategorier-flex-items6">Important</div>
         </div>
     </div>
-    
 
-<!-- Categories - Grid Item 2 (Horizontal layout) -->
-<div class="grid-item2">
-    <div class="frame sort-and-filter-frame">
-        <div class="sort-and-filter-container">
-            <button class="sort-and-filter-button" onclick="toggleSortAndFilter()">Sorter og filtrer</button>
-            <div class="menu-option-group">
-                <div class="sort-options">
-                    <p>Sorter etter dato:</p>
-                    <div class="sortOrderAsc-radio">
-                        <input id="sortOrderAsc" name="sortOrder" type="radio" value="asc" />
-                        <label for="sortOrderAsc">Stigende</label>
+    <!-- Categories - Grid Item 2 (Horizontal layout) -->
+    <div class="grid-item2">
+        <div class="frame sort-and-filter-frame">
+            <div class="sort-and-filter-container">
+                <button class="sort-and-filter-button" onclick="toggleSortAndFilter()">Sorter og filtrer</button>
+                <div class="menu-option-group">
+                    <div class="sort-options">
+                        <p>Sorter etter dato:</p>
+                        <div class="sortOrderAsc-radio">
+                            <input id="sortOrderAsc" name="sortOrder" type="radio" value="asc" />
+                            <label for="sortOrderAsc">Stigende</label>
+                        </div>
+                        <div class="sortOrderDesc-radio">
+                            <input id="sortOrderDesc" name="sortOrder" type="radio" value="desc" />
+                            <label for="sortOrderDesc">Synkende</label>
+                        </div>
                     </div>
-                    <div class="sortOrderDesc-radio">
-                        <input id="sortOrderDesc" name="sortOrder" type="radio" value="desc" />
-                        <label for="sortOrderDesc">Synkende</label>
-                    </div>
-                </div>
-                <br>
-                <div class="filter-options">
-                    <p>Filtrer etter status:</p>
-                    <div class="filterAll-radio">
-                        <input id="filterAll" name="filterStatus" type="radio" value="all" />
-                        <label for="filterAll">Alle</label>
-                    </div>
-                    <div class="filterOpen-radio">
-                        <input id="filterOpen" name="filterStatus" type="radio" value="open" />
-                        <label for="filterOpen">Åpnet</label>
-                    </div>
-                    <div class="filterActive-radio">
-                        <input id="filterActive" name="filterStatus" type="radio" value="active" />
-                        <label for="filterActive">Aktiv</label>
-                    </div>
-                    <div class="filterClosed-radio">
-                        <input id="filterClosed" name="filterStatus" type="radio" value="closed" />
-                        <label for="filterClosed">Lukket</label>
+                    <br>
+                    <div class="filter-options">
+                        <p>Filtrer etter status:</p>
+                        <div class="filterAll-radio">
+                            <input id="filterAll" name="filterStatus" type="radio" value="all" />
+                            <label for="filterAll">Alle</label>
+                        </div>
+                        <div class="filterOpen-radio">
+                            <input id="filterOpen" name="filterStatus" type="radio" value="open" />
+                            <label for="filterOpen">Åpnet</label>
+                        </div>
+                        <div class="filterActive-radio">
+                            <input id="filterActive" name="filterStatus" type="radio" value="active" />
+                            <label for="filterActive">Aktiv</label>
+                        </div>
+                        <div class="filterClosed-radio">
+                            <input id="filterClosed" name="filterStatus" type="radio" value="closed" />
+                            <label for="filterClosed">Lukket</label>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Main Content - Grid Item 3 -->
-<div class="grid-item3">
-    @if (Model == null)
-    {
-        <p>Case record not found.</p>
-    }
-    else
-    {
-        <table class="UP-table">
-            <tr>
-                <th>CaseRecordId</th>
-                <td>@Model.CaseRecordId</td>
-            </tr>
-            <tr>
-                <th>CaseDate</th>
-                <td>@Model.CaseDate</td>
-            </tr>
-            <tr>
-                <th>CaseTitle</th>
-                <td>@Model.CaseTitle</td>
-            </tr>
-            <tr>
-                <th>CaseIssueType</th>
-                <td>@Model.CaseIssueType</td>
-            </tr>
-            <tr>
-                <th>CaseDescription</th>
-                <td>@Model.CaseDescription</td>
-            </tr>
-            <tr>
-                <th>CaseStatus</th>
-                <td>@Model.CaseStatus</td>
-            </tr>
-            <tr>
-                <th>LocationId</th>
-                <td>@Model.LocationId</td>
-            </tr>
-            <tr>
-                <th>CaseLocation</th>
-                <td>@Model.GeoJSON</td>
-            </tr>
-            <tr>
-                <th>UserId</th>
-                <td>@Model.User?.UserName</td>
-            </tr>
-        </table>
-    }
+    <!-- Main Content - Grid Item 3 -->
+    <!-- Main Content - Grid Item 3 -->
+    <div class="grid-item3 caseDetails-grid-3">
+        <div class="case-info">
+            @if (Model == null)
+            {
+                <p>Case record not found.</p>
+            }
+            else
+            {
+                <form id="updateStatusForm" method="post" asp-controller="CaseWorker" asp-action="UpdateStatus">
+                    <input type="hidden" name="caseRecordId" value="@Model.CaseRecordId" />
+                    <input type="hidden" id="caseStatus" name="caseStatus" value="@Model.CaseStatus" />
+                    <div style="overflow-x: auto; max-width: 100%;">
+                        <table class="UP-table">
+                            <tr>
+                                <th>CaseRecordId</th>
+                                <td style="max-width: 100%;">@Model.CaseRecordId</td>
+                            </tr>
+                            <tr>
+                                <th>CaseDate</th>
+                                <td style="max-width: 100%;">@Model.CaseDate</td>
+                            </tr>
+                            <tr>
+                                <th>CaseTitle</th>
+                                <td style="max-width: 100%;">@Model.CaseTitle</td>
+                            </tr>
+                            <tr>
+                                <th>CaseIssueType</th>
+                                <td style="max-width: 100%;">@Model.CaseIssueType</td>
+                            </tr>
+                            <tr>
+                                <th>CaseDescription</th>
+                                <td style="max-width: 100%;">@Model.CaseDescription</td>
+                            </tr>
+                            <tr>
+                                <th>CaseStatus</th>
+                                <td style="max-width: 100%;">
+                                    <select id="caseStatusSelect" onchange="updateCaseStatus()">
+                                        <option value="Open">Open</option>
+                                        <option value="Closed">Closed</option>
+                                        <option value="InProgress">InProgress</option>
+                                        <option value="Resolved">Resolved</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>LocationId</th>
+                                <td style="max-width: 100%;">@Model.LocationId</td>
+                            </tr>
+                            <tr>
+                                <th>CaseLocation</th>
+                                <td style="max-width: 100%;">@Model.GeoJSON</td>
+                            </tr>
+                            <tr>
+                                <th>UserId</th>
+                                <td style="max-width: 100%;">@Model.User?.UserName</td>
+                            </tr>
+                        </table>
+                    </div>
+                </form>
+            }
+        </div>
+        <div class="case-info-map">
+            <h3>Map Placeholder</h3>
+            <div id="map-container" style="width: 100%; height: 400px; background-color: #eaeaea; display: flex; align-items: center; justify-content: center;">
+                <p>Map will be displayed here</p>
+            </div>
+        </div>
+    </div>
 </div>
+```
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var caseStatus = "@Model.CaseStatus";
+            var select = document.getElementById("caseStatusSelect");
+            select.value = caseStatus;
+        });
 
-</div>
+        function updateCaseStatus() {
+            var select = document.getElementById("caseStatusSelect");
+            var status = select.options[select.selectedIndex].value;
+            document.getElementById("caseStatus").value = status;
+            document.getElementById("updateStatusForm").submit();
+        }
+    </script>
+}
