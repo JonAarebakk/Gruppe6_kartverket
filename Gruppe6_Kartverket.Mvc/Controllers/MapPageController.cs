@@ -1,6 +1,9 @@
 using Gruppe6_Kartverket.Mvc.Data;
 using Gruppe6_Kartverket.Mvc.Models;
 using Gruppe6_Kartverket.Mvc.Models.Database;
+using Gruppe6_Kartverket.Mvc.Models.Services;
+using Gruppe6_Kartverket.Mvc.Models.ViewModels;
+using Gruppe6_Kartverket.Mvc.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -14,6 +17,7 @@ public class MapPageController : Controller
     private readonly UserManager<IdentityUser> _userManager;
     private readonly ApplicationDbContext _dbContext;
 
+
     public MapPageController(UserManager<IdentityUser> userManager, ApplicationDbContext dbContext)
     {
         _userManager = userManager;
@@ -23,9 +27,9 @@ public class MapPageController : Controller
     [HttpGet]
     public IActionResult MapPage()
     {
-        if (User.Identity.IsAuthenticated)
+        if ((User.Identity.IsAuthenticated != null) && User.Identity.IsAuthenticated)
         {
-            ViewBag.LoggedIn = true;
+            ViewBag.LoggedIn = "loggedIn";
         }
 
         ViewBag.HideFooter = true;
@@ -38,6 +42,7 @@ public class MapPageController : Controller
     public async Task<IActionResult> MapPage(CaseRegistrationModel model)
     {
         ViewBag.HideFooter = true;
+
 
         if (!ModelState.IsValid)
         {
@@ -56,9 +61,6 @@ public class MapPageController : Controller
         }
         else
         {
-            ViewBag.ShowSubmittedPopup = true;
-            ModelState.Clear();
-
             var identityUser = await _userManager.GetUserAsync(User);
 
             if (identityUser != null)
@@ -69,6 +71,7 @@ public class MapPageController : Controller
                 {
                     LocationId = newLocationId, // Set the increment from the database
                     GeoJSON = model.GeoJson,
+                        //"{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.4194,37.7749]},\"properties\":{\"name\":\"San Francisco\",\"type\":\"City\"}},{\"type\":\"Feature\",\"geometry\":{\"type\":\"LineString\",\"coordinates\":[[-122.4194,37.7749],[-118.2437,34.0522],[-74.0060,40.7128]]},\"properties\":{\"name\":\"Route 1\",\"description\":\"A route connecting SF, LA, and NYC\"}},{\"type\":\"Feature\",\"geometry\":{\"type\":\"Polygon\",\"coordinates\":[[[-123.0,37.0],[-123.0,38.0],[-122.0,38.0],[-122.0,37.0],[-123.0,37.0]]]},\"properties\":{\"name\":\"Area A\",\"description\":\"A polygonal area\"}}]}",
                     Municipality = "", // Get via kartverket API
                     County = "" // Get via kartverket API
                 };
@@ -90,8 +93,10 @@ public class MapPageController : Controller
                 _dbContext.CaseLocations.Add(caseLocation);
                 await _dbContext.SaveChangesAsync();
             }
+            ViewBag.ShowSubmittedPopup = true;
+            ModelState.Clear();
 
-            return RedirectToAction("LandingPage", "LandingPage");
+            return RedirectToAction("MapPage", "MapPage");
         }
     }
 
