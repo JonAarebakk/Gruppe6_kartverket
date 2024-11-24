@@ -36,7 +36,7 @@ services:
       mynetwork:
     volumes:
       - ./Gruppe6_Kartverket.Mvc/keys:/app/keys
-    #command: [ "dotnet", "ef", "database", "update", "--project", "/src/Gruppe6_Kartverket.Mvc/Gruppe6_Kartverket.Mvc.csproj" ]
+    command: [ "dotnet", "ef", "database", "update", "--project", "/src/Gruppe6_Kartverket.Mvc/Gruppe6_Kartverket.Mvc.csproj" ]
     
 networks:
   mynetwork:

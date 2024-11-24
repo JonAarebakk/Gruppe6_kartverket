@@ -22,7 +22,7 @@
             <div class="content-container">
                 <div class="tables-container">
                     <div class="Case-menu">
-                        <table class="UP-table" id="Inbox">
+                        <table class="UP-table" id="Inbox_table">
                             <thead>
                             <tr>
                                 <th>Status på sak</th>
@@ -120,20 +120,38 @@
             </div>
         </div>
     </div>
-    <div id="Profil_instillinger" class="tab-content">
-        <div class="profile-settings-container">
-            <h2>Profil-innstillinger</h2>
-        </div>
+</div>
+
+<div id="Profil_instillinger" class="tab-content">
+    <div class="profile-settings-container">
+        <h2>Profil-innstillinger</h2>
+        <form class="settings-form">
+            <div class="section">
+                <h3>Personal Information</h3>
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" value="John Doe" />
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" value="john.doe@example.com" />
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" value="+1 (555) 123-4567" />
+                </div>
+            </div>
+            <div class="section">
+                <h3>Profile Picture</h3>
+                <div class="form-group">
+                    <img src="/api/placeholder/150/150" alt="Profile Picture" class="profile-picture" />
+                    <input type="file" id="profilePicture" />
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 
-<div id="ProfileSettings" class="tab-content">
-    <!-- Innholdet for Profil-innstillinger -->
-    <div class="profile-settings-container">
-        <h2>Profil-innstillinger</h2>
-
-        </div>
-</div>
 
 
 
@@ -228,3 +246,4 @@
         }
     </script>
 }
+
