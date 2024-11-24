@@ -1,0 +1,38 @@
+@model Gruppe6_Kartverket.Mvc.Models.ViewModels.CaseWorkerPageV2ViewModel
+
+@if (Model == null || Model.CaseRecords == null || !Model.CaseRecords.Any())
+{
+    <p>No case records available.</p>
+}
+else
+{
+    <table class="UP-table">
+        <thead class="UP-table-head">
+        <tr>
+            <th>CaseRecordId</th>
+            <th>CaseDate</th>
+            <th>CaseTitle</th>
+            <th>CaseIssueType</th>
+            <th>CaseDescription</th>
+            <th>CaseStatus</th>
+            <th>LocationId</th>
+            <th>UserId</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var caseRecord in Model.CaseRecords)
+        {
+            <tr class="expandable">
+                <td>@caseRecord.CaseRecordId</td>
+                <td>@caseRecord.CaseDate</td>
+                <td>@caseRecord.CaseTitle</td>
+                <td>@caseRecord.CaseIssueType</td>
+                <td class="description">@caseRecord.CaseDescription</td>
+                <td>@caseRecord.CaseStatus</td>
+                <td>@caseRecord.LocationId</td>
+                <td>@caseRecord.User?.UserName</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

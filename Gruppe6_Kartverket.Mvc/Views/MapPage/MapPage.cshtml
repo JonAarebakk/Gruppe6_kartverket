@@ -56,10 +56,14 @@
             </div>
             </p>
             <input asp-for="GeoJson" type="hidden" id="geoJsonInput"/>
+            <input asp-for="CenterLongitude" type="hidden" id="centerOfFeature"/>
+            <input asp-for="CenterLatitude" type="hidden" id="centerLatitude"/>
         </form>
-
+        
         <div class="submit-cancel-wrapper">
             <button class="cancel-case-button" id="cancel-case-button">Avbryt</button>
+
+            <!-- Gray the button out intill we are able to submit -->
             <button class="submit-case">Submit</button>
         </div>
     </div>
@@ -80,6 +84,7 @@
             <button class="popup-close">Close</button>
         </div>
     </div>
+
     <div class="popup" id="new-case-explanation">
         <h2>Ny registrering</h2>
         <p>"Legg til praktisk info her"</p>
@@ -89,37 +94,38 @@
             <button class="popup-close">Close</button>
         </div>
     </div>
+
     <div class="popup" id="delete-features">
         <h2>Det er ingen flere tegninger å slette</h2>
         <button class="popup-close">Close</button>
     </div>
-    <div class="popup" id="max-features">
-        <h2>Max features reached</h2>
-        <p>"Du kan ikke tegne mer enn X figurer"</p>
-        <button class="popup-close">Close</button>
-    </div>
+
     <div class="popup" id="submit-case-popup">
         <h2>Submit?</h2>
         <p>Ønsker du å sende inn saken?</p>
         <button class="submit-case-confirmation">Send inn</button>
         <button class="popup-close">Tilbake</button>
     </div>
+
     <div class="popup" id="case-not-valid">
         <h2>Ikke alle felt er fylt inn</h2>
         <p>Pass på at alle feltene er fylt inn og at det er tegnet en figur på kartet.</p>
         <button class="popup-close">Ok</button>
     </div>
+
     <div class="popup" id="avbryt-case">
         <h2>Avbryt?</h2>
         <p>Ønsker du å avbryte? Dette vil slette all informasjon som er lagt inn.</p>
         <button class="cancel-case-confirmation">Avbryt</button>
         <button class="popup-close">Tilbake</button>
     </div>
+
     <div class="popup" id="case-submit-help">
         <h2>Hvordan registrere sak</h2>
         <p>"Legg inn forklaring/hjelp på hvordan sende inn case"</p>
         <button class="popup-close">Close</button>
     </div>
+
     @if (ViewBag.ShowSubmittedPopup == true)
     {
         <div class="popup" id="case-submitted">
@@ -143,7 +149,7 @@
 <p hidden id="loggedIn">@ViewBag.LoggedIn</p>
 
 @section Scripts {
-    <script type="module" src="~/js/ol_map5.js"></script>
+    <script type="module" src="~/js/ol_map4.js"></script>
     <script>
         function resetCaseForm() {
             var form = document.getElementById("CaseForm");

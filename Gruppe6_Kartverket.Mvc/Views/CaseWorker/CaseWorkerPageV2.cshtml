@@ -2,24 +2,26 @@
 @model Gruppe6_Kartverket.Mvc.Models.ViewModels.CaseWorkerPageV2ViewModel
 
 @{
-Layout = "~/Views/Shared/_CaseWorkerLayout.cshtml";
-ViewData["Title"] = "CaseWorkerPage-V2";
+    Layout = "~/Views/Shared/_CaseWorkerLayout.cshtml";
+    ViewData["Title"] = "CaseWorkerPage-V2";
 }
 
 @section HeadContent {
-<link rel="stylesheet" href="~/css/caseWorkerPage-V2.css">
+    <link rel="stylesheet" href="~/css/caseWorkerPage-V2.css">
 }
 
 <div class="grid-container">
     <!-- Sidebar - Grid Item 1 -->
     <div class="grid-item1">
         <div id="SideBarV2-Flex">
-            <div class="kategorier-flex-items" id="Kategorier-flex-items1">Inbox</div>
-            <div class="kategorier-flex-items" id="Kategorier-flex-items2">Sent</div>
-            <div class="kategorier-flex-items" id="Kategorier-flex-items3">Drafts</div>
-            <div class="kategorier-flex-items" id="Kategorier-flex-items4">Spam</div>
-            <div class="kategorier-flex-items" id="Kategorier-flex-items5">Trash</div>
-            <div class="kategorier-flex-items" id="Kategorier-flex-items6">Important</div>
+            <a class="no-style-link" href="@Url.Action("CaseWorkerPageV2", "CaseWorker")">
+                <div class="kategorier-flex-items green-background" id="Kategorier-flex-items1">Inbox</div>
+            </a>
+            <div class="kategorier-flex-items" id="Kategorier-flex-items2">Eksempel</div>
+            <div class="kategorier-flex-items" id="Kategorier-flex-items3">Eskempel</div>
+            <div class="kategorier-flex-items" id="Kategorier-flex-items4">Eksempel</div>
+            <div class="kategorier-flex-items" id="Kategorier-flex-items5">Eksempel</div>
+            <div class="kategorier-flex-items" id="Kategorier-flex-items6">Eksempel</div>
         </div>
     </div>
 
@@ -27,137 +29,47 @@ ViewData["Title"] = "CaseWorkerPage-V2";
     <div class="grid-item2">
         <div class="frame sort-and-filter-frame">
             <div class="sort-and-filter-container">
-                <button class="sort-and-filter-button" onclick="toggleSortAndFilter()">Sorter og filtrer</button>
-                <div class="menu-option-group">
-                    <div class="sort-options">
-                        <p>Sorter etter dato:</p>
-                        <div class="sortOrderAsc-radio">
-                            <input id="sortOrderAsc" name="sortOrder" type="radio" value="asc" />
-                            <label for="sortOrderAsc">Stigende</label>
-                        </div>
-                        <div class="sortOrderDesc-radio">
-                            <input id="sortOrderDesc" name="sortOrder" type="radio" value="desc" />
-                            <label for="sortOrderDesc">Synkende</label>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="filter-options">
-                        <p>Filtrer etter status:</p>
-                        <div class="filterAll-radio">
-                            <input id="filterAll" name="filterStatus" type="radio" value="all" />
-                            <label for="filterAll">Alle</label>
-                        </div>
-                        <div class="filterOpen-radio">
-                            <input id="filterOpen" name="filterStatus" type="radio" value="open" />
-                            <label for="filterOpen">Åpnet</label>
-                        </div>
-                        <div class="filterActive-radio">
-                            <input id="filterActive" name="filterStatus" type="radio" value="active" />
-                            <label for="filterActive">Aktiv</label>
-                        </div>
-                        <div class="filterClosed-radio">
-                            <input id="filterClosed" name="filterStatus" type="radio" value="closed" />
-                            <label for="filterClosed">Lukket</label>
-                        </div>
-                    </div>
-                </div>
+                <select id="filterDropdown" onchange="filterCaseRecords()">
+                    <option value="asc">Sort by Date Ascending</option>
+                    <option value="desc">Sort by Date Descending</option>
+                    <option value="open">Status: Open</option>
+                    <option value="closed">Status: Closed</option>
+                    <option value="inprogress">Status: In Progress</option>
+                    <option value="resolved">Status: Resolved</option>
+                </select>
             </div>
         </div>
     </div>
 
     <!-- Main Content - Grid Item 3 -->
-    <div class="grid-item3">
-        <!-- Check if model or case records are null or empty -->
-        @if (Model == null || Model.CaseRecords == null || !Model.CaseRecords.Any())
-        {
-        <p>No case records available.</p>
-        }
-        else
-        {
-        <table class="UP-table">
-            <thead class="UP-table-head">
-            <tr>
-                <th>CaseRecordId</th>
-                <th>CaseDate</th>
-                <th>CaseTitle</th>
-                <th>CaseIssueType</th>
-                <th>CaseDescription</th>
-                <th>CaseStatus</th>
-                <th>LocationId</th>
-                <th>UserId</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach (var caseRecord in Model.CaseRecords)
-            {
-            <tr class="expandable">
-                <td>@caseRecord.CaseRecordId</td>
-                <td>@caseRecord.CaseDate</td>
-                <td>@caseRecord.CaseTitle</td>
-                <td>@caseRecord.CaseIssueType</td>
-                <td class="description">@caseRecord.CaseDescription</td>
-                <td>@caseRecord.CaseStatus</td>
-                <td>@caseRecord.LocationId</td>
-                <td>@caseRecord.User?.UserName</td>
-            </tr>
-            }
-            </tbody>
-        </table>
-        }
+    <div class="grid-item3" id="caseRecordsTable">
+        @await Html.PartialAsync("_CaseRecordsTable", Model)
     </div>
 </div>
 
 @section Scripts {
-<script>
-    function toggleSortAndFilter() {
-        var menuOptionGroup = document.querySelector('.menu-option-group'); // The div with the sort and filter options
-        menuOptionGroup.style.display = menuOptionGroup.style.display === 'none' ? 'flex' : 'none';
-    }
+    <script>
+        function filterCaseRecords() {
+            var filterValue = document.getElementById("filterDropdown").value;
+            $.ajax({
+                url: '@Url.Action("CaseWorkerPageV2", "CaseWorker")',
+                type: 'GET',
+                data: { filter: filterValue },
+                success: function (result) {
+                    $('#caseRecordsTable').html(result);
+                }
+            });
+        }
 
-    function sortCases() {
-        console.log("Sorting cases...");
-        var table = document.getElementById("Inbox");
-        var rows = Array.from(table.rows).slice(1); // Exclude the header row
-        var sortOrder = document.getElementById("sortOrder").value;
+        document.addEventListener('DOMContentLoaded', function() {
+            const rows = document.querySelectorAll('.expandable');
 
-        rows.sort(function(a, b) {
-            var dateA = new Date(a.cells[2].innerText);
-            var dateB = new Date(b.cells[2].innerText);
-            return sortOrder === "asc" ? dateA - dateB : dateB - dateA;
-        });
-
-        rows.forEach(function(row) {
-            table.appendChild(row);
-        });
-    }
-
-    function filterCases() {
-        console.log("Filtering cases...");
-        var table = document.getElementById("Inbox");
-        var rows = Array.from(table.rows).slice(1); // Exclude the header row
-        var filterValue = document.getElementById("categoryFilter").value;
-
-        rows.forEach(function(row) {
-            var issueType = row.cells[4].innerText.toLowerCase();
-            if (filterValue === "all" || issueType.includes(filterValue)) {
-                row.style.display = "";
-            } else {
-                row.style.display = "none";
-            }
-        });
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-        const rows = document.querySelectorAll('.expandable');
-
-        rows.forEach(row => {
-            row.addEventListener('click', function() {
-                const caseRecordId = this.querySelector('td').innerText;
-                window.location.href = `/CaseWorker/CaseDetails?caseRecordId=${caseRecordId}`;
+            rows.forEach(row => {
+                row.addEventListener('click', function() {
+                    const caseRecordId = this.querySelector('td').innerText;
+                    window.location.href = `/CaseWorker/CaseDetails?caseRecordId=${caseRecordId}`;
+                });
             });
         });
-    });
-    
-    
-</script>
+    </script>
 }
