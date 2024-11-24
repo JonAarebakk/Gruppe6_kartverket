@@ -21,20 +21,6 @@ namespace Gruppe6_Kartverket.Mvc.Data
         public DbSet<CaseLocation> CaseLocations { get; set; }
         public DbSet<CaseRecord> CaseRecords { get; set; }
 
-        // Configures the connection to the database with retry on failure
-        /*
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseMySql(
-                "Server=mariadb; Port=3306; Database=kartverket_tables; Uid=root; Pwd=123;",
-                new MySqlServerVersion(new Version(8, 0, 21)),
-                mySqlOptions => mySqlOptions.EnableRetryOnFailure(
-                    maxRetryCount: 2,
-                    maxRetryDelay: TimeSpan.FromSeconds(30),
-                    errorNumbersToAdd: null
-                )
-            );
-        }*/
 
         // Configures the relationships between tables and models
         protected override void OnModelCreating(ModelBuilder modelBuilder)

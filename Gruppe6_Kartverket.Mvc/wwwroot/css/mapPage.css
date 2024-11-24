@@ -46,14 +46,6 @@
     display: flex;
 }
 
-/* The button group for the map */
-.map-button-group {
-    height: 100%;
-    width: 100%;
-    display: none;
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-}
 
 /* div for new case button */
 .new-case {
@@ -75,6 +67,15 @@
     margin: 0 5px;
     height: 70%;
     width: 20%;
+}
+
+/* The button group for the map */
+.map-button-group {
+    height: 100%;
+    width: 100%;
+    display: none;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
 }
 
 /* Style for every button in the .map-button-group div */

@@ -52,8 +52,6 @@ const map = new ol.Map({
 **  To do list:                                        **
 **  - make select.on to deactivate proparly            **
 **  - remove console.log() debugging statements        **
-**  - for cancel-case-button add a popUp for are you   **
-**    sure? And if yes, clear the map                  **
 *********************************************************
 */
 //#region Section 2 /*Lets Visual studio collapse this section*/
@@ -96,6 +94,7 @@ function deleteFeature() {
         resetInteractions();        //Reset the interactions
         showPopup('delete-features'); //Gives a popup for no more features to delete
     }
+    //
 }
 
 //Function to draw a feature
@@ -159,7 +158,7 @@ select.on('select', function (evt) {
     }
 });
 
-//Changes the active map button for styling purposes
+//Changes the active map button for styling and functionality
 function setActiveMapButton() {
     var buttons = document.querySelectorAll('.map-button');
     buttons.forEach(button => {
@@ -170,6 +169,17 @@ function setActiveMapButton() {
         }
     });
 }
+
+//Sets all map buttons to inactive for styling and functionality
+function deselectMapButtons() {
+    var buttons = document.querySelectorAll('.map-button');
+    buttons.forEach(button => {
+        if (button.classList.contains('active')) {
+            button.classList.remove('active');
+        }
+    });
+}
+
 
 //Clears the source of all features and resets the drawnFeatures counter
 function clearMapOfFunctions() {
@@ -323,7 +333,9 @@ function hasFormChanged() {
     } else if (drawnFeatures != 0) {
         console.log("Features has changed");
         return true;
-    } 
+    } else {
+        return false;
+    }
 }
 
 
@@ -382,7 +394,6 @@ function showPopup(popupID) {
 ****************************************************************
 **  To do list:                                               **
 **  - Make one general function that initializes all buttons  **
-**  - Add if() on necCaseButton                               **
 **  - Add if() on cancelCaseButton                            **
 **  - Combine the two cancelCaseButton functions              **
 **  - change querySelectorAll to querySelector on elements    **
@@ -398,7 +409,7 @@ const newCaseButton = document.getElementById('new-case-button');
 newCaseButton.addEventListener('click', function () {
     var isUserLoggedIn = document.getElementById('loggedIn').textContent;
 
-    if (isUserLoggedIn = true) {
+    if (isUserLoggedIn == "loggedIn") {
         startNewCase();
     } else {
         showPopup('new-case-explanation');
@@ -430,7 +441,7 @@ document.querySelectorAll('.cancel-case-button').forEach(button => {
         var formChanged = hasFormChanged();
         console.log(formChanged); //for debugging)
 
-        if (formChanged = true) {
+        if (formChanged) {
             showPopup('avbryt-case');
         }
     });
@@ -442,7 +453,8 @@ document.querySelectorAll('.cancel-case-confirmation').forEach(button => {
         console.log("Case Cancelled"); //for debugging
         actionType.value = 'None';     
         setActiveMapButton();          //Resets the map buttons
-        clearMapOfFunctions();         
+        clearMapOfFunctions();
+        closePopupsAndOverlays();
 
         cancelCase();                  //Resets the case input form
     });
@@ -468,6 +480,10 @@ document.querySelectorAll('.popup-close').forEach(button => {
     button.addEventListener('click', function () {
         closePopupsAndOverlays();
     });
+});
+
+const deactiveMapButtons = document.querySelector('.case-input-wrapper').addEventListener('click', function () {
+    deselectMapButtons();
 });
 
 //#endregion

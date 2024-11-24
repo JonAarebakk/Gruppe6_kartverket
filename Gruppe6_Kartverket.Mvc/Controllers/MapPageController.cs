@@ -1,6 +1,9 @@
 using Gruppe6_Kartverket.Mvc.Data;
 using Gruppe6_Kartverket.Mvc.Models;
 using Gruppe6_Kartverket.Mvc.Models.Database;
+using Gruppe6_Kartverket.Mvc.Models.Services;
+using Gruppe6_Kartverket.Mvc.Models.ViewModels;
+using Gruppe6_Kartverket.Mvc.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -13,6 +16,7 @@ public class MapPageController : Controller
     private readonly UserManager<IdentityUser> _userManager;
     private readonly ApplicationDbContext _dbContext;
 
+
     public MapPageController(UserManager<IdentityUser> userManager, ApplicationDbContext dbContext)
     {
         _userManager = userManager;
@@ -23,9 +27,9 @@ public class MapPageController : Controller
     [HttpGet]
     public IActionResult MapPage()
     {
-        if (User.Identity.IsAuthenticated)
+        if ((User.Identity.IsAuthenticated != null) && User.Identity.IsAuthenticated)
         {
-            ViewBag.LoggedIn = true;
+            ViewBag.LoggedIn = "loggedIn";
         }
 
         ViewBag.HideFooter = true;
@@ -39,6 +43,7 @@ public class MapPageController : Controller
     public async Task<IActionResult> MapPage(CaseRegistrationModel model)
     {
         ViewBag.HideFooter = true;
+
 
         if (!ModelState.IsValid)
         {
@@ -58,9 +63,6 @@ public class MapPageController : Controller
         }
         else
         {
-            ViewBag.ShowSubmittedPopup = true;
-            ModelState.Clear();
-
             var identityUser = await _userManager.GetUserAsync(User);
 
             if (identityUser != null)
@@ -74,6 +76,7 @@ public class MapPageController : Controller
                     GeoJSON = model.GeoJson,
                     Municipality = "", // Placeholder, could be fetched via an API
                     County = "" // Placeholder, could be fetched via an API
+
                 };
 
                 var userId = Guid.Parse(identityUser.Id);
@@ -93,8 +96,10 @@ public class MapPageController : Controller
                 _dbContext.CaseLocations.Add(caseLocation);
                 await _dbContext.SaveChangesAsync();
             }
+            ViewBag.ShowSubmittedPopup = true;
+            ModelState.Clear();
 
-            return RedirectToAction("LandingPage", "LandingPage");
+            return RedirectToAction("MapPage", "MapPage");
         }
     }
 

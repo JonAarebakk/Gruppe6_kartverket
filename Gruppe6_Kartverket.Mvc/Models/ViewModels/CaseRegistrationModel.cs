@@ -17,5 +17,8 @@ namespace Gruppe6_Kartverket.Mvc.Models
 
         [Required(ErrorMessage = "GeoJson is required.")]
          public string GeoJson { get; set; }
+
+        public double centerLongitude { get; set; }
+        public double centerLatitude { get; set; }
     }
 }
