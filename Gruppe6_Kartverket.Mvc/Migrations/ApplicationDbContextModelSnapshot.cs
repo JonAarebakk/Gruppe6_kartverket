@@ -82,8 +82,8 @@ namespace Gruppe6_Kartverket.Mvc.Migrations
                     b.Property<int?>("LocationId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("varchar(255)");
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("char(36)");
 
                     b.HasKey("CaseRecordId");
 
@@ -96,9 +96,9 @@ namespace Gruppe6_Kartverket.Mvc.Migrations
 
             modelBuilder.Entity("Gruppe6_Kartverket.Mvc.Models.Database.User", b =>
                 {
-                    b.Property<string>("UserId")
+                    b.Property<Guid>("UserId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("UserName")
                         .IsRequired()
@@ -124,8 +124,8 @@ namespace Gruppe6_Kartverket.Mvc.Migrations
 
             modelBuilder.Entity("Gruppe6_Kartverket.Mvc.Models.Database.UserInfo", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("varchar(255)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("Email")
                         .IsRequired()

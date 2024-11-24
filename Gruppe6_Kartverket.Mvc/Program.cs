@@ -19,8 +19,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-        options.UseMySql(connectionString,
-            ServerVersion.AutoDetect(connectionString),
+        options.UseMySql(connectionString, 
+                new MariaDbServerVersion(new Version(10, 5, 8)),
             mySqlOptions =>
             {
                 mySqlOptions.EnableRetryOnFailure(

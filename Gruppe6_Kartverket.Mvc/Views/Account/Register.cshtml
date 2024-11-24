@@ -15,11 +15,11 @@ ViewData["Title"] = "Registrer bruker";
         <div class="RFcontainer">
             <div id="containerhead">
                 <h1>Create account</h1>
-                <p>Already have an account? <a asp-controller="LogIn" asp-action="LogIn">Log in</a></p>
+                <p>Already have an account? <a asp-controller="Account" asp-action="LogIn">Log in</a></p>
             </div>
 
             <div id="containerbody">
-                <form asp-action="Register" asp-controller="LogIn" method="post">
+                <form asp-action="Register" asp-controller="Account" method="post">
                     @Html.AntiForgeryToken()
 
                     <p>

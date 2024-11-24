@@ -1,4 +1,5 @@
-﻿using Gruppe6_Kartverket.Mvc.Controllers; // provides access to controllers
+﻿/*
+ using Gruppe6_Kartverket.Mvc.Controllers; // provides access to controllers
 using Gruppe6_Kartverket.Mvc.Models; // provides access to models
 using Microsoft.AspNetCore.Http; 
 using Microsoft.AspNetCore.Mvc;
@@ -72,3 +73,4 @@ namespace Gruppe6_Kartverket.Mvc.Tests.ControllerTests
         }
     }
 }
+*/

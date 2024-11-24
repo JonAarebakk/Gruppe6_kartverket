@@ -9,13 +9,13 @@ using Gruppe6_Kartverket.Mvc.Data;
 
 namespace Gruppe6_Kartverket.Mvc.Controllers
 {
-    public class LogInController : Controller
+    public class AccountController : Controller
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ApplicationDbContext _dbContext;
 
-        public LogInController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager,
+        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager,
             ApplicationDbContext dbContext)
         {
             _userManager = userManager;
