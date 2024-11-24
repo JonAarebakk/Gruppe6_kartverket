@@ -94,6 +94,7 @@ function deleteFeature() {
         resetInteractions();        //Reset the interactions
         showPopup('delete-features'); //Gives a popup for no more features to delete
     }
+    //
 }
 
 //Function to draw a feature
@@ -170,7 +171,7 @@ function setActiveMapButton() {
 }
 
 //Sets all map buttons to inactive for styling and functionality
-function deselctMapButtons() {
+function deselectMapButtons() {
     var buttons = document.querySelectorAll('.map-button');
     buttons.forEach(button => {
         if (button.classList.contains('active')) {
@@ -482,7 +483,7 @@ document.querySelectorAll('.popup-close').forEach(button => {
 });
 
 const deactiveMapButtons = document.querySelector('.case-input-wrapper').addEventListener('click', function () {
-    deselctMapButtons();
+    deselectMapButtons();
 });
 
 //#endregion
