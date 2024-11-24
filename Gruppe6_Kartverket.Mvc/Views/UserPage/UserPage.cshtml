@@ -39,7 +39,7 @@
                             {
                                 foreach (var caseRecord in Model.CaseRecords)
                                 {
-                                    <tr>
+                                    <tr  class="expandable" data-case-record-id="@caseRecord.CaseRecordId">
                                         <td>@caseRecord.CaseStatus</td>
                                         <td>@caseRecord.UserId</td>
                                         <td>@caseRecord.CaseDate.ToString("yyyy-MM-dd")</td>
@@ -157,6 +157,15 @@
             } else if (statusValue === "InProgress") {
                 element.style.backgroundColor = "#FFDD9D";
             }
+        });
+    });
+    
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll('.expandable').forEach(row => {
+            row.addEventListener('click', function() {
+                const caseRecordId = row.getAttribute('data-case-record-id');
+                window.location.href = `/CaseInfo/CaseInfo?caseRecordId=${caseRecordId}`;
+            });
         });
     });
 </script>

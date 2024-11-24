@@ -41,5 +41,6 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
 
             return View(viewModel);
         }
+
     }
 }

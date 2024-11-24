@@ -39,10 +39,6 @@ public class MapPageController : Controller
     {
         ViewBag.HideFooter = true;
 
-        // Set the GeoJSON directly in the model
-        // model.GeoJson = "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.4194,37.7749]},\"properties\":{\"name\":\"San Francisco\",\"type\":\"City\"}},{\"type\":\"Feature\",\"geometry\":{\"type\":\"LineString\",\"coordinates\":[[-122.4194,37.7749],[-118.2437,34.0522],[-74.0060,40.7128]]},\"properties\":{\"name\":\"Route 1\",\"description\":\"A route connecting SF, LA, and NYC\"}},{\"type\":\"Feature\",\"geometry\":{\"type\":\"Polygon\",\"coordinates\":[[[-123.0,37.0],[-123.0,38.0],[-122.0,38.0],[-122.0,37.0],[-123.0,37.0]]]},\"properties\":{\"name\":\"Area A\",\"description\":\"A polygonal area\"}}]}";
-
-
         if (!ModelState.IsValid)
         {
             foreach (var state in ModelState)
@@ -72,8 +68,7 @@ public class MapPageController : Controller
                 var caseLocation = new CaseLocation
                 {
                     LocationId = newLocationId, // Set the increment from the database
-                    GeoJSON =
-                        "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.4194,37.7749]},\"properties\":{\"name\":\"San Francisco\",\"type\":\"City\"}},{\"type\":\"Feature\",\"geometry\":{\"type\":\"LineString\",\"coordinates\":[[-122.4194,37.7749],[-118.2437,34.0522],[-74.0060,40.7128]]},\"properties\":{\"name\":\"Route 1\",\"description\":\"A route connecting SF, LA, and NYC\"}},{\"type\":\"Feature\",\"geometry\":{\"type\":\"Polygon\",\"coordinates\":[[[-123.0,37.0],[-123.0,38.0],[-122.0,38.0],[-122.0,37.0],[-123.0,37.0]]]},\"properties\":{\"name\":\"Area A\",\"description\":\"A polygonal area\"}}]}",
+                    GeoJSON = model.GeoJson,
                     Municipality = "", // Get via kartverket API
                     County = "" // Get via kartverket API
                 };
