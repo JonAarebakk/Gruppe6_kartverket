@@ -26,7 +26,7 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return RedirectToAction("LogIn", "LogIn");
+                return RedirectToAction("LogIn", "Account");
             }
 
             var userId = Guid.Parse(user.Id);
@@ -41,5 +41,6 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
 
             return View(viewModel);
         }
+
     }
 }

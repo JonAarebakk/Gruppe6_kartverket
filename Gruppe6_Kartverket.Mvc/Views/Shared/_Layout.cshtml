@@ -56,7 +56,7 @@
                 <div class="HeaderTopLinks">
                 <form asp-action="Logout" asp-controller="Account" method="post" class="form-inline">
                     @Html.AntiForgeryToken()
-                    <button type="submit" class="btn btn-outline-secondary ms-3" style="border: none; padding: 0;">Logout</button>
+                    <button type="submit" class="btn btn-outline-secondary ms-3">Logout</button>
                 </form>
             </div>
                 <a href="@Url.Action("UserPage", "UserPage")" class="user-icon-btn">

@@ -22,7 +22,7 @@
             <div class="content-container">
                 <div class="tables-container">
                     <div class="Case-menu">
-                        <table class="UP-table" id="Inbox">
+                        <table class="UP-table" id="Inbox_table">
                             <thead>
                             <tr>
                                 <th>Status på sak</th>
@@ -39,22 +39,12 @@
                             {
                                 foreach (var caseRecord in Model.CaseRecords)
                                 {
-                                    <tr>
+                                    <tr  class="expandable" data-case-record-id="@caseRecord.CaseRecordId">
                                         <td>@caseRecord.CaseStatus</td>
                                         <td>@caseRecord.UserId</td>
                                         <td>@caseRecord.CaseDate.ToString("yyyy-MM-dd")</td>
                                         <td>@caseRecord.CaseTitle</td>
-                                        <td>
-                                            <span class="description-text">@caseRecord.CaseDescription</span>
-                                            <form asp-action="EditCaseDescription" asp-controller="MapPage" method="post" class="edit-form" style="display:none;">
-                                                <input type="hidden" name="caseId" value="@caseRecord.CaseRecordId"/>
-                                                <input type="text" name="newDescription" value="@caseRecord.CaseDescription"/>
-                                                <button type="submit" class="btn btn-primary">Save</button>
-                                            </form>
-                                            <button class="btn btn-primary edit-button" onclick="toggleEditForm(this)">
-                                                <i class="fas fa-edit"></i> Edit
-                                            </button>
-                                        </td>
+                                        <td>@caseRecord.CaseDescription</td>
                                         <td>@caseRecord.CaseIssueType</td>
                                         <td>
                                             <form asp-action="DeleteCase" asp-controller="MapPage" method="post">
@@ -120,20 +110,38 @@
             </div>
         </div>
     </div>
-    <div id="Profil_instillinger" class="tab-content">
-        <div class="profile-settings-container">
-            <h2>Profil-innstillinger</h2>
-        </div>
+</div>
+
+<div id="Profil_instillinger" class="tab-content">
+    <div class="profile-settings-container">
+        <h2>Profil-innstillinger</h2>
+        <form class="settings-form">
+            <div class="section">
+                <h3>Personal Information</h3>
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" value="John Doe" />
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" value="john.doe@example.com" />
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" value="+1 (555) 123-4567" />
+                </div>
+            </div>
+            <div class="section">
+                <h3>Profile Picture</h3>
+                <div class="form-group">
+                    <img src="/api/placeholder/150/150" alt="Profile Picture" class="profile-picture" />
+                    <input type="file" id="profilePicture" />
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 
-<div id="ProfileSettings" class="tab-content">
-    <!-- Innholdet for Profil-innstillinger -->
-    <div class="profile-settings-container">
-        <h2>Profil-innstillinger</h2>
-
-        </div>
-</div>
 
 
 
@@ -149,6 +157,15 @@
             } else if (statusValue === "InProgress") {
                 element.style.backgroundColor = "#FFDD9D";
             }
+        });
+    });
+    
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll('.expandable').forEach(row => {
+            row.addEventListener('click', function() {
+                const caseRecordId = row.getAttribute('data-case-record-id');
+                window.location.href = `/CaseInfo/CaseInfo?caseRecordId=${caseRecordId}`;
+            });
         });
     });
 </script>
@@ -228,3 +245,4 @@
         }
     </script>
 }
+

@@ -1,3 +1,4 @@
+@using Gruppe6_Kartverket.Mvc.Models.ViewModels
 @model Gruppe6_Kartverket.Mvc.Models.ViewModels.CaseWorkerPageV2ViewModel
 
 @{
@@ -83,7 +84,6 @@ ViewData["Title"] = "CaseWorkerPage-V2";
                 <th>CaseDescription</th>
                 <th>CaseStatus</th>
                 <th>LocationId</th>
-                <th>CaseLocation</th>
                 <th>UserId</th>
             </tr>
             </thead>
@@ -98,7 +98,6 @@ ViewData["Title"] = "CaseWorkerPage-V2";
                 <td class="description">@caseRecord.CaseDescription</td>
                 <td>@caseRecord.CaseStatus</td>
                 <td>@caseRecord.LocationId</td>
-                <td>@caseRecord.CaseLocation?.Municipality</td>
                 <td>@caseRecord.User?.UserName</td>
             </tr>
             }

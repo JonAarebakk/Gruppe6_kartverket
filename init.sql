@@ -1,4 +1,4 @@
-﻿﻿-- Check if the user 'root'@'%' exists
+﻿-- Check if the user 'root'@'%' exists
 SET @user_exists = (SELECT COUNT(*) FROM mysql.user WHERE user = 'root' AND host = '%');
 
 -- If the user exists, update the password; otherwise, create the user
