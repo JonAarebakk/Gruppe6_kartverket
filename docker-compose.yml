@@ -27,11 +27,8 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ConnectionStrings__DefaultConnection: "Server=mariadb;Port=3306;Database=kartverket_tables;User=root;Password=passord123"
-      #PATH: "$PATH:/root/.dotnet/tools"
     networks:
       mynetwork:
-        aliases:
-          - gruppe6_kartverket.mvc
     volumes:
       - ./Gruppe6_Kartverket.Mvc/keys:/app/keys
     command: [ "dotnet", "ef", "database", "update", "--project", "/src/Gruppe6_Kartverket.Mvc/Gruppe6_Kartverket.Mvc.csproj" ]

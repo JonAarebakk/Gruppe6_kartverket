@@ -1,6 +1,9 @@
 using Gruppe6_Kartverket.Mvc.Data;
 using Gruppe6_Kartverket.Mvc.Models;
 using Gruppe6_Kartverket.Mvc.Models.Database;
+using Gruppe6_Kartverket.Mvc.Models.Services;
+using Gruppe6_Kartverket.Mvc.Models.ViewModels;
+using Gruppe6_Kartverket.Mvc.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -13,6 +16,7 @@ public class MapPageController : Controller
 {
     private readonly UserManager<IdentityUser> _userManager;
     private readonly ApplicationDbContext _dbContext;
+
 
     public MapPageController(UserManager<IdentityUser> userManager, ApplicationDbContext dbContext)
     {

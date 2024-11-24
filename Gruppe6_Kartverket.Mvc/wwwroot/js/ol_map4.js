@@ -211,6 +211,8 @@ function featureToGeoJson() {
             }
 
             console.log(coords); //for debugging
+            var centerOfFeature = getCenterOfFeature(coords);
+            console.log(centerOfFeature); //for debugging
 
             let geoJsonFeature = {
                 type: 'Feature',
@@ -220,25 +222,42 @@ function featureToGeoJson() {
                     type: featureType
                 }
             }
-            geoJsonFeatures.push(geoJsonFeature); //Pushes the GeoJson object to the array
+            var geoJsonString = JSON.stringify(geoJsonFeature);
+            document.getElementById("geoJsonInput").value = geoJsonString;
+            
+            document.getElementById("centerLongitude").value = centerOfFeature[0];
+            document.getElementById("centerLatitude").value = centerOfFeature[1];
+            
         });
-        console.log(geoJsonFeatures); //for debugging
     }
 }
 
-/* Collects the GeoJson objects into one FeatureCollection*/
-function createFeatureCollection() {
-    featureToGeoJson();
-    let featureCollection = {
-        type: 'FeatureCollection',
-        features: geoJsonFeatures
-    };
-    console.log(featureCollection);
-    var geoJsonString = JSON.stringify(featureCollection);
-    console.log(geoJsonString);
+//Loops through the coordinates and calculates the center of the feature
+function getCenterOfFeature(coords) {
+    let totalLon = 0;
+    let totalLat = 0;
+    let count = 0;
 
-    document.getElementById("geoJsonInput").value = geoJsonString;
+    function calculateCenter(coordinates) {
+        if (Array.isArray(coordinates[0])) {
+            for (let i = 0; i < coordinates.length; i++) {
+                calculateCenter(coordinates[i]);
+            }
+        } else {
+            totalLon += coordinates[0];
+            totalLat += coordinates[1];
+            count++;
+        }
+    }
+
+    calculateCenter(coords);
+
+    const centerLon = totalLon / count;
+    const centerLat = totalLat / count;
+
+    return [centerLon, centerLat];
 }
+
 
 //#endregion
 
@@ -327,7 +346,7 @@ function submitCase() {
     var formValidity = isFormValid();
 
     if (formValidity) {
-        createFeatureCollection();
+        featureToGeoJson();
         clearMapOfFunctions();
         closePopupsAndOverlays();
 
