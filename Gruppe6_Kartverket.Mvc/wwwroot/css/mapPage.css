@@ -36,6 +36,39 @@
     width: 30%;
     display: none; /* Starts as hidden */
     flex-direction: column;
+    padding-left: 15px; /* Add some padding to the left */
+    padding-right: 15px; /* Add some padding to the left */
+
+}
+
+/* Style for form labels */
+.case-input-wrapper label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+    color: #333;
+}
+
+
+/* Style for form inputs */
+.case-input-wrapper input[type="text"],
+.case-input-wrapper select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+/* Style for validation messages */
+.case-input-wrapper .text-danger {
+    color: #e74c3c;
+    font-size: 12px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+    display: block;
 }
 
 /* The bottom bar with buttons for interacting with the map */
@@ -69,7 +102,7 @@
     background-color: #007bff;
     color: white;
     border: none;
-    border-radius: 7px;
+    border-radius: 15px; /* More rounded corners */
     padding: 4px 8px;
     cursor: pointer;
     margin: 0 5px;
@@ -82,14 +115,13 @@
     background-color: #007bff;
     color: white;
     border: none;
-    border-radius: 7px;
+    border-radius: 15px; /* More rounded corners */
     padding: 4px 8px;
     cursor: pointer;
     margin: 0 5px;
     height: 70%;
     width: 20%;
 }
-
 /*  Active button style */
 .map-button.active {
     background-color: green;
@@ -102,6 +134,33 @@
     flex-direction: row;
     width: 100%;
     justify-content: center; /* Center horizontally */
+}
+
+
+/* Style for submit and cancel buttons */
+.submit-cancel-wrapper button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin: 5px;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.submit-cancel-wrapper button:hover {
+    background-color: #0056b3;
+}
+
+/* Style for the cancel button */
+.cancel-case-button {
+    background-color: #e74c3c;
+}
+
+.cancel-case-button:hover {
+    background-color: #c0392b;
 }
 
 

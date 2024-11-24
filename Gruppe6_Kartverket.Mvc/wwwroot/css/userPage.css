@@ -1,4 +1,3 @@
-
 /*
 **************************************
 ***  Styling for the tab in general ***
@@ -58,11 +57,15 @@
 */
 .UP-container {
     position: relative;    
-    height: 100vh; /* Sets the height of the container to 100% of the viewport height */
     padding-top: 60px; /* Adds 60px padding to the top of the container */
     display: flex; /* Use flexbox layout */
     flex-direction: column; /* Arrange children in a row */
     z-index: 0 !important;
+    height: fit-content; 
+    overflow-y: auto; /* Enable vertical scrolling */
+    background-image: url("../images/kartverket-bakgrunssbilder/lofoten.jpg"); /* Sets a background image for the container */
+    background-size: cover; /* Ensures the background image covers the entire container */
+    background-position: center; /* Centers the background image */
 }
 
 .UP-container::before {
@@ -72,9 +75,6 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: url("../images/kartverket-bakgrunssbilder/lofoten.jpg"); /* Sets a background image for the container */
-    background-size: cover; /* Ensures the background image covers the entire container */
-    background-position: center; /* Centers the background image */
     opacity: 0.6; /* Sets the opacity of the background image to 60% */
     z-index: -1;
 }
@@ -83,8 +83,7 @@
     display: flex; 
     flex-direction: row;
     width: 100%;
-    height: 100%;
-
+    height: 100vh;
 }
 
 .content-container {
@@ -294,12 +293,31 @@
 .profile-settings-container {
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Center vertically */
-    align-items: flex-start; /* Align items to the left */
+    justify-content: flex-start; /* Align items to the top */
+    align-items: stretch; /* Stretch items to fill the container width */
     width: 60%;
-    height: 600%;
     padding: 20px;
     background: white;
     margin: auto; /* Center horizontally within its parent */
     background-color: #f9f9f9;
+    gap: 15px; /* Add space between elements */
+}
+
+.profile-settings-container div {
+    width: 100%; /* Ensure each child element takes the full width */
+}
+
+.profile-settings-container label {
+    font-weight: bold; /* Make labels bold */
+    margin-bottom: 5px; /* Add space below labels */
+}
+
+.profile-settings-container input,
+.profile-settings-container select {
+    width: 100%; /* Make input and select elements take full width */
+    padding: 10px; /* Add padding for better appearance */
+    margin-bottom: 10px; /* Add space below input and select elements */
+    border: 1px solid #ccc; /* Add border */
+    border-radius: 5px; /* Round the corners */
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
 }

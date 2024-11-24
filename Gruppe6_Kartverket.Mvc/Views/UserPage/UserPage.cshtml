@@ -1,4 +1,4 @@
-@model Gruppe6_Kartverket.Mvc.Models.ViewModels.CaseWorkerPageV2ViewModel
+@model Gruppe6_Kartverket.Mvc.Models.ViewModels.UserPageViewModel
 
 @{
     ViewData["Title"] = "UserPage";
@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 }
 
-        
 <div class="UP-container">
     <div class="tab-container">
         <div class="tab-buttons">
@@ -34,12 +33,11 @@
                             </tr>
                             </thead>
                             <tbody>
-
                             @if (Model != null && Model.CaseRecords != null && Model.CaseRecords.Any())
                             {
                                 foreach (var caseRecord in Model.CaseRecords)
                                 {
-                                    <tr  class="expandable" data-case-record-id="@caseRecord.CaseRecordId">
+                                    <tr class="expandable" data-case-record-id="@caseRecord.CaseRecordId">
                                         <td>@caseRecord.CaseStatus</td>
                                         <td>@caseRecord.UserId</td>
                                         <td>@caseRecord.CaseDate.ToString("yyyy-MM-dd")</td>
@@ -54,7 +52,6 @@
                                                 </button>
                                             </form>
                                         </td>
-                                        
                                     </tr>
                                 }
                             }
@@ -64,7 +61,6 @@
                                     <td colspan="7">Ingen saker å vise.</td>
                                 </tr>
                             }
-                            
                             </tbody>
                         </table>
                     </div>
@@ -110,124 +106,138 @@
             </div>
         </div>
     </div>
-</div>
+    <div id="Profil_instillinger" class="tab-content">
+        <div class="profile-settings-container">
+            <h2>Profil-innstillinger</h2>
+            <form asp-action="UpdateUserInfo" asp-controller="UserPage" method="post" class="settings-form">
+                <div>
+                    <label asp-for="UserInfo.FirstName">Endre fornavn:</label>
+                    <input asp-for="UserInfo.FirstName" placeholder="fornavn" autocomplete="given-name"/>
+                    <span asp-validation-for="UserInfo.FirstName" class="text-danger"></span>
+                </div>
+                <div>
+                    <label asp-for="UserInfo.LastName">Endre etternavn:</label>
+                    <input asp-for="UserInfo.LastName" placeholder="etternavn" autocomplete="family-name"/>
+                    <span asp-validation-for="UserInfo.LastName" class="text-danger"></span>
+                </div>
+                <div>
+                    <label asp-for="UserInfo.PhoneNumber">Endre eller legg til telefonnummer:</label>
+                    <input asp-for="UserInfo.PhoneNumber" placeholder="telefon-nummer" autocomplete="tel"/>
+                    <span asp-validation-for="UserInfo.PhoneNumber" class="text-danger"></span>
+                </div>
+                <div>
+                    <label asp-for="UserInfo.Email">Endre mail:</label>
+                    <input asp-for="UserInfo.Email" placeholder="epost" autocomplete="email"/>
+                    <span asp-validation-for="UserInfo.Email" class="text-danger"></span>
+                </div>
+                <div>
+                    <label asp-for="UserInfo.Gender">Endre kjønn:</label>
+                    <select asp-for="UserInfo.Gender" autocomplete="sex">
+                        <option value="Man">Man</option>
+                        <option value="Woman">Woman</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div>
+                    <label asp-for="User.UserName">Endre brukernavn:</label>
+                    <input asp-for="User.UserName" placeholder="brukernavn" autocomplete="username"/>
+                    <span asp-validation-for="User.UserName" class="text-danger"></span>
+                </div>
+                <div>
+                    <label asp-for="User.UserPassword">Endre passord:</label>
+                    <input asp-for="User.UserPassword" placeholder="passord" type="password" autocomplete="new-password"/>
+                    <span asp-validation-for="User.UserPassword" class="text-danger"></span>
+                </div>
 
-<div id="Profil_instillinger" class="tab-content">
-    <div class="profile-settings-container">
-        <h2>Profil-innstillinger</h2>
-        <form class="settings-form">
-            <div class="section">
-                <h3>Personal Information</h3>
-                <div class="form-group">
-                    <label for="fullName">Full Name</label>
-                    <input type="text" id="fullName" value="John Doe" />
-                </div>
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" value="john.doe@example.com" />
-                </div>
-                <div class="form-group">
-                    <label for="phone">Phone Number</label>
-                    <input type="tel" id="phone" value="+1 (555) 123-4567" />
-                </div>
-            </div>
-            <div class="section">
-                <h3>Profile Picture</h3>
-                <div class="form-group">
-                    <img src="/api/placeholder/150/150" alt="Profile Picture" class="profile-picture" />
-                    <input type="file" id="profilePicture" />
-                </div>
-            </div>
-        </form>
+                <button type="submit" class="btn btn-primary">Endre</button>
+            </form>
+        </div>
     </div>
 </div>
 
-
-
-
 @section Scripts {
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        document.querySelectorAll('.status-color').forEach(element => {
-            const statusValue = element.innerText.trim();
-            if (statusValue === "Open") {
-                element.style.backgroundColor = "rgba(21,102,48,0.74)";
-            } else if (statusValue === "Closed") {
-                element.style.backgroundColor = "rgba(207,0,0,0.74)";
-            } else if (statusValue === "InProgress") {
-                element.style.backgroundColor = "#FFDD9D";
-            }
-        });
-    });
-    
-    document.addEventListener("DOMContentLoaded", function() {
-        document.querySelectorAll('.expandable').forEach(row => {
-            row.addEventListener('click', function() {
-                const caseRecordId = row.getAttribute('data-case-record-id');
-                window.location.href = `/CaseInfo/CaseInfo?caseRecordId=${caseRecordId}`;
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll('.status-color').forEach(element => {
+                const statusValue = element.innerText.trim();
+                if (statusValue === "Open") {
+                    element.style.backgroundColor = "rgba(21,102,48,0.74)";
+                } else if (statusValue === "Closed") {
+                    element.style.backgroundColor = "rgba(207,0,0,0.74)";
+                } else if (statusValue === "InProgress") {
+                    element.style.backgroundColor = "#FFDD9D";
+                }
             });
         });
-    });
-</script>
-<script>
-    function toggleSortAndFilter() {
-        var menuOptionGroup = document.querySelector('.menu-option-group'); // The div with the sort and filter options
-        menuOptionGroup.style.display = menuOptionGroup.style.display === 'none' ? 'flex' : 'none';
-    }
 
-    function sortCases() {
-        console.log("Sorting cases...");
-        var table = document.getElementById("Inbox");
-        var rows = Array.from(table.rows).slice(1); // Exclude the header row
-        var sortOrder = document.querySelector('input[name="sortOrder"]:checked').value;
-
-        rows.sort(function(a, b) {
-            var dateA = new Date(a.cells[3].innerText);
-            var dateB = new Date(b.cells[3].innerText);
-            return sortOrder === "asc" ? dateA - dateB : dateB - dateA;
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll('.expandable').forEach(row => {
+                row.addEventListener('click', function() {
+                    const caseRecordId = row.getAttribute('data-case-record-id');
+                    window.location.href = `/CaseInfo/CaseInfo?caseRecordId=${caseRecordId}`;
+                });
+            });
         });
+    </script>
+    <script>
+        function toggleSortAndFilter() {
+            var menuOptionGroup = document.querySelector('.menu-option-group'); // The div with the sort and filter options
+            menuOptionGroup.style.display = menuOptionGroup.style.display === 'none' ? 'flex' : 'none';
+        }
 
-        rows.forEach(function(row) {
-            table.appendChild(row);
-        });
-    }
+        function sortCases() {
+            console.log("Sorting cases...");
+            var table = document.getElementById("Inbox");
+            var rows = Array.from(table.rows).slice(1); // Exclude the header row
+            var sortOrder = document.querySelector('input[name="sortOrder"]:checked').value;
 
-    function filterCases() {
-        console.log("Filtering cases...");
-        var table = document.getElementById("Inbox");
-        var rows = Array.from(table.rows).slice(1); // Exclude the header row
-        var filterValue = document.querySelector('input[name="filterStatus"]:checked').value;
+            rows.sort(function(a, b) {
+                var dateA = new Date(a.cells[3].innerText);
+                var dateB = new Date(b.cells[3].innerText);
+                return sortOrder === "asc" ? dateA - dateB : dateB - dateA;
+            });
 
-        rows.forEach(function(row) {
-            var caseStatus = row.cells[0].innerText.toLowerCase();
-            if (filterValue === "all" || caseStatus.includes(filterValue)) {
-                row.style.display = "";
-            } else {
-                row.style.display = "none";
+            rows.forEach(function(row) {
+                table.appendChild(row);
+            });
+        }
+
+        function filterCases() {
+            console.log("Filtering cases...");
+            var table = document.getElementById("Inbox");
+            var rows = Array.from(table.rows).slice(1); // Exclude the header row
+            var filterValue = document.querySelector('input[name="filterStatus"]:checked').value;
+
+            rows.forEach(function(row) {
+                var caseStatus = row.cells[0].innerText.toLowerCase();
+                if (filterValue === "all" || caseStatus.includes(filterValue)) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        }
+
+        function openTab(evt, tabName) {
+            var i, tabcontent, tabbuttons;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
             }
+            tabbuttons = document.getElementsByClassName("tab-button");
+            for (i = 0; i < tabbuttons.length; i++) {
+                tabbuttons[i].className = tabbuttons[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "flex";
+            evt.currentTarget.className += " active";
+        }
+
+        // Default åpen fane
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("Inbox").style.display = "flex";
+            document.querySelector('.tab-button').classList.add('active');
         });
-    }
-
-    function openTab(evt, tabName) {
-        var i, tabcontent, tabbuttons;
-        tabcontent = document.getElementsByClassName("tab-content");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
-        }
-        tabbuttons = document.getElementsByClassName("tab-button");
-        for (i = 0; i < tabbuttons.length; i++) {
-            tabbuttons[i].className = tabbuttons[i].className.replace(" active", "");
-        }
-        document.getElementById(tabName).style.display = "flex";
-        evt.currentTarget.className += " active";
-    }
-
-    // Default åpen fane
-    document.addEventListener("DOMContentLoaded", function() {
-        document.getElementById("Inbox").style.display = "flex";
-        document.querySelector('.tab-button').classList.add('active');
-    });
-</script>
+    </script>
 
     <script>
         function toggleEditForm(button) {
@@ -245,4 +255,3 @@
         }
     </script>
 }
-
