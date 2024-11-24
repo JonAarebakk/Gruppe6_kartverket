@@ -5,13 +5,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-image: url("../Images/kartverket-bakgrunssbilder/norway.jpg"); /* Path to the background image */
+    background-image: url("../images/kartverket-bakgrunssbilder/norway.jpg"); /* Path to the background image */
     background-size: cover; /* Ensure the image covers the entire background */
     background-position: center; /* Center the background image */
     opacity: 0.9;
     min-height: 100vh;
     padding: 1rem;
-    background-image: url("../Images/kartverket-bakgrunssbilder/norway.jpg"); /* Path to the background image */
+    background-image: url("../images/kartverket-bakgrunssbilder/norway.jpg"); /* Path to the background image */
     background-size: cover; /* Ensure the image covers the entire background */
     background-position: center; /* Center the background image */
 }

@@ -52,8 +52,6 @@ const map = new ol.Map({
 **  To do list:                                        **
 **  - make select.on to deactivate proparly            **
 **  - remove console.log() debugging statements        **
-**  - for cancel-case-button add a popUp for are you   **
-**    sure? And if yes, clear the map                  **
 *********************************************************
 */
 //#region Section 2 /*Lets Visual studio collapse this section*/
@@ -159,7 +157,7 @@ select.on('select', function (evt) {
     }
 });
 
-//Changes the active map button for styling purposes
+//Changes the active map button for styling and functionality
 function setActiveMapButton() {
     var buttons = document.querySelectorAll('.map-button');
     buttons.forEach(button => {
@@ -170,6 +168,17 @@ function setActiveMapButton() {
         }
     });
 }
+
+//Sets all map buttons to inactive for styling and functionality
+function deselctMapButtons() {
+    var buttons = document.querySelectorAll('.map-button');
+    buttons.forEach(button => {
+        if (button.classList.contains('active')) {
+            button.classList.remove('active');
+        }
+    });
+}
+
 
 //Clears the source of all features and resets the drawnFeatures counter
 function clearMapOfFunctions() {
@@ -384,7 +393,6 @@ function showPopup(popupID) {
 ****************************************************************
 **  To do list:                                               **
 **  - Make one general function that initializes all buttons  **
-**  - Add if() on necCaseButton                               **
 **  - Add if() on cancelCaseButton                            **
 **  - Combine the two cancelCaseButton functions              **
 **  - change querySelectorAll to querySelector on elements    **
@@ -400,7 +408,7 @@ const newCaseButton = document.getElementById('new-case-button');
 newCaseButton.addEventListener('click', function () {
     var isUserLoggedIn = document.getElementById('loggedIn').textContent;
 
-    if (isUserLoggedIn = true) {
+    if (isUserLoggedIn == "loggedIn") {
         startNewCase();
     } else {
         showPopup('new-case-explanation');
@@ -471,6 +479,10 @@ document.querySelectorAll('.popup-close').forEach(button => {
     button.addEventListener('click', function () {
         closePopupsAndOverlays();
     });
+});
+
+const deactiveMapButtons = document.querySelector('.case-input-wrapper').addEventListener('click', function () {
+    deselctMapButtons();
 });
 
 //#endregion
