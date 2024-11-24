@@ -1,49 +1,53 @@
-using Microsoft.AspNetCore.Mvc; // Enables MVC features like controllers and views.
-using Microsoft.EntityFrameworkCore; // Provides ORM for database access.
-using System.Threading.Tasks; // Supports asynchronous programming.
-using Gruppe6_Kartverket.Mvc.Data; // Imports database context.
-using Gruppe6_Kartverket.Mvc.Models.ViewModels; // Imports custom view models.
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
+using Gruppe6_Kartverket.Mvc.Data;
+using Gruppe6_Kartverket.Mvc.Models.ViewModels;
 
-namespace Gruppe6_Kartverket.Mvc.Controllers // Namespace for the controller.
+namespace Gruppe6_Kartverket.Mvc.Controllers
 {
-    public class CaseInfoController : Controller // Handles case-related actions.
+    public class CaseInfoController : Controller
     {
-        private readonly ApplicationDbContext _context; // Represents the database context.
+        private readonly ApplicationDbContext _context;
 
-        public CaseInfoController(ApplicationDbContext context) // Constructor with dependency injection.
+        // Constructor: Initializes the controller with the ApplicationDbContext.
+        public CaseInfoController(ApplicationDbContext context)
         {
-            _context = context; // Injects the database context.
+            _context = context;
         }
 
-        public async Task<IActionResult> CaseInfo(int caseRecordId) // Retrieves detailed case information.
+        // Fetches and displays detailed information about a specific case record.
+        public async Task<IActionResult> CaseInfo(int caseRecordId)
         {
-            // Queries the database for a case record, including related location and user data.
+            // Retrieves the case record along with related location and user data.
             var caseRecord = await _context.CaseRecords
-                .Include(cr => cr.CaseLocation) // Includes location details.
+                .Include(cr => cr.CaseLocation) // Includes associated case location details.
                 .Include(cr => cr.User) // Includes associated user details.
-                .FirstOrDefaultAsync(cr => cr.CaseRecordId == caseRecordId); // Finds the case by ID.
+                .FirstOrDefaultAsync(cr => cr.CaseRecordId == caseRecordId); // Finds the case by its ID.
 
-            if (caseRecord == null) // Checks if the case record is found.
+            // Returns a 404 if the case record is not found.
+            if (caseRecord == null)
             {
-                return NotFound(); // Returns a 404 error if not found.
+                return NotFound();
             }
 
-            // Maps database data to a view model for display.
+            // Creates a view model to present the case record details to the view.
             var viewmodel = new CaseDetailsViewModel
             {
-                CaseRecordId = caseRecord.CaseRecordId, // Case ID.
-                CaseDate = caseRecord.CaseDate, // Date of the case.
-                CaseTitle = caseRecord.CaseTitle, // Title of the case.
-                CaseIssueType = caseRecord.CaseIssueType, // Type of issue.
-                CaseDescription = caseRecord.CaseDescription, // Description of the case.
-                CaseStatus = caseRecord.CaseStatus, // Status of the case.
-                LocationId = caseRecord.LocationId, // Location ID.
-                GeoJSON = caseRecord.CaseLocation?.GeoJSON, // GeoJSON data for mapping.
-                CaseLocation = caseRecord.CaseLocation, // Location details.
-                User = caseRecord.User // Associated user details.
+                CaseRecordId = caseRecord.CaseRecordId,
+                CaseDate = caseRecord.CaseDate,
+                CaseTitle = caseRecord.CaseTitle,
+                CaseIssueType = caseRecord.CaseIssueType,
+                CaseDescription = caseRecord.CaseDescription,
+                CaseStatus = caseRecord.CaseStatus,
+                LocationId = caseRecord.LocationId,
+                GeoJSON = caseRecord.CaseLocation?.GeoJSON, // Optionally include the geoJSON data from the location.
+                CaseLocation = caseRecord.CaseLocation,
+                User = caseRecord.User
             };
 
-            return View(viewmodel); // Passes the view model to the view.
+            // Passes the view model to the view to display the case details.
+            return View(viewmodel);
         }
     }
 }

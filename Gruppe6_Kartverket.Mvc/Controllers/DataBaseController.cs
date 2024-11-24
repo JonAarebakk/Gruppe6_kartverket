@@ -1,161 +1,177 @@
-﻿using Gruppe6_Kartverket.Mvc.Models.Database; // Imports database models.
-using Gruppe6_Kartverket.Mvc.Data; // Imports database context.
-using Microsoft.AspNetCore.Mvc; // Enables MVC features like controllers and views.
-using System.Diagnostics; // Provides diagnostics for debugging.
-using System.Text.Json; // Supports JSON serialization.
-using Microsoft.EntityFrameworkCore; // Provides ORM for database access.
+﻿using Gruppe6_Kartverket.Mvc.Models.Database;
+using Gruppe6_Kartverket.Mvc.Data;
+using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
+using System.Text.Json;
+using Microsoft.EntityFrameworkCore;
 
-namespace Gruppe6_Kartverket.Mvc.Controllers // Namespace for the controller.
+namespace Gruppe6_Kartverket.Mvc.Controllers
 {
-    public class DataBaseController : Controller // Manages database-related actions.
+    public class DataBaseController : Controller
     {
-        private readonly ILogger<DataBaseController> _logger; // Logs application activities.
-        private readonly ApplicationDbContext _context; // Represents the database context.
+        private readonly ILogger<DataBaseController> _logger;
+        private readonly ApplicationDbContext _context;
 
-        public DataBaseController(ILogger<DataBaseController> logger, ApplicationDbContext context) // Constructor.
+        // Constructor that injects the logger and ApplicationDbContext for database access
+        public DataBaseController(ILogger<DataBaseController> logger, ApplicationDbContext context)
         {
-            _logger = logger; // Injects the logger.
-            _context = context; // Injects the database context.
+            _logger = logger;
+            _context = context;
         }
 
+        // Action method to register user information and save it to the database
         [HttpPost]
-        public IActionResult RegisterUserInfo(UserInfo userInfo) // Registers new user information.
+        public IActionResult RegisterUserInfo(UserInfo userInfo)
         {
             try
             {
-                if (userInfo == null) // Validates the input.
+                if (userInfo == null)
                 {
-                    return BadRequest("Invalid user information."); // Returns bad request if invalid.
+                    return BadRequest("Invalid user information.");
                 }
 
-                _context.UserInfos.Add(userInfo); // Adds user information to the database.
-                _context.SaveChanges(); // Saves changes to the database.
-                return RedirectToAction("UserInfoOverview"); // Redirects to the overview page.
+                // Adds the new userInfo to the database and saves the changes
+                _context.UserInfos.Add(userInfo);
+                _context.SaveChanges();
+                return RedirectToAction("UserInfoOverview");
             }
-            catch (Exception ex) // Catches errors.
+            catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}, Inner Exception: {ex.InnerException?.Message}"); // Logs error details.
-                throw; // Rethrows the exception.
+                Console.WriteLine($"Error: {ex.Message}, Inner Exception: {ex.InnerException?.Message}");
+                throw; // Rethrows the exception for further handling
             }
         }
 
+        // Action method to fetch and display a list of all user information
         [HttpGet]
-        public IActionResult UserInfoOverview() // Displays all user information.
+        public IActionResult UserInfoOverview()
         {
-            var userInfos = _context.UserInfos.ToList(); // Retrieves all user information from the database.
-            return View(userInfos); // Passes data to the view.
+            var userInfos = _context.UserInfos.ToList(); // Fetches all userInfos from the database
+            return View(userInfos); // Passes the list to the view
         }
 
+        // Action method to register a new user and save it to the database
         [HttpPost]
-        public IActionResult RegisterUser(User user) // Registers a new user.
+        public IActionResult RegisterUser(User user)
         {
             try
             {
-                if (user == null) // Validates the input.
+                if (user == null)
                 {
-                    return BadRequest("Invalid user."); // Returns bad request if invalid.
+                    return BadRequest("Invalid user.");
                 }
 
-                _context.Users.Add(user); // Adds the user to the database.
-                _context.SaveChanges(); // Saves changes to the database.
-                return RedirectToAction("UserOverview"); // Redirects to the overview page.
+                // Adds the new user to the database and saves the changes
+                _context.Users.Add(user);
+                _context.SaveChanges();
+                return RedirectToAction("UserOverview");
             }
-            catch (Exception ex) // Catches errors.
+            catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}, Inner Exception: {ex.InnerException?.Message}"); // Logs error details.
-                throw; // Rethrows the exception.
+                Console.WriteLine($"Error: {ex.Message}, Inner Exception: {ex.InnerException?.Message}");
+                throw; // Rethrows the exception for further handling
             }
         }
 
+        // Action method to fetch and display a list of all users
         [HttpGet]
-        public IActionResult UserOverview() // Displays all users.
+        public IActionResult UserOverview()
         {
-            var users = _context.Users.ToList(); // Retrieves all users from the database.
-            return View(users); // Passes data to the view.
+            var users = _context.Users.ToList(); // Fetches all users from the database
+            return View(users); // Passes the list to the view
         }
 
+        // Action method to register a user type and save it to the database
         [HttpPost]
-        public IActionResult RegisterUserType(UserTypes userType) // Registers a new user type.
+        public IActionResult RegisterUserType(UserTypes userType)
         {
             try
             {
-                if (userType == null) // Validates the input.
+                if (userType == null)
                 {
-                    return BadRequest("Invalid user type."); // Returns bad request if invalid.
+                    return BadRequest("Invalid user type.");
                 }
 
-                _context.UserTypes.Add(userType); // Adds the user type to the database.
-                _context.SaveChanges(); // Saves changes to the database.
-                return RedirectToAction("UserTypeOverview"); // Redirects to the overview page.
+                // Adds the new userType to the database and saves the changes
+                _context.UserTypes.Add(userType);
+                _context.SaveChanges();
+                return RedirectToAction("UserTypeOverview");
             }
-            catch (Exception ex) // Catches errors.
+            catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}, Inner Exception: {ex.InnerException?.Message}"); // Logs error details.
-                throw; // Rethrows the exception.
+                Console.WriteLine($"Error: {ex.Message}, Inner Exception: {ex.InnerException?.Message}");
+                throw; // Rethrows the exception for further handling
             }
         }
 
+        // Action method to fetch and display a list of all user types
         [HttpGet]
-        public IActionResult UserTypeOverview() // Displays all user types.
+        public IActionResult UserTypeOverview()
         {
-            var userTypes = _context.UserTypes.ToList(); // Retrieves all user types from the database.
-            return View(userTypes); // Passes data to the view.
+            var userTypes = _context.UserTypes.ToList(); // Fetches all userTypes from the database
+            return View(userTypes); // Passes the list to the view
         }
 
+        // Action method to register a case location and save it to the database
         [HttpPost]
-        public IActionResult RegisterCaseLocation(CaseLocation caseLocation) // Registers a new case location.
+        public IActionResult RegisterCaseLocation(CaseLocation caseLocation)
         {
             try
             {
-                if (caseLocation == null) // Validates the input.
+                if (caseLocation == null)
                 {
-                    return BadRequest("Invalid case location."); // Returns bad request if invalid.
+                    return BadRequest("Invalid case location.");
                 }
 
-                _context.CaseLocations.Add(caseLocation); // Adds the case location to the database.
-                _context.SaveChanges(); // Saves changes to the database.
-                return RedirectToAction("CaseLocationOverview"); // Redirects to the overview page.
+                // Adds the new caseLocation to the database and saves the changes
+                _context.CaseLocations.Add(caseLocation);
+                _context.SaveChanges();
+                return RedirectToAction("CaseLocationOverview");
             }
-            catch (Exception ex) // Catches errors.
+            catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}, Inner Exception: {ex.InnerException?.Message}"); // Logs error details.
-                throw; // Rethrows the exception.
+                Console.WriteLine($"Error: {ex.Message}, Inner Exception: {ex.InnerException?.Message}");
+                throw; // Rethrows the exception for further handling
             }
         }
 
+        // Action method to fetch and display a list of all case locations
         [HttpGet]
-        public IActionResult CaseLocationOverview() // Displays all case locations.
+        public IActionResult CaseLocationOverview()
         {
-            var caseLocations = _context.CaseLocations.ToList(); // Retrieves all case locations from the database.
-            return View(caseLocations); // Passes data to the view.
+            var caseLocations = _context.CaseLocations.ToList(); // Fetches all case locations from the database
+            return View(caseLocations); // Passes the list to the view
         }
 
+        // Action method to register a case record and save it to the database
         [HttpPost]
-        public IActionResult RegisterCase(CaseRecord caseRecord) // Registers a new case.
+        public IActionResult RegisterCase(CaseRecord caseRecord)
         {
             try
             {
-                if (caseRecord == null) // Validates the input.
+                if (caseRecord == null)
                 {
-                    return BadRequest("Invalid case."); // Returns bad request if invalid.
+                    return BadRequest("Invalid case.");
                 }
 
-                _context.CaseRecords.Add(caseRecord); // Adds the case to the database.
-                _context.SaveChanges(); // Saves changes to the database.
-                return RedirectToAction("CaseOverview"); // Redirects to the overview page.
+                // Adds the new caseRecord to the database and saves the changes
+                _context.CaseRecords.Add(caseRecord);
+                _context.SaveChanges();
+                return RedirectToAction("CaseOverview");
             }
-            catch (Exception ex) // Catches errors.
+            catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}, Inner Exception: {ex.InnerException?.Message}"); // Logs error details.
-                throw; // Rethrows the exception.
+                Console.WriteLine($"Error: {ex.Message}, Inner Exception: {ex.InnerException?.Message}");
+                throw; // Rethrows the exception for further handling
             }
         }
 
+        // Action method to fetch and display a list of all case records
         [HttpGet]
-        public IActionResult CaseOverview() // Displays all cases.
+        public IActionResult CaseOverview()
         {
-            var cases = _context.CaseRecords.ToList(); // Retrieves all cases from the database.
-            return View(cases); // Passes data to the view.
+            var cases = _context.CaseRecords.ToList(); // Fetches all case records from the database
+            return View(cases); // Passes the list to the view
         }
     }
 }

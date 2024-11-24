@@ -1,86 +1,89 @@
-using Microsoft.AspNetCore.Mvc; // Enables MVC features like controllers and views.
-using Microsoft.EntityFrameworkCore; // Provides ORM for database access.
-using Gruppe6_Kartverket.Mvc.Models.Database; // Imports database models.
-using Gruppe6_Kartverket.Mvc.Models.ViewModels; // Imports custom view models.
-using System.Threading.Tasks; // Supports asynchronous programming.
-using System.Linq; // Provides LINQ functionality.
-using Gruppe6_Kartverket.Mvc.Data; // Imports database context.
-using System; // Provides base system functionalities.
-using System.Collections.Generic; // Enables use of collections.
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Gruppe6_Kartverket.Mvc.Models.Database;
+using Gruppe6_Kartverket.Mvc.Models.ViewModels;
+using System.Threading.Tasks;
+using System.Linq;
+using Gruppe6_Kartverket.Mvc.Data;
+using System;
+using System.Collections.Generic;
 
-namespace Gruppe6_Kartverket.Mvc.Controllers // Namespace for the controller.
+namespace Gruppe6_Kartverket.Mvc.Controllers
 {
-    public class CaseWorkerController : Controller // Manages case worker-related actions.
+    public class CaseWorkerController : Controller
     {
-        private readonly ApplicationDbContext _context; // Represents the database context.
+        private readonly ApplicationDbContext _context;
 
-        // Constructor that injects the ApplicationDbContext for database access.
+        // Constructor that injects the ApplicationDbContext for database access
         public CaseWorkerController(ApplicationDbContext context)
         {
-            _context = context; // Injects the database context.
+            _context = context;
         }
 
-        // Action method to fetch all case records and pass them to the view.
+        // Action method to fetch case records and pass them to the view
         public async Task<IActionResult> CaseWorkerPageV2()
         {
             try
             {
-                // Queries the database for case records, including related location and user data.
+                // Fetches all case records along with their associated case location and user
                 var caseRecords = await _context.CaseRecords
-                    .Include(c => c.CaseLocation) // Includes location details.
-                    .Include(c => c.User) // Includes associated user details.
-                    .ToListAsync(); // Executes the query and converts results to a list.
+                    .Include(c => c.CaseLocation) // Includes case location data
+                    .Include(c => c.User) // Includes user data
+                    .ToListAsync(); // Executes the query asynchronously
 
-                if (caseRecords == null || !caseRecords.Any()) // Checks if any case records exist.
+                // Logs a message if no case records are found
+                if (caseRecords == null || !caseRecords.Any())
                 {
-                    Console.WriteLine("No case records found."); // Logs a message if no records are found.
+                    Console.WriteLine("No case records found.");
                 }
 
-                // Prepares the view model with the retrieved case records.
+                // Creates a ViewModel with the case records to pass to the view
                 var viewModel = new CaseWorkerPageV2ViewModel
                 {
-                    CaseRecords = caseRecords, // Assigns case records to the view model.
+                    CaseRecords = caseRecords,
                 };
 
-                return View(viewModel); // Passes the view model to the view.
+                return View(viewModel); // Returns the view with the populated ViewModel
             }
-            catch (Exception ex) // Catches any exceptions that occur.
+            catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}"); // Logs the error message.
-                return StatusCode(500, "Internal server error. Please try again later."); // Returns a server error response.
+                // Logs the exception (e.g., to console or file) if an error occurs
+                Console.WriteLine($"Error: {ex.Message}");
+                return StatusCode(500, "Internal server error. Please try again later."); // Returns a 500 status code on error
             }
         }
 
-        // Action method to fetch details of a specific case record.
+        // Action method to fetch the details of a specific case record
         public IActionResult CaseDetails(int caseRecordId)
         {
-            // Queries the database for a specific case record by ID, including related data.
+            // Retrieves a specific case record by its ID, along with associated location and user
             var caseRecord = _context.CaseRecords
-                .Include(c => c.CaseLocation) // Includes location details.
-                .Include(c => c.User) // Includes associated user details.
-                .FirstOrDefault(c => c.CaseRecordId == caseRecordId); // Finds the record by ID.
+                .Include(c => c.CaseLocation) // Includes case location data
+                .Include(c => c.User) // Includes user data
+                .FirstOrDefault(c => c.CaseRecordId == caseRecordId); // Finds the case record by its ID
 
-            if (caseRecord == null) // Checks if the case record is found.
+            // Returns a 404 if the case record was not found
+            if (caseRecord == null)
             {
-                return NotFound(); // Returns a 404 error if not found.
+                return NotFound();
             }
 
-            // Maps the case record data to a view model for display.
+            // Creates a ViewModel to pass detailed case information to the view
             var viewModel = new CaseDetailsViewModel
             {
-                CaseRecordId = caseRecord.CaseRecordId, // Case ID.
-                CaseDate = caseRecord.CaseDate, // Date of the case.
-                CaseTitle = caseRecord.CaseTitle, // Title of the case.
-                CaseIssueType = caseRecord.CaseIssueType, // Type of issue.
-                CaseDescription = caseRecord.CaseDescription, // Description of the case.
-                CaseStatus = caseRecord.CaseStatus, // Status of the case.
-                LocationId = caseRecord.LocationId, // Location ID.
-                GeoJSON = caseRecord.CaseLocation.GeoJSON, // GeoJSON data for mapping.
-                CaseLocation = caseRecord.CaseLocation, // Location details.
-                User = caseRecord.User // Associated user details.
+                CaseRecordId = caseRecord.CaseRecordId,
+                CaseDate = caseRecord.CaseDate,
+                CaseTitle = caseRecord.CaseTitle,
+                CaseIssueType = caseRecord.CaseIssueType,
+                CaseDescription = caseRecord.CaseDescription,
+                CaseStatus = caseRecord.CaseStatus,
+                LocationId = caseRecord.LocationId,
+                GeoJSON = caseRecord.CaseLocation.GeoJSON, // Includes the GeoJSON data from the location
+                CaseLocation = caseRecord.CaseLocation, // Includes location data
+                User = caseRecord.User // Includes user data
             };
 
-            return View(viewModel); // Passes the view model to the view.
+            return View(viewModel); // Returns the view with the populated ViewModel
         }
     }
 }

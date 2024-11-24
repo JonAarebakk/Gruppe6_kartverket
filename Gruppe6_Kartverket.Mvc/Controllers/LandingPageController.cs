@@ -1,28 +1,28 @@
-using Gruppe6_Kartverket.Mvc.Models; // Imports application-specific models.
-using Microsoft.AspNetCore.Mvc; // Provides MVC features like controllers and views.
-using System.Diagnostics; // Provides tools for debugging.
+using Gruppe6_Kartverket.Mvc.Models;
+using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
-namespace Gruppe6_Kartverket.Mvc.Controllers // Namespace for the controller.
+namespace Gruppe6_Kartverket.Mvc.Controllers
 {
-    public class LandingPageController : Controller // Controller for landing page-related actions.
+    public class LandingPageController : Controller
     {
-        // Handles GET requests for the landing page.
+        // Displays the LandingPage view
         [HttpGet]
         public IActionResult LandingPage()
         {
-            return View(); // Returns the landing page view.
+            return View();
         }
-        
-        // Handles requests for a linked page.
+
+        // Displays the LinkPage view
         public IActionResult LinkPage()
         {
-            return View(); // Returns the link page view.
+            return View();
         }
-        
-        // Handles error cases and provides error details.
+
+        // Returns the error view with request information
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier }); // Returns the error view with the request ID.
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

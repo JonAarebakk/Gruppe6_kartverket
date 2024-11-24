@@ -1,45 +1,49 @@
-using Gruppe6_Kartverket.Mvc.Data; // Imports application-specific data context.
-using Gruppe6_Kartverket.Mvc.Models; // Imports models used in the application.
-using Gruppe6_Kartverket.Mvc.Models.Database; // Imports database-related models.
-using Microsoft.AspNetCore.Identity; // Provides identity management.
-using Microsoft.AspNetCore.Mvc; // Enables MVC features like controllers and views.
-using System.Diagnostics; // For debugging purposes.
+using Gruppe6_Kartverket.Mvc.Data;
+using Gruppe6_Kartverket.Mvc.Models;
+using Gruppe6_Kartverket.Mvc.Models.Database;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
+using System.Text.Json;
 
-namespace Gruppe6_Kartverket.Mvc.Controllers; // Namespace for the controller.
+namespace Gruppe6_Kartverket.Mvc.Controllers;
 
-public class MapPageController : Controller // Manages map-related pages and actions.
+public class MapPageController : Controller
 {
-    private readonly UserManager<IdentityUser> _userManager; // Manages user authentication.
-    private readonly ApplicationDbContext _dbContext; // Provides access to the database.
+    private readonly UserManager<IdentityUser> _userManager;
+    private readonly ApplicationDbContext _dbContext;
 
-    // Constructor to inject dependencies.
     public MapPageController(UserManager<IdentityUser> userManager, ApplicationDbContext dbContext)
     {
-        _userManager = userManager; // Assigns the user manager.
-        _dbContext = dbContext; // Assigns the database context.
+        _userManager = userManager;
+        _dbContext = dbContext;
     }
 
+    // Displays the map page view with footer hidden if authenticated
     [HttpGet]
-    public IActionResult MapPage() // Displays the map page.
+    public IActionResult MapPage()
     {
-        if (User.Identity.IsAuthenticated) // Checks if the user is logged in.
+        if (User.Identity.IsAuthenticated)
         {
-            ViewBag.LoggedIn = true; // Sets a flag to show logged-in status.
+            ViewBag.LoggedIn = true;
         }
 
-        ViewBag.HideFooter = true; // Hides the footer on this page.
-        return View(); // Returns the map page view.
+        ViewBag.HideFooter = true;
+
+        return View();
     }
 
+    // Handles the form submission to register a new case
     [HttpPost]
-    [ValidateAntiForgeryToken] // Protects against CSRF attacks.
-    public async Task<IActionResult> MapPage(CaseRegistrationModel model) // Handles case registration.
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> MapPage(CaseRegistrationModel model)
     {
-        ViewBag.HideFooter = true; // Hides the footer on this page.
+        ViewBag.HideFooter = true;
 
-        if (!ModelState.IsValid) // Validates the form data.
+        if (!ModelState.IsValid)
         {
-            foreach (var state in ModelState) // Logs validation errors.
+            // Logs validation errors
+            foreach (var state in ModelState)
             {
                 if (state.Value.Errors.Count > 0)
                 {
@@ -50,74 +54,77 @@ public class MapPageController : Controller // Manages map-related pages and act
                 }
             }
 
-            return View(model); // Returns the view with validation messages.
+            return View(model);
         }
         else
         {
-            ViewBag.ShowSubmittedPopup = true; // Shows a success popup.
-            ModelState.Clear(); // Clears the form state.
+            ViewBag.ShowSubmittedPopup = true;
+            ModelState.Clear();
 
-            var identityUser = await _userManager.GetUserAsync(User); // Retrieves the logged-in user.
+            var identityUser = await _userManager.GetUserAsync(User);
 
             if (identityUser != null)
             {
-                var newLocationId = (_dbContext.CaseLocations.Max(cl => (int?)cl.LocationId) ?? 0) + 1; // Generates a new location ID.
+                // Generate a new Location ID and add CaseLocation and CaseRecord to the database
+                var newLocationId = (_dbContext.CaseLocations.Max(cl => (int?)cl.LocationId) ?? 0) + 1;
 
-                var caseLocation = new CaseLocation // Creates a new case location.
+                var caseLocation = new CaseLocation
                 {
-                    LocationId = newLocationId, // Sets the new location ID.
-                    GeoJSON = model.GeoJson, // Assigns geoJSON data.
-                    Municipality = "", // Placeholder for municipality data.
-                    County = "" // Placeholder for county data.
+                    LocationId = newLocationId,
+                    GeoJSON = model.GeoJson,
+                    Municipality = "", // Placeholder, could be fetched via an API
+                    County = "" // Placeholder, could be fetched via an API
                 };
 
-                var userId = Guid.Parse(identityUser.Id); // Converts user ID to Guid.
+                var userId = Guid.Parse(identityUser.Id);
 
-                var caseRecord = new CaseRecord // Creates a new case record.
+                var caseRecord = new CaseRecord
                 {
-                    CaseDate = DateTime.UtcNow, // Sets the current date and time.
-                    CaseTitle = model.CaseTitle, // Assigns the case title.
-                    CaseIssueType = model.Kategori, // Assigns the issue type.
-                    CaseDescription = model.Beskrivelse, // Assigns the description.
-                    CaseStatus = CaseStatus.Open.ToString(), // Sets the status to "Open."
-                    CaseLocation = caseLocation, // Links the location.
-                    User = _dbContext.Users.FirstOrDefault(u => u.UserId == userId) // Links the user.
+                    CaseDate = DateTime.UtcNow,
+                    CaseTitle = model.CaseTitle,
+                    CaseIssueType = model.Kategori,
+                    CaseDescription = model.Beskrivelse,
+                    CaseStatus = CaseStatus.Open.ToString(),
+                    CaseLocation = caseLocation,
+                    User = _dbContext.Users.FirstOrDefault(u => u.UserId == userId)
                 };
 
-                _dbContext.CaseRecords.Add(caseRecord); // Adds the case record to the database.
-                _dbContext.CaseLocations.Add(caseLocation); // Adds the location to the database.
-                await _dbContext.SaveChangesAsync(); // Saves the changes.
+                _dbContext.CaseRecords.Add(caseRecord);
+                _dbContext.CaseLocations.Add(caseLocation);
+                await _dbContext.SaveChangesAsync();
             }
 
-            return RedirectToAction("LandingPage", "LandingPage"); // Redirects to the landing page.
+            return RedirectToAction("LandingPage", "LandingPage");
         }
     }
 
+    // Deletes a case record based on the provided caseId
     [HttpPost]
-    [ValidateAntiForgeryToken] // Protects against CSRF attacks.
-    public async Task<IActionResult> DeleteCase(int caseId) // Handles case deletion.
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteCase(int caseId)
     {
-        var caseRecord = await _dbContext.CaseRecords.FindAsync(caseId); // Finds the case by ID.
+        var caseRecord = await _dbContext.CaseRecords.FindAsync(caseId);
         if (caseRecord != null)
         {
-            _dbContext.CaseRecords.Remove(caseRecord); // Removes the case from the database.
-            await _dbContext.SaveChangesAsync(); // Saves the changes.
+            _dbContext.CaseRecords.Remove(caseRecord);
+            await _dbContext.SaveChangesAsync();
         }
 
-        return RedirectToAction("Userpage", "UserPage"); // Redirects to the user page.
+        return RedirectToAction("Userpage", "UserPage");
     }
 
+    // Edits the description of a case record
     [HttpPost]
-    [ValidateAntiForgeryToken] // Protects against CSRF attacks.
-    public async Task<IActionResult> EditCaseDescription(int caseId, string newDescription) // Edits the case description.
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> EditCaseDescription(int caseId, string newDescription)
     {
-        var caseRecord = await _dbContext.CaseRecords.FindAsync(caseId); // Finds the case by ID.
+        var caseRecord = await _dbContext.CaseRecords.FindAsync(caseId);
         if (caseRecord != null)
         {
-            caseRecord.CaseDescription = newDescription; // Updates the description.
-            await _dbContext.SaveChangesAsync(); // Saves the changes.
+            caseRecord.CaseDescription = newDescription;
+            await _dbContext.SaveChangesAsync();
         }
 
-        return RedirectToAction("UserPage", "UserPage"); // Redirects to the user page.
+        return RedirectToAction("UserPage", "UserPage");
     }
 }

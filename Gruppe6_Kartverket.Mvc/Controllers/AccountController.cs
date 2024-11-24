@@ -1,56 +1,59 @@
-﻿using System.ComponentModel.DataAnnotations; // Provides attributes for data validation.
-using Microsoft.AspNetCore.Mvc; // Enables MVC features like controllers and views.
-using Microsoft.AspNetCore.Identity; // Handles identity and authentication.
-using System.Threading.Tasks; // Supports asynchronous programming.
-using Microsoft.EntityFrameworkCore; // Provides ORM for database access.
-using Gruppe6_Kartverket.Mvc.Models; // Imports custom models.
-using Gruppe6_Kartverket.Mvc.Models.Database; // Imports database models.
-using Gruppe6_Kartverket.Mvc.Data; // Imports database context.
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Gruppe6_Kartverket.Mvc.Models;
+using Gruppe6_Kartverket.Mvc.Models.Database;
+using Gruppe6_Kartverket.Mvc.Data;
 
-namespace Gruppe6_Kartverket.Mvc.Controllers // Namespace for the controller.
+namespace Gruppe6_Kartverket.Mvc.Controllers
 {
-    public class AccountController : Controller // Handles account-related actions.
+    public class AccountController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager; // Manages user operations.
-        private readonly SignInManager<IdentityUser> _signInManager; // Handles sign-in operations.
-        private readonly ApplicationDbContext _dbContext; // Represents the database context.
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly ApplicationDbContext _dbContext;
 
+        // Constructor: Initializes dependencies for UserManager, SignInManager, and ApplicationDbContext.
         public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager,
             ApplicationDbContext dbContext)
         {
-            _userManager = userManager; // Inject UserManager dependency.
-            _signInManager = signInManager; // Inject SignInManager dependency.
-            _dbContext = dbContext; // Inject ApplicationDbContext dependency.
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _dbContext = dbContext;
         }
 
+        // Logs the user out and redirects to the landing page.
         [HttpPost]
-        [ValidateAntiForgeryToken] // Protects against CSRF attacks.
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> LogOut()
         {
-            await _signInManager.SignOutAsync(); // Signs the user out.
-            return RedirectToAction("LandingPage", "LandingPage"); // Redirects to the landing page.
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("LandingPage", "LandingPage");
         }
 
+        // Displays the login page.
         [HttpGet]
         public IActionResult LogIn()
         {
-            return View(); // Displays the login page.
+            return View();
         }
 
+        // Validates the login credentials and signs the user in if valid.
         [HttpPost]
-        [ValidateAntiForgeryToken] // Protects against CSRF attacks.
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> LogIn(LogInModel model)
         {
-            if (ModelState.IsValid) // Checks if the form data is valid.
+            if (ModelState.IsValid)
             {
-                var identityUser = await _userManager.FindByEmailAsync(model.Email); // Finds user by email.
+                var identityUser = await _userManager.FindByEmailAsync(model.Email);
                 if (identityUser != null)
                 {
-                    // Verifies user credentials in the database.
                     var user = await _dbContext.Users
                         .FirstOrDefaultAsync(u => u.UserId == Guid.Parse(identityUser.Id) && u.UserPassword == model.Password);
 
-                    if (user != null) // If user is found and password matches.
+                    if (user != null)
                     {
                         var result = await _signInManager.PasswordSignInAsync(
                             userName: identityUser.UserName,
@@ -58,72 +61,73 @@ namespace Gruppe6_Kartverket.Mvc.Controllers // Namespace for the controller.
                             isPersistent: false,
                             lockoutOnFailure: false);
 
-                        if (result.Succeeded) // If sign-in is successful.
+                        if (result.Succeeded)
                         {
-                            var roles = await _userManager.GetRolesAsync(identityUser); // Fetches user roles.
-                            if (user.UserType == "Ad") // Redirects based on user type.
-                            {
-                                return RedirectToAction("LandingPage", "LandingPage");
-                            }
-                            else if (user.UserType == "Us")
+                            var roles = await _userManager.GetRolesAsync(identityUser);
+                            if (user.UserType == "Ad" || user.UserType == "Us")
                             {
                                 return RedirectToAction("LandingPage", "LandingPage");
                             }
                         }
                         else
                         {
-                            ModelState.AddModelError(string.Empty, "Invalid login attempt."); // Error for failed login.
+                            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                         }
                     }
                     else
                     {
-                        ModelState.AddModelError(string.Empty, "Invalid password."); // Error for wrong password.
+                        ModelState.AddModelError(string.Empty, "Invalid password.");
                     }
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "User not found."); // Error for missing user.
+                    ModelState.AddModelError(string.Empty, "User not found.");
                 }
             }
 
-            return View(model); // Returns to the login page with errors.
+            return View(model);
         }
 
+        // Displays the registration page.
         [HttpGet]
         public IActionResult Register()
         {
-            return View("Register"); // Displays the registration page.
+            return View("Register");
         }
 
+        // Handles the registration form submission, validates input, and creates the user.
         [HttpPost]
-        [ValidateAntiForgeryToken] // Protects against CSRF attacks.
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegistrationFormModel model)
         {
-            if (string.IsNullOrEmpty(model.Email)) // Validates email presence.
+            // Validates email format and presence.
+            if (string.IsNullOrEmpty(model.Email))
             {
                 ModelState.AddModelError("Email", "Email is required.");
             }
-            else if (!new EmailAddressAttribute().IsValid(model.Email)) // Validates email format.
+            else if (!new EmailAddressAttribute().IsValid(model.Email))
             {
                 ModelState.AddModelError("Email", "Invalid email format.");
             }
 
-            if (!ModelState.IsValid) // Returns errors if form is invalid.
+            if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            // Checks for existing user by email or username.
+            // Checks if a user with the same email or username exists.
             var existingUser = await _dbContext.UserInfos
                 .Include(ui => ui.User)
                 .FirstOrDefaultAsync(ui => ui.Email == model.Email || ui.User.UserName == model.Username);
+
             if (existingUser != null)
             {
                 ModelState.AddModelError(string.Empty, "User with this email or username already exists.");
                 return View(model);
             }
 
-            var identityUser = new IdentityUser // Creates a new identity user.
+            // Creates a new IdentityUser for authentication.
+            var identityUser = new IdentityUser
             {
                 UserName = model.Username,
                 Email = model.Email,
@@ -131,11 +135,12 @@ namespace Gruppe6_Kartverket.Mvc.Controllers // Namespace for the controller.
                 NormalizedUserName = model.Username.ToUpper()
             };
 
-            var result = await _userManager.CreateAsync(identityUser, model.Password); // Adds user to Identity.
+            var result = await _userManager.CreateAsync(identityUser, model.Password);
 
-            if (result.Succeeded) // If user creation succeeds.
+            if (result.Succeeded)
             {
-                var userInfo = new UserInfo // Creates UserInfo record.
+                // Creates additional user information for the database.
+                var userInfo = new UserInfo
                 {
                     UserId = Guid.Parse(identityUser.Id),
                     FirstName = model.FirstName,
@@ -147,27 +152,29 @@ namespace Gruppe6_Kartverket.Mvc.Controllers // Namespace for the controller.
                     Email = model.Email
                 };
 
-                var users = new User // Creates User record.
+                // Creates user record with user type and password.
+                var users = new User
                 {
                     UserName = model.Username,
                     UserPassword = model.Password,
                     UserId = Guid.Parse(identityUser.Id),
                     UserType = model.UserType
                 };
-                _dbContext.Users.Add(users); // Adds User to the database.
-                _dbContext.UserInfos.Add(userInfo); // Adds UserInfo to the database.
-                await _dbContext.SaveChangesAsync(); // Saves changes to the database.
+                _dbContext.Users.Add(users);
+                _dbContext.UserInfos.Add(userInfo);
+                await _dbContext.SaveChangesAsync();
 
-                await _signInManager.SignInAsync(identityUser, isPersistent: false); // Signs in the new user.
-                return RedirectToAction("LandingPage", "LandingPage"); // Redirects to the landing page.
+                await _signInManager.SignInAsync(identityUser, isPersistent: false);
+                return RedirectToAction("LandingPage", "LandingPage");
             }
 
-            foreach (var error in result.Errors) // Adds any creation errors to the model state.
+            // Adds errors if user creation fails.
+            foreach (var error in result.Errors)
             {
                 ModelState.AddModelError(string.Empty, error.Description);
             }
 
-            return View(model); // Returns to registration page with errors.
+            return View(model);
         }
     }
 }
