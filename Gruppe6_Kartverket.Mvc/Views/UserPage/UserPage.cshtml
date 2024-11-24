@@ -44,17 +44,7 @@
                                         <td>@caseRecord.UserId</td>
                                         <td>@caseRecord.CaseDate.ToString("yyyy-MM-dd")</td>
                                         <td>@caseRecord.CaseTitle</td>
-                                        <td>
-                                            <span class="description-text">@caseRecord.CaseDescription</span>
-                                            <form asp-action="EditCaseDescription" asp-controller="MapPage" method="post" class="edit-form" style="display:none;">
-                                                <input type="hidden" name="caseId" value="@caseRecord.CaseRecordId"/>
-                                                <input type="text" name="newDescription" value="@caseRecord.CaseDescription"/>
-                                                <button type="submit" class="btn btn-primary">Save</button>
-                                            </form>
-                                            <button class="btn btn-primary edit-button" onclick="toggleEditForm(this)">
-                                                <i class="fas fa-edit"></i> Edit
-                                            </button>
-                                        </td>
+                                        <td>@caseRecord.CaseDescription</td>
                                         <td>@caseRecord.CaseIssueType</td>
                                         <td>
                                             <form asp-action="DeleteCase" asp-controller="MapPage" method="post">
