@@ -35,12 +35,12 @@
                     <a href="@Url.Action("MapPage", "MapPage")" class="card-button">Gå til kartet</a>
                 }
             </div>
-                
+            @if(identityUser == null){
             <div class="card">
                 <h2>Logg inn</h2>
                 <p>Logg inn for å få tilgang til dine kartdata.</p>
                 <a href="@Url.Action("LogIn", "Account")" class="card-button">Logg inn</a>
-            </div>
+            </div>} 
 
             @if (user != null && user.UserType == "Ad")
             {

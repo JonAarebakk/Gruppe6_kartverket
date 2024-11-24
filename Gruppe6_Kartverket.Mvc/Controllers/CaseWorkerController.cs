@@ -5,6 +5,8 @@ using Gruppe6_Kartverket.Mvc.Models.ViewModels;
 using System.Threading.Tasks;
 using System.Linq;
 using Gruppe6_Kartverket.Mvc.Data;
+using System;
+using System.Collections.Generic;
 
 namespace Gruppe6_Kartverket.Mvc.Controllers
 {
@@ -35,7 +37,7 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
 
                 var viewModel = new CaseWorkerPageV2ViewModel
                 {
-                    CaseRecords = caseRecords
+                    CaseRecords = caseRecords,
                 };
 
                 return View(viewModel);
@@ -70,6 +72,7 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
                 CaseDescription = caseRecord.CaseDescription,
                 CaseStatus = caseRecord.CaseStatus,
                 LocationId = caseRecord.LocationId,
+                GeoJSON = caseRecord.CaseLocation.GeoJSON,
                 CaseLocation = caseRecord.CaseLocation,
                 User = caseRecord.User
             };
