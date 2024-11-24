@@ -21,36 +21,46 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
         }
 
         // Action method to fetch case records and pass them to the view
-        public async Task<IActionResult> CaseWorkerPageV2()
+        public async Task<IActionResult> CaseWorkerPageV2(string filter)
         {
-            try
+            var caseRecords = _context.CaseRecords.AsQueryable();
+
+            switch (filter)
             {
-                // Fetches all case records along with their associated case location and user
-                var caseRecords = await _context.CaseRecords
-                    .Include(c => c.CaseLocation) // Includes case location data
-                    .Include(c => c.User) // Includes user data
-                    .ToListAsync(); // Executes the query asynchronously
-
-                // Logs a message if no case records are found
-                if (caseRecords == null || !caseRecords.Any())
-                {
-                    Console.WriteLine("No case records found.");
-                }
-
-                // Creates a ViewModel with the case records to pass to the view
-                var viewModel = new CaseWorkerPageV2ViewModel
-                {
-                    CaseRecords = caseRecords,
-                };
-
-                return View(viewModel); // Returns the view with the populated ViewModel
+                case "asc":
+                    caseRecords = caseRecords.OrderBy(c => c.CaseDate);
+                    break;
+                case "desc":
+                    caseRecords = caseRecords.OrderByDescending(c => c.CaseDate);
+                    break;
+                case "open":
+                    caseRecords = caseRecords.Where(c => c.CaseStatus == CaseStatus.Open.ToString());
+                    break;
+                case "closed":
+                    caseRecords = caseRecords.Where(c => c.CaseStatus == CaseStatus.Closed.ToString());
+                    break;
+                case "inprogress":
+                    caseRecords = caseRecords.Where(c => c.CaseStatus == CaseStatus.InProgress.ToString());
+                    break;
+                case "resolved":
+                    caseRecords = caseRecords.Where(c => c.CaseStatus == CaseStatus.Resolved.ToString());
+                    break;
             }
-            catch (Exception ex)
+
+            var viewModel = new CaseWorkerPageV2ViewModel
             {
-                // Logs the exception (e.g., to console or file) if an error occurs
-                Console.WriteLine($"Error: {ex.Message}");
-                return StatusCode(500, "Internal server error. Please try again later."); // Returns a 500 status code on error
+                CaseRecords = await caseRecords
+                    .Include(c => c.CaseLocation)
+                    .Include(c => c.User)
+                    .ToListAsync()
+            };
+
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+            {
+                return PartialView("_CaseRecordsTable", viewModel);
             }
+
+            return View(viewModel);
         }
 
         // Action method to fetch the details of a specific case record
@@ -84,6 +94,19 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
             };
 
             return View(viewModel); // Returns the view with the populated ViewModel
+        }
+
+        [HttpPost]
+        public IActionResult UpdateStatus(int caseRecordId, string caseStatus)
+        {
+            var caseRecord = _context.CaseRecords.Find(caseRecordId);
+            if (caseRecord != null)
+            {
+                caseRecord.CaseStatus = caseStatus;
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("CaseDetails", new { caseRecordId = caseRecordId });
         }
     }
 }
