@@ -1,8 +1,11 @@
 ﻿using Gruppe6_Kartverket.Mvc.Controllers;
+using Gruppe6_Kartverket.Mvc.Data;
 using Gruppe6_Kartverket.Mvc.Models.Database;
+using Gruppe6_Kartverket.Mvc.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using NSubstitute;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Gruppe6_Kartverket.Mvc.Tests.ControllerTests
@@ -10,48 +13,49 @@ namespace Gruppe6_Kartverket.Mvc.Tests.ControllerTests
     public class CaseInfoControllerTests
     {
         [Fact]
-        public void CaseInfoViewWithModel_InvalidModel_ReturnsViewResultWithModel()
+        public async Task CaseInfo_InvalidModel_ReturnsNotFound()
         {
-            // Arrange - Creates an instance of CaseInfoController using the GetUnitUnderTest
-            // Creates a CaseRecord model and adds model state error to simulate an invalid model
-            var controller = GetUnitUnderTest();
-            var model = new CaseRecord();
-            controller.ModelState.AddModelError("Error", "Model is invalid");
+            // Arrange
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(databaseName: "TestDatabase")
+                .Options;
+            var context = new ApplicationDbContext(options);
+            var controller = new CaseInfoController(context);
+            var caseRecordId = 1;
 
-            // Act - Calls the CaseInfoViewWithModel method on the controller with the invalid model
-            var result = controller.CaseInfoViewWithModel(model);
+            // Act
+            var result = await controller.CaseInfo(caseRecordId);
 
-            // Assert - Verifies that:
-            // 1. the result is of type ViewResult
-            // 2. the model in the view result is the same as the provided model
-            var viewResult = Assert.IsType<ViewResult>(result);
-            Assert.Equal(model, viewResult.Model);
+            // Assert
+            Assert.IsType<NotFoundResult>(result);
         }
 
         [Fact]
-        public void CaseInfoViewWithModel_ValidModel_ReturnsViewResultWithModel()
+        public async Task CaseInfo_ValidModel_ReturnsViewResultWithModel()
         {
-            // Arrange -
-            // 1. Creates an instance of CaseInfoController using the GetUnitUnderTest helper method.
-            // 2. Creates a CaseRecord model.
-            var controller = GetUnitUnderTest();
-            var model = new CaseRecord();
+            // Arrange
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(databaseName: "TestDatabase")
+                .Options;
+            var context = new ApplicationDbContext(options);
+            var caseRecordId = 1;
+            var caseRecord = new CaseRecord
+            {
+                CaseRecordId = caseRecordId,
+                CaseTitle = "Test Case"
+            };
+            context.CaseRecords.Add(caseRecord);
+            context.SaveChanges();
 
-            // Act - Calls the CaseInfoViewWithModel method on the controller with the valid model.
-            var result = controller.CaseInfoViewWithModel(model);
+            var controller = new CaseInfoController(context);
 
-            // Assert - Verifies that:
-            // 1. the result is of type ViewResult
-            // 2. the model in the view result is the same as the provided model
+            // Act
+            var result = await controller.CaseInfo(caseRecordId);
+
+            // Assert
             var viewResult = Assert.IsType<ViewResult>(result);
-            Assert.Equal(model, viewResult.Model);
-        }
-
-        private CaseInfoController GetUnitUnderTest()
-        {
-            var controller = new CaseInfoController();
-            controller.ControllerContext.HttpContext = new DefaultHttpContext();
-            return controller;
+            var model = Assert.IsType<CaseDetailsViewModel>(viewResult.Model);
+            Assert.Equal(caseRecordId, model.CaseRecordId);
         }
     }
 }
