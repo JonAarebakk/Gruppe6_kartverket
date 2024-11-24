@@ -1,7 +1,7 @@
 
 /*
 **************************************
-***  Styling for the tab in general / faner ***
+***  Styling for the tab in general ***
 **************************************
 */
 
@@ -43,7 +43,7 @@
 .tab-content {
     display: none;
     padding: 20px;
-    border-radius: 0 10px 10px 10px; /* Round bottom corners */
+   /* border-radius: 0 10px 10px 10px; */ /* Round bottom corners */ 
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow effect */
 }
 
@@ -72,10 +72,10 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: url("../Images/kartverket-bakgrunssbilder/lofoten.jpg"); /* Sets a background image for the container */
+    background-image: url("../images/kartverket-bakgrunssbilder/lofoten.jpg"); /* Sets a background image for the container */
     background-size: cover; /* Ensures the background image covers the entire container */
     background-position: center; /* Centers the background image */
-    opacity: 0.6; /* Sets the opacity of the background image to 60% */
+    opacity: 0.; /* Sets the opacity of the background image to 60% */
     z-index: -1;
 }
 
@@ -133,7 +133,7 @@
     padding: 0; /* Remove all padding */
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Adds a shadow effect to the table */
     background: white;
-    opacity: 0.8 !important;
+    opacity: 0.9 !important;
 }
 
 
@@ -285,129 +285,20 @@
     margin-right: 10px;
 }
 
-
-
-
-
-
 /*
 **************************************
-***  Old styling for the userPage view  ***
+***  Profile settings-tab ***
 **************************************
 */
 
-
-
-
-
-/* .UP-filter-button {
-    position: fixed;
-    top: 70px; /* Adjust this value based on the height of your navbar */
-/* right: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    z-index: 1000; /* Ensure it stays on top */
-/* }
-}
-.UP-filter-menu {
-    position: fixed;
-    top: 60px; /* Adjust this value based on the height of your navbar */
-/* right: -300px;
-    width: 300px;
-    height: calc(100vh - 70px); /* Adjust this value based on the height of your navbar */
-/* background-color: #f8f9fa;
-    transition: right 0.3s ease;
-    padding: 30px;
-    box-sizing: border-box;
-    z-index: 999; /* Ensure this is higher than the navbar's z-index */
-/*    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.sidebar {
-    float: left;
-    background-color: #E4F1F8;
-    outline: 1px;
-    outline-color: black;
-    overflow: hidden;
-    height: 100vh;
-}
-
-.sidebar-button {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    margin: 0; /* Remove margin */
- /*   background-color: #E4F1F8; /* Color before hovering */
-/*   border: 0;
-  color: #000000;
-  text-align: left;
-  cursor: pointer;
-  font-size: 16px;
-  padding: 0;
-
-}
-
-.sidebar-button a {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-  width: 100%;
-}
-
-.sidebar-button:hover {
-  background-color: #C2DEEF; /* Color after hovering */
-/*    color: black;
-   border-color: #C2DEEF; /* Ensure border has the same color */
-/*     padding: 0
-}
-
-.UP-filter-menu.open {
-    right: 0;
-}
-
-.UP-button-container {
+.profile-settings-container {
     display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
+    flex-direction: column;
+    justify-content: center; /* Center vertically */
+    align-items: flex-start; /* Align items to the left */
+    width: 60%;
+    height: 600%;
+    padding: 20px;
+    background: white;
+    margin: auto; /* Center horizontally within its parent */
 }
-.inbox-header {
-    background-color: #E4F1F8; /* Set the background color to light gray */
-
-
-/* .UP-apply-button, .UP-reset-button {
-   background-color: #28a745;
-   color: white;
-   border: none;
-   padding: 5px 10px;
-   cursor: pointer;
-   flex: 1;
-   margin: 0 5px;
-   text-align: center;
-}
-
-.content {
-   margin-top: 70px; /* Adjust this value as needed */
-
-
-/* .UP-reset-button {
-    background-color: #dc3545;
-}
-
-.filter-toggle {
-    display: none;
-}
-
-.filter-toggle:checked ~ .UP-filter-menu {
-    right: 0;
-}
-
-.filter-toggle:checked ~ .UP-filter-button {
-    display: none;
-}
-
-*/
