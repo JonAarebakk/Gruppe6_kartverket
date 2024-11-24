@@ -15,7 +15,7 @@ namespace Gruppe6_Kartverket.Mvc.Models
         [StringLength(500, ErrorMessage = "Description cannot be longer than 500 characters.")]
         public string Beskrivelse { get; set; }
 
-        // [Required(ErrorMessage = "GeoJson is required.")]
-        // public string GeoJson { get; set; }
+        [Required(ErrorMessage = "GeoJson is required.")]
+         public string GeoJson { get; set; }
     }
 }

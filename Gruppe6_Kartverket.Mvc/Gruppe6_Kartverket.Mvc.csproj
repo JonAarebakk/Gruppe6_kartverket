@@ -35,6 +35,7 @@
 
   <ItemGroup>
     <Folder Include="keys\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 
