@@ -1,6 +1,3 @@
-To merge the suggested code into the existing `CaseDetails.cshtml` file, you need to update the table to make the `td` elements scrollable sideways and add the map placeholder. Here is the merged code:
-
-```razor
 @model Gruppe6_Kartverket.Mvc.Models.ViewModels.CaseDetailsViewModel
 
 @{
@@ -16,7 +13,9 @@ To merge the suggested code into the existing `CaseDetails.cshtml` file, you nee
     <!-- Sidebar - Grid Item 1 -->
     <div class="grid-item1">
         <div id="SideBarV2-Flex">
-            <div class="kategorier-flex-items" id="Kategorier-flex-items1">Inbox</div>
+            <a class="no-style-link" style="" href="@Url.Action("CaseWorkerPageV2", "CaseWorker")">
+                <div class="kategorier-flex-items" id="Kategorier-flex-items1">Inbox</div>
+            </a>
             <div class="kategorier-flex-items" id="Kategorier-flex-items2">Sent</div>
             <div class="kategorier-flex-items" id="Kategorier-flex-items3">Drafts</div>
             <div class="kategorier-flex-items" id="Kategorier-flex-items4">Spam</div>
@@ -26,48 +25,8 @@ To merge the suggested code into the existing `CaseDetails.cshtml` file, you nee
     </div>
 
     <!-- Categories - Grid Item 2 (Horizontal layout) -->
-    <div class="grid-item2">
-        <div class="frame sort-and-filter-frame">
-            <div class="sort-and-filter-container">
-                <button class="sort-and-filter-button" onclick="toggleSortAndFilter()">Sorter og filtrer</button>
-                <div class="menu-option-group">
-                    <div class="sort-options">
-                        <p>Sorter etter dato:</p>
-                        <div class="sortOrderAsc-radio">
-                            <input id="sortOrderAsc" name="sortOrder" type="radio" value="asc" />
-                            <label for="sortOrderAsc">Stigende</label>
-                        </div>
-                        <div class="sortOrderDesc-radio">
-                            <input id="sortOrderDesc" name="sortOrder" type="radio" value="desc" />
-                            <label for="sortOrderDesc">Synkende</label>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="filter-options">
-                        <p>Filtrer etter status:</p>
-                        <div class="filterAll-radio">
-                            <input id="filterAll" name="filterStatus" type="radio" value="all" />
-                            <label for="filterAll">Alle</label>
-                        </div>
-                        <div class="filterOpen-radio">
-                            <input id="filterOpen" name="filterStatus" type="radio" value="open" />
-                            <label for="filterOpen">Åpnet</label>
-                        </div>
-                        <div class="filterActive-radio">
-                            <input id="filterActive" name="filterStatus" type="radio" value="active" />
-                            <label for="filterActive">Aktiv</label>
-                        </div>
-                        <div class="filterClosed-radio">
-                            <input id="filterClosed" name="filterStatus" type="radio" value="closed" />
-                            <label for="filterClosed">Lukket</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div class="grid-item2"></div>
 
-    <!-- Main Content - Grid Item 3 -->
     <!-- Main Content - Grid Item 3 -->
     <div class="grid-item3 caseDetails-grid-3">
         <div class="case-info">
@@ -138,7 +97,7 @@ To merge the suggested code into the existing `CaseDetails.cshtml` file, you nee
         </div>
     </div>
 </div>
-```
+
 @section Scripts {
     <script>
         document.addEventListener("DOMContentLoaded", function() {
