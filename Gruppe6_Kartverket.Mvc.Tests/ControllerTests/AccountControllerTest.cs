@@ -33,13 +33,14 @@ namespace Gruppe6_Kartverket.Mvc.Tests.ControllerTests
         [Fact]
         public async Task LogOut_ReturnsRedirectToActionResult()
         {
-            // Arrange
+            // Arrange - Set up the SignOutAsync method to return a completed task
             _signInManager.SignOutAsync().Returns(Task.CompletedTask);
 
-            // Act
+            // Act - Call the LogOut method
             var result = await _controller.LogOut();
 
-            // Assert
+            // Assert - Check that the result is a RedirectToActionResult
+            // and that it redirects to the LandingPage action
             var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
             Assert.Equal("LandingPage", redirectToActionResult.ActionName);
             Assert.Equal("LandingPage", redirectToActionResult.ControllerName);
@@ -48,23 +49,23 @@ namespace Gruppe6_Kartverket.Mvc.Tests.ControllerTests
         [Fact]
         public void LogIn_Get_ReturnsViewResult()
         {
-            // Act
+            // Act - Call the LogIn method
             var result = _controller.LogIn();
 
-            // Assert
+            // Assert - Check that the result is a ViewResult
             Assert.IsType<ViewResult>(result);
         }
 
         [Fact]
         public async Task LogIn_Post_InvalidModel_ReturnsViewResult()
         {
-            // Arrange
+            // Arrange - Add a model error
             _controller.ModelState.AddModelError("Email", "Required");
 
-            // Act
+            // Act - Call the LogIn method
             var result = await _controller.LogIn(new LogInModel());
 
-            // Assert
+            // Assert - Check that the result is a ViewResult
             var viewResult = Assert.IsType<ViewResult>(result);
             Assert.IsType<LogInModel>(viewResult.Model);
         }
@@ -72,23 +73,24 @@ namespace Gruppe6_Kartverket.Mvc.Tests.ControllerTests
         [Fact]
         public void Register_Get_ReturnsViewResult()
         {
-            // Act
+            // Act - Call the Register method
             var result = _controller.Register();
 
-            // Assert
+            // Assert - Check that the result is a ViewResult
             var viewResult = Assert.IsType<ViewResult>(result);
         }
 
         [Fact]
         public async Task Register_Post_InvalidModel_ReturnsViewResult()
         {
-            // Arrange
+            // Arrange - Add a model error
             _controller.ModelState.AddModelError("Email", "Required");
 
-            // Act
+            // Act - Call the Register method
             var result = await _controller.Register(new RegistrationFormModel());
 
-            // Assert
+            // Assert - Check that the result is a ViewResult
+            // and that the model is passed back to the view
             var viewResult = Assert.IsType<ViewResult>(result);
             Assert.IsType<RegistrationFormModel>(viewResult.Model);
         }
