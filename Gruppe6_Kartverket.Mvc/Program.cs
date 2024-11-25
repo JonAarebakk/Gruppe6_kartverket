@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.DataProtection;
 using System.IO;
 using System.Text.Json;
 using Microsoft.Extensions.Options;
+using Gruppe6_Kartverket.Mvc.Models.Services;
+using Gruppe6_Kartverket.Mvc.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddHttpClient<KartverketApiService>();
+builder.Services.AddScoped<IKartverketApiService, KartverketApiService>();
 
 // Configure Entity Framework with MariaDB
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -54,6 +58,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
     })
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
+
 
 // Configure antiforgery settings
 builder.Services.AddAntiforgery(options =>

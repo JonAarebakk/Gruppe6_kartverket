@@ -224,10 +224,9 @@ function featureToGeoJson() {
             }
             var geoJsonString = JSON.stringify(geoJsonFeature);
             document.getElementById("geoJsonInput").value = geoJsonString;
-            
-            document.getElementById("centerLongitude").value = centerOfFeature[0];
-            document.getElementById("centerLatitude").value = centerOfFeature[1];
-            
+
+            document.getElementById("centerLongitudeInput").value = centerOfFeature[0];
+            document.getElementById("centerLatitudeInput").value = centerOfFeature[1];
         });
     }
 }
