@@ -158,7 +158,7 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
                     UserName = model.Username,
                     UserPassword = model.Password,
                     UserId = Guid.Parse(identityUser.Id),
-                    UserType = model.UserType
+                    UserType = "Us"
                 };
                 _dbContext.Users.Add(users);
                 _dbContext.UserInfos.Add(userInfo);
