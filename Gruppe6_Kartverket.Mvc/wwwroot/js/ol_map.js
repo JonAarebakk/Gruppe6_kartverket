@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var geoJsonString = document.getElementById("CaseLocationGeoJSON").innerText;
     var geoJsonObject = JSON.parse(geoJsonString);
 
+
     var features = new ol.format.GeoJSON().readFeatures(geoJsonObject, {
         dataProjection: 'EPSG:4326',
         featureProjection: 'EPSG:3857'
@@ -79,6 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         calculateCenter(coords);
 
+
         const centerLon = totalLon / count;
         const centerLat = totalLat / count;
 
@@ -99,4 +101,5 @@ document.addEventListener("DOMContentLoaded", function () {
             zoom: 9,   // Initial zoom level
         }),
     });
+
 });
