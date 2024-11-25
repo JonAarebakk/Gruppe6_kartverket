@@ -46,18 +46,26 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
+    env:
+      Solution_Name: Gruppe6_Kartverket.sln
+      Test_Project_Path: Gruppe6_Kartverket.Mvc.Tests/Gruppe6_Kartverket.Mvc.Tests.csproj
+
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout
+      uses: actions/checkout@v4
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
+
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore ${{ env.Solution_Name }}
+
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build ${{ env.Solution_Name }} --no-restore
+
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test ${{ env.Test_Project_Path }} --no-build --verbosity normal
