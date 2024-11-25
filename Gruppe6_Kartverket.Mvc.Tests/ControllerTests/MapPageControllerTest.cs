@@ -68,4 +68,5 @@ public class MapPageControllerTests
         var viewResult = Assert.IsType<ViewResult>(result);
         Assert.Equal(model, viewResult.Model);
     }
+
 }

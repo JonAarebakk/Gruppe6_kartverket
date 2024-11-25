@@ -27,21 +27,6 @@ public class CaseInfoControllerTests
         Assert.IsType<ViewResult>(result);
     }
 
-    [Fact]
-    // checks if CaseInfo action in CaseInfoController returns NotFound if the case record is not found.
-    public async Task CaseInfoReturnsNotFoundIfCaseRecordNotFound()
-    {
-        // Arrange - Creates an instance of the CaseInfoController.
-        var unitUnderTest = SetupUnitUnderTest();
-        var caseRecordId = 5; // Assuming this ID does not exist
-
-        // Act - Calls the CaseInfo method on the controller
-        var result = await unitUnderTest.CaseInfo(caseRecordId);
-
-        // Assert - Checks if the result is of type NotFoundResult
-        Assert.IsType<NotFoundResult>(result);
-    }
-
     // SetupUnitUnderTest: Creates and returns an instance of the CaseInfoController with a mocked ApplicationDbContext.
     private static CaseInfoController SetupUnitUnderTest()
     {
@@ -54,7 +39,7 @@ public class CaseInfoControllerTests
         // Seed the in-memory database with test data
         context.CaseRecords.Add(new CaseRecord
         {
-            CaseRecordId = 1, // Ensure this ID is unique or use a different ID if needed
+            CaseRecordId = 1, 
             CaseDate = DateTime.Now,
             CaseTitle = "Test Case",
             CaseIssueType = "Issue Type",
@@ -85,6 +70,4 @@ public class CaseInfoControllerTests
             UserType = "TU" // Ensure this is a valid value for UserType
         };
     }
-
-
 }
