@@ -1,6 +1,15 @@
 # Gruppe6_kartverket 🚀
-
 ## Gruppe6_Kartverket (GitHub Repository Root)
+
+## Dummy Credentials for login
+
+### For Caseworker:
+email: [caseworkertest@email.com] passord: [passord]
+
+### For Bruker:
+email: [brukertest@email.com] passord: [passord]
+
+
 
 <pre>
 ├── Gruppe6_Kartverket.sln
