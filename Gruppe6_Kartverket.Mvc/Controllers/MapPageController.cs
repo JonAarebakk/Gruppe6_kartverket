@@ -1,12 +1,11 @@
 using Gruppe6_Kartverket.Mvc.Data;
 using Gruppe6_Kartverket.Mvc.Models.Database;
-using Gruppe6_Kartverket.Mvc.Models.Services;
+//using Gruppe6_Kartverket.Mvc.Models.Services;
 using Gruppe6_Kartverket.Mvc.Models.ViewModels;
-using Gruppe6_Kartverket.Mvc.Services;
+//using Gruppe6_Kartverket.Mvc.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using System.Drawing.Printing;
 using System.Text.Json;
 
 namespace Gruppe6_Kartverket.Mvc.Controllers;
@@ -25,6 +24,7 @@ public class MapPageController : Controller
         _kartverketApiService = kartverketApiService;
     }
 
+    // Displays the map page view with footer hidden if authenticated
     [HttpGet]
     public IActionResult MapPage()
     {
@@ -38,15 +38,16 @@ public class MapPageController : Controller
         return View();
     }
 
+    // Handles the form submission to register a new case
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> MapPage(CaseRegistrationModel model)
+    public async Task<IActionResult> MapPage(CaseRegistrationModel model, IFormFile file)
     {
         ViewBag.HideFooter = true;
 
-
         if (!ModelState.IsValid)
         {
+            // Logs validation errors
             foreach (var state in ModelState)
             {
                 if (state.Value.Errors.Count > 0)
@@ -67,6 +68,7 @@ public class MapPageController : Controller
 
             if (identityUser != null)
             {
+                // Generate a new Location ID and add CaseLocation and CaseRecord to the database
                 var newLocationId = (_dbContext.CaseLocations.Max(cl => (int?)cl.LocationId) ?? 0) + 1;
 
                 var kartverkApiInfo = new KartverkApiInfo();
@@ -74,7 +76,7 @@ public class MapPageController : Controller
 
                 var caseLocation = new CaseLocation
                 {
-                    LocationId = newLocationId, // Set the increment from the database
+                    LocationId = newLocationId,
                     GeoJSON = model.GeoJson,
                     Municipality = kartverkApiInfo.Kommunenavn ?? "", 
                     County = kartverkApiInfo.Fylkesnavn ?? "" 
@@ -93,6 +95,16 @@ public class MapPageController : Controller
                     User = _dbContext.Users.FirstOrDefault(u => u.UserId == userId)
                 };
 
+                if (file != null && file.Length > 0)
+                {
+                    var filePath = Path.Combine("wwwroot/uploads", file.FileName);
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+                    // Save the file path or name to the database if needed
+                }
+
                 _dbContext.CaseRecords.Add(caseRecord);
                 _dbContext.CaseLocations.Add(caseLocation);
                 await _dbContext.SaveChangesAsync();
@@ -104,6 +116,7 @@ public class MapPageController : Controller
         }
     }
 
+    // Deletes a case record based on the provided caseId
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteCase(int caseId)
@@ -115,10 +128,10 @@ public class MapPageController : Controller
             await _dbContext.SaveChangesAsync();
         }
 
-        return RedirectToAction("Userpage", "UserPage"); // Adjust the redirect action as needed
+        return RedirectToAction("Userpage", "UserPage");
     }
 
-
+    // Edits the description of a case record
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> EditCaseDescription(int caseId, string newDescription)
@@ -130,6 +143,6 @@ public class MapPageController : Controller
             await _dbContext.SaveChangesAsync();
         }
 
-        return RedirectToAction("UserPage", "UserPage"); // Adjust the redirect action as needed
+        return RedirectToAction("UserPage", "UserPage");
     }
 }

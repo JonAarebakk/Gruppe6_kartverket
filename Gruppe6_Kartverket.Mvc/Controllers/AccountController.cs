@@ -15,6 +15,7 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ApplicationDbContext _dbContext;
 
+        // Constructor: Initializes dependencies for UserManager, SignInManager, and ApplicationDbContext.
         public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager,
             ApplicationDbContext dbContext)
         {
@@ -23,6 +24,7 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
             _dbContext = dbContext;
         }
 
+        // Logs the user out and redirects to the landing page.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LogOut()
@@ -31,12 +33,14 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
             return RedirectToAction("LandingPage", "LandingPage");
         }
 
+        // Displays the login page.
         [HttpGet]
         public IActionResult LogIn()
         {
             return View();
         }
 
+        // Validates the login credentials and signs the user in if valid.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LogIn(LogInModel model)
@@ -60,11 +64,7 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
                         if (result.Succeeded)
                         {
                             var roles = await _userManager.GetRolesAsync(identityUser);
-                            if (user.UserType == "Ad")
-                            {
-                                return RedirectToAction("LandingPage", "LandingPage");
-                            }
-                            else if (user.UserType == "Us")
+                            if (user.UserType == "Ad" || user.UserType == "Us")
                             {
                                 return RedirectToAction("LandingPage", "LandingPage");
                             }
@@ -88,16 +88,19 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
             return View(model);
         }
 
+        // Displays the registration page.
         [HttpGet]
         public IActionResult Register()
         {
             return View("Register");
         }
 
+        // Handles the registration form submission, validates input, and creates the user.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegistrationFormModel model)
         {
+            // Validates email format and presence.
             if (string.IsNullOrEmpty(model.Email))
             {
                 ModelState.AddModelError("Email", "Email is required.");
@@ -112,15 +115,18 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
                 return View(model);
             }
 
+            // Checks if a user with the same email or username exists.
             var existingUser = await _dbContext.UserInfos
                 .Include(ui => ui.User)
                 .FirstOrDefaultAsync(ui => ui.Email == model.Email || ui.User.UserName == model.Username);
+
             if (existingUser != null)
             {
                 ModelState.AddModelError(string.Empty, "User with this email or username already exists.");
                 return View(model);
             }
 
+            // Creates a new IdentityUser for authentication.
             var identityUser = new IdentityUser
             {
                 UserName = model.Username,
@@ -133,6 +139,7 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
 
             if (result.Succeeded)
             {
+                // Creates additional user information for the database.
                 var userInfo = new UserInfo
                 {
                     UserId = Guid.Parse(identityUser.Id),
@@ -145,6 +152,7 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
                     Email = model.Email
                 };
 
+                // Creates user record with user type and password.
                 var users = new User
                 {
                     UserName = model.Username,
@@ -160,6 +168,7 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
                 return RedirectToAction("LandingPage", "LandingPage");
             }
 
+            // Adds errors if user creation fails.
             foreach (var error in result.Errors)
             {
                 ModelState.AddModelError(string.Empty, error.Description);

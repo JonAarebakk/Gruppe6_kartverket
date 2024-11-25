@@ -4,7 +4,6 @@
 **************************************
 */
 
-
 /* Wrapper for whole mapPage View */
 .map-page-wrapper {
     height: 100vh;
@@ -18,7 +17,7 @@
     width: 100%;
     height: 100%;
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
 }
 
 /* Style for the map */
@@ -27,6 +26,9 @@
     width: 100%; /* Set the width of the map */
     background: white; /* or another color (NB! FOR TESTING) */
     display: flex;
+    padding-top: 20px; 
+    padding-left: 20px; 
+    padding-right: 20px;
 }
 
 
@@ -36,6 +38,37 @@
     width: 30%;
     display: none; /* Starts as hidden */
     flex-direction: column;
+    padding-left: 15px; /* Add some padding to the left */
+    padding-right: 15px; /* Add some padding to the left */
+}
+
+/* Style for form labels */
+.case-input-wrapper label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+    color: #333;
+}
+
+/* Style for form inputs */
+.case-input-wrapper input[type="text"],
+.case-input-wrapper select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+/* Style for validation messages */
+.case-input-wrapper .text-danger {
+    color: #e74c3c;
+    font-size: 12px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+    display: block;
 }
 
 /* The bottom bar with buttons for interacting with the map */
@@ -45,7 +78,6 @@
     background: #D0ECD6;
     display: flex;
 }
-
 
 /* div for new case button */
 .new-case {
@@ -61,12 +93,18 @@
     background-color: #007bff;
     color: white;
     border: none;
-    border-radius: 7px;
+    border-radius: 15px; /* More rounded corners */
     padding: 4px 8px;
     cursor: pointer;
     margin: 0 5px;
     height: 70%;
     width: 20%;
+}
+
+.new-case button:active {
+    background-color: #0056b3;
+    box-shadow: 0 3px #666;
+    transform: translateY(2px);
 }
 
 /* The button group for the map */
@@ -80,10 +118,10 @@
 
 /* Style for every button in the .map-button-group div */
 .map-button-group button {
-    background-color: #007bff;
+    background-color: #156630;
     color: white;
     border: none;
-    border-radius: 7px;
+    border-radius: 15px; /* More rounded corners */
     padding: 4px 8px;
     cursor: pointer;
     margin: 0 5px;
@@ -91,10 +129,12 @@
     width: 20%;
 }
 
-/*  Active button style */
+/* Active button style */
 .map-button.active {
     background-color: green;
     color: white;
+    box-shadow: 0 3px #666;
+    transform: translateY(2px);
 }
 
 /* Places the buttons next to each other */
@@ -105,6 +145,36 @@
     justify-content: center; /* Center horizontally */
 }
 
+/* Style for submit and cancel buttons */
+.submit-cancel-wrapper button {
+    background-color: #156630;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin: 5px;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.submit-cancel-wrapper button:hover {
+    background-color: #0056b3;
+}
+
+.submit-cancel-wrapper button:active {
+    box-shadow: 0 3px #666;
+    transform: translateY(2px);
+}
+
+/* Style for the cancel button */
+.cancel-case-button {
+    background-color: #e74c3c !important;
+}
+
+.cancel-case-button:hover {
+    background-color: #bd1907 !important;
+}
 
 /* Popup in the centre of the screen */
 .popup {
@@ -133,9 +203,8 @@
 }
 
 /*************************************/
-/* Sector for the different overlays */    
+/* Sector for the different overlays */
 /*************************************/
-
 
 /* Insert phone number */
 #insert-phone-number-overlay.overlay {
@@ -160,6 +229,7 @@
 #case-not-valid.popup {
     display: none;
 }
+
 /* Avbryt case */
 #avbryt-case.popup {
     display: none;
@@ -188,4 +258,48 @@
 /* Explanation for how to fill out the form */
 #case-submit-help.popup {
     display: none;
+}
+
+/* Style for buttons inside pop-ups */
+.popup button {
+    background-color: #156630; /* Primary color */
+    color: white; /* Text color */
+    border: none; /* Remove border */
+    border-radius: 20px; /* Rounded corners */
+    padding: 10px 20px; /* Padding for a modern look */
+    cursor: pointer; /* Pointer cursor on hover */
+    margin: 5px; /* Margin between buttons */
+    font-size: 14px; /* Font size */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+}
+
+.popup button:hover {
+    background-color: #0056b3; /* Darker color on hover */
+}
+
+.popup button:active {
+    background-color: #004494; /* Even darker color on active */
+    transform: translateY(2px); /* Slightly move down on active */
+}
+
+/* Specific style for the close button inside pop-ups */
+/* Close button for popups */
+.popup .popup-close {
+    background-color: #156630; 
+}
+
+.popup .popup-close:hover {
+    background-color: #0d421f; /* Darker green on hover */
+}
+
+.popup .popup-close:active {
+    background-color: #093015; /* Even darker green on active */
+}
+
+.popup .cancel-case-confirmation {
+    background-color: #e74c3c; /* Red color */
+}
+
+.popup .cancel-case-confirmation:active {
+    background-color: #6e1f19; /* Red color */
 }

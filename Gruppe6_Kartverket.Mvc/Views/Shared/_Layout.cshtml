@@ -1,4 +1,19 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.EntityFrameworkCore
+@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<IdentityUser> SignInManager
+@inject Gruppe6_Kartverket.Mvc.Data.ApplicationDbContext _dbContext
+
+@{
+    ViewBag.Title = "Landing Page";
+
+    var identityUser = await UserManager.GetUserAsync(User);
+    var user = identityUser != null ? await _dbContext.Users.FirstOrDefaultAsync(u => u.UserId == Guid.Parse(identityUser.Id)) : null;
+
+
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -46,22 +61,32 @@
             </form>
 
             <div class="HeaderTopLinks">
-                <a href="@Url.Action("ContactUs", "ContactUs")" class="btn btn-outline-secondary ms-3">
-                    Contact Us
+                <a href="https://www.kartverket.no/om-kartverket/kontakt-oss" class="btn btn-outline-secondary ms-3" rel="noopener noreferrer">
+                    Kontakt oss
                 </a>
             </div>
+            
             <!-- Authentication Links -->
             @if (User.Identity.IsAuthenticated)
             {
                 <div class="HeaderTopLinks">
-                <form asp-action="Logout" asp-controller="Account" method="post" class="form-inline">
-                    @Html.AntiForgeryToken()
-                    <button type="submit" class="btn btn-outline-secondary ms-3">Logout</button>
-                </form>
-            </div>
-                <a href="@Url.Action("UserPage", "UserPage")" class="user-icon-btn">
-                    <img src="~/icons/user.png" alt="userIcon"/>
-                </a>
+                    <form asp-action="Logout" asp-controller="Account" method="post" class="form-inline">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-outline-secondary ms-3">Logg ut</button>
+                    </form>
+                </div>
+                if (user != null && user.UserType == "Us")
+                {
+                    <a href="@Url.Action("UserPage", "UserPage")" class="user-icon-btn">
+                        <img src="~/icons/user.png" alt="userIcon"/>
+                    </a>
+                } 
+                else if (user != null && user.UserType == "Ad")
+                {
+                    <a href="@Url.Action("CaseWorkerPageV2", "CaseWorker")" class="user-icon-btn">
+                        <img src="~/icons/user.png" alt="userIcon"/>
+                    </a>
+                }
             }
             else
             {
@@ -70,7 +95,7 @@
                 </div>
                 <div class="HeaderTopLinks">
                     <a href="@Url.Action("Register", "Account")" class="btn btn-outline-secondary ms-3">Register</a>
-                    </div>
+                </div>
             }
             <!-- Settings Icon -->
             <a href="@Url.Action("Settings", "Settings")" class="settings-container">
@@ -99,16 +124,16 @@
                     <h4>Hjelp</h4>
                     <p>Telefon: <a href="tel:32118000">32 11 80 00</a></p>
                     <p>E-post: <a href="mailto:post@kartverket.no">post@kartverket.no</a></p>
-                    <p><a href="/om-kartverket/kontakt-oss">Kontaktinfo og adresser</a></p> <!--NB! DENNE LINKEN FØRER INGEN STEDER-->
                 </div>
 
                 <!-- Third Column: Help Links -->
                 <div class="sitefooter-column">
                     <h4>Hjelp</h4>
                     <a href="http://status.kartverket.no/" rel="noopener nofollow">Driftsmeldinger</a><br>
-                    <a href="/om-kartverket/faq" rel="noopener nofollow">Ofte stilte spørsmål</a><br> <!--NB! DENNE LINKEN FØRER INGEN STEDER-->
-                    <a href="/eiendom/skjema/alleskjema" rel="noopener nofollow">Skjemaer</a> <!--NB! DENNE LINKEN FØRER INGEN STEDER-->
+                    <a href="https://www.kartverket.no/om-kartverket/faq" rel="noopener nofollow">Ofte stilte spørsmål</a><br>                   
+                    <a href="https://www.kartverket.no/eiendom/skjema/alleskjema" rel="noopener nofollow">Skjemaer</a>
                 </div>
+                
                 <!-- Fourth Column: Follow Us and Social Links -->
                 <div class="sitefooter-column">
                     <h4>Følg oss</h4>
@@ -120,6 +145,7 @@
                 </div>
             </footer>
         }
+                
 
 
 <!-- JavaScript-filer -->
@@ -129,5 +155,5 @@
 <script src="~/lib/ol/dist/ol.js"></script>
 
 @await RenderSectionAsync("Scripts", required: false)
-</body>
-</html>
+                </body>
+                    </html>

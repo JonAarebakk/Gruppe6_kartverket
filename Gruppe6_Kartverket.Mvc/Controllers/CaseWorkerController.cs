@@ -20,49 +20,65 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
             _context = context;
         }
 
-        // Action method to fetch the data and pass it to the view
-        public async Task<IActionResult> CaseWorkerPageV2()
+        // Action method to fetch case records and pass them to the view
+        public async Task<IActionResult> CaseWorkerPageV2(string filter)
         {
-            try
+            var caseRecords = _context.CaseRecords.AsQueryable();
+
+            switch (filter)
             {
-                var caseRecords = await _context.CaseRecords
+                case "asc":
+                    caseRecords = caseRecords.OrderBy(c => c.CaseDate);
+                    break;
+                case "desc":
+                    caseRecords = caseRecords.OrderByDescending(c => c.CaseDate);
+                    break;
+                case "open":
+                    caseRecords = caseRecords.Where(c => c.CaseStatus == CaseStatus.Open.ToString());
+                    break;
+                case "closed":
+                    caseRecords = caseRecords.Where(c => c.CaseStatus == CaseStatus.Closed.ToString());
+                    break;
+                case "inprogress":
+                    caseRecords = caseRecords.Where(c => c.CaseStatus == CaseStatus.InProgress.ToString());
+                    break;
+                case "resolved":
+                    caseRecords = caseRecords.Where(c => c.CaseStatus == CaseStatus.Resolved.ToString());
+                    break;
+            }
+
+            var viewModel = new CaseWorkerPageV2ViewModel
+            {
+                CaseRecords = await caseRecords
                     .Include(c => c.CaseLocation)
                     .Include(c => c.User)
-                    .ToListAsync();
+                    .ToListAsync()
+            };
 
-                if (caseRecords == null || !caseRecords.Any())
-                {
-                    Console.WriteLine("No case records found.");
-                }
-
-                var viewModel = new CaseWorkerPageV2ViewModel
-                {
-                    CaseRecords = caseRecords,
-                };
-
-                return View(viewModel);
-            }
-            catch (Exception ex)
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
             {
-                // Log the exception to the console or a file
-                Console.WriteLine($"Error: {ex.Message}");
-                return StatusCode(500, "Internal server error. Please try again later.");
+                return PartialView("_CaseRecordsTable", viewModel);
             }
+
+            return View(viewModel);
         }
 
         // Action method to fetch the details of a specific case record
         public IActionResult CaseDetails(int caseRecordId)
         {
+            // Retrieves a specific case record by its ID, along with associated location and user
             var caseRecord = _context.CaseRecords
-                .Include(c => c.CaseLocation)
-                .Include(c => c.User)
-                .FirstOrDefault(c => c.CaseRecordId == caseRecordId);
+                .Include(c => c.CaseLocation) // Includes case location data
+                .Include(c => c.User) // Includes user data
+                .FirstOrDefault(c => c.CaseRecordId == caseRecordId); // Finds the case record by its ID
 
+            // Returns a 404 if the case record was not found
             if (caseRecord == null)
             {
                 return NotFound();
             }
 
+            // Creates a ViewModel to pass detailed case information to the view
             var viewModel = new CaseDetailsViewModel
             {
                 CaseRecordId = caseRecord.CaseRecordId,
@@ -72,12 +88,25 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
                 CaseDescription = caseRecord.CaseDescription,
                 CaseStatus = caseRecord.CaseStatus,
                 LocationId = caseRecord.LocationId,
-                GeoJSON = caseRecord.CaseLocation.GeoJSON,
-                CaseLocation = caseRecord.CaseLocation,
-                User = caseRecord.User
+                GeoJSON = caseRecord.CaseLocation.GeoJSON, // Includes the GeoJSON data from the location
+                CaseLocation = caseRecord.CaseLocation, // Includes location data
+                User = caseRecord.User // Includes user data
             };
 
-            return View(viewModel);
+            return View(viewModel); // Returns the view with the populated ViewModel
+        }
+
+        [HttpPost]
+        public IActionResult UpdateStatus(int caseRecordId, string caseStatus)
+        {
+            var caseRecord = _context.CaseRecords.Find(caseRecordId);
+            if (caseRecord != null)
+            {
+                caseRecord.CaseStatus = caseStatus;
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("CaseDetails", new { caseRecordId = caseRecordId });
         }
     }
 }
