@@ -2,20 +2,18 @@
 
 @{
     ViewData["Title"] = "Settings";
+    Layout = "_Layout";
 }
 
 @section HeadContent {
     <!-- Link to CSS file -->
     <link rel="stylesheet" href="~/css/Settings.css">
 }
-<nav class="navbar">
-    <a href="/">Hjem</a>
-    <a href="/settings">Innstillinger</a>
-    <a href="/contact">Kontakt oss</a>
-</nav>
-<div class="site-wrapper">
-    <h1>Settings</h1>
-    <p>Kontakt oss på tlf: 32 11 80 00, for mer informasjon se "kontakt oss" på bunnen</p>
-    <p>Versjon-nummer: 4.20</p>
-    <a href="https://www.kartverket.no/om-kartverket/kontakt-oss" class="contact-link">Kontakt oss</a>
+
+<div class="Setting-innhold">
+        <h1>Settings</h1>
+        <p>Contact us at phone: 32 11 80 00, for more information see "contact us" at the bottom</p>
+        <p>Version number: 4.20</p>
+        <a href="https://www.kartverket.no/om-kartverket/kontakt-oss" class="contact-link">Contact us</a>
 </div>
+
