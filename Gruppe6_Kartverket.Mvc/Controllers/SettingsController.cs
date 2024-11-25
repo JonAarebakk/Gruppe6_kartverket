@@ -1,25 +1,31 @@
-using Microsoft.AspNetCore.Mvc;
-using Gruppe6_Kartverket.Mvc.Models;
+using Microsoft.AspNetCore.Mvc; // Enables MVC features.
+using Gruppe6_Kartverket.Mvc.Models; // Imports models for the application.
 
-namespace Gruppe6_Kartverket.Mvc.Controllers;
+namespace Gruppe6_Kartverket.Mvc.Controllers; // Namespace for the controller.
 
-public class SettingsController : Controller
+public class SettingsController : Controller // Manages settings-related actions.
 {
-    // GET
+    // GET: Renders the settings page.
     public IActionResult Settings()
     {
-        var model = new SettingsModel();
-        return View(model);
+        var model = new SettingsModel(); // Initializes the settings model.
+        return View(model); // Returns the settings view with the model.
+    }
+
+    public IActionResult ContactUs()
+    {
+        return View();
     }
 
     [HttpPost]
-    public IActionResult Save(SettingsModel model)
+    public IActionResult Save(SettingsModel model) // Handles saving settings.
     {
-        if (ModelState.IsValid)
+        if (ModelState.IsValid) // Validates the input data.
         {
-            // Save logic here
-            return RedirectToAction("Settings");
+            // Add save logic here (e.g., save to database or configuration).
+            return RedirectToAction("Settings"); // Redirects back to the settings page.
         }
-        return View("Settings", model);
+
+        return View("Settings", model); // Returns the view with validation errors.
     }
 }

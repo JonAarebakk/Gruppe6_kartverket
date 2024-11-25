@@ -3,14 +3,13 @@
     display: grid;
     grid-template-columns: auto 1fr; /* auto for grid-item1, 1fr for grid-item2 and grid-item3 */
     grid-template-rows: auto 1fr; /* auto for the navbar, 1fr for the rest */
-    gap: 20px;
+    gap: 2%;
     height: 100vh; /* Set the height to 100% of the viewport height */
     position: relative; /* Ensure it can contain the pseudo-element */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
-
 
 /* Sidebar and categories - Item 1 (Left Sidebar) */
 .grid-item1 {
@@ -29,6 +28,7 @@
 }
 
 .grid-item2 {
+    padding-top: 5rem;
     height: fit-content; /* Adjust height to fit the content */
 }
 
@@ -176,7 +176,7 @@ body {
     background-color: transparent;
 }
 .renderBody-div{
-     background-color: transparent; 
+    background-color: transparent;
 }
 
 body::before {
@@ -194,7 +194,6 @@ body::before {
     z-index: -1; /* Ensure it stays behind other content */
 }
 
-
 .sort-and-filter-frame {
     flex: 1; /* Take 1/4 of the available space */
     display: flex; /* Use flexbox layout */
@@ -202,7 +201,6 @@ body::before {
     width: 100%; /* Ensure it takes the full width of its portion */
     height: 20%; /* Ensure it takes the full height of its portion */
 }
-
 
 .sort-and-filter-container {
     position: relative;
@@ -220,7 +218,6 @@ body::before {
     cursor: pointer; /* Changes the cursor to a pointer when hovering over the button */
     font-size: 16px; /* Sets the font size to 16px */
     border-radius: 10px; /* Adjust the value to control the roundness */
-
 }
 .menu-option-group {
     position: absolute;
@@ -282,4 +279,34 @@ body::before {
 
 .frame .sort-and-filter-frame {
     justify-content: flex-end;
+}
+
+.caseDetails-grid-3{
+    margin-right: 2%;
+}
+
+.no-style-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.green-background {
+    background-color: green;
+    color: white; /* Optional: change text color to white for better contrast */
+}
+
+/* Custom styles for the dropdown */
+.sort-and-filter-container select {
+    background-color: #28a745; /* Green background color */
+    color: white; /* White text color */
+    border: none; /* Remove border */
+    padding: 10px; /* Add padding */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 16px; /* Increase font size */
+    cursor: pointer; /* Pointer cursor on hover */
+}
+
+.sort-and-filter-container select:focus {
+    outline: none; /* Remove outline on focus */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Add shadow on focus */
 }

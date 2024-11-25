@@ -5,8 +5,6 @@ WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
 
-
-
 # This stage is used to build the service project
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
@@ -26,7 +24,9 @@ RUN dotnet publish "./Gruppe6_Kartverket.Mvc.csproj" -c $BUILD_CONFIGURATION -o 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
 ENV  AspnetCoreEnvironment=Docker
+
 
 ENTRYPOINT ["dotnet", "Gruppe6_Kartverket.Mvc.dll"]
 
@@ -93,9 +93,6 @@ ENTRYPOINT ["dotnet", "Gruppe6_Kartverket.Mvc.dll"]
 #ENTRYPOINT ["/app/wait-for-mariadb.sh", "dotnet", "ef", "database", "update", "--project", "/src/Gruppe6_Kartverket.Mvc/Gruppe6_Kartverket.Mvc.csproj", "&&", "dotnet", "Gruppe6_Kartverket.Mvc.dll"]
 
 
-# Add a wait script
-# COPY Gruppe6_Kartverket.Mvc/wait-for-it.sh /usr/local/bin/wait-for-it.sh
-# RUN chmod +x /usr/local/bin/wait-for-it.sh
 
 # Use the runtime image to run the app
 #FROM base AS final

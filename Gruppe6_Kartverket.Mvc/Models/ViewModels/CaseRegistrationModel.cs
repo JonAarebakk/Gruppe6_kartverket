@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Gruppe6_Kartverket.Mvc.Models
+namespace Gruppe6_Kartverket.Mvc.Models.ViewModels
 {
     public class CaseRegistrationModel
     {
@@ -17,5 +17,8 @@ namespace Gruppe6_Kartverket.Mvc.Models
 
         [Required(ErrorMessage = "GeoJson is required.")]
          public string GeoJson { get; set; }
+
+        public double CenterLongitude { get; set; }
+        public double CenterLatitude { get; set; }
     }
 }

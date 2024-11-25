@@ -21,12 +21,14 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
             _dbContext = dbContext;
         }
 
+        // Displays the user's page with a list of their case records.
+        // Redirects to login if the user is not authenticated.
         public async Task<IActionResult> UserPage()
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return RedirectToAction("LogIn", "LogIn");
+                return RedirectToAction("LogIn", "Account");
             }
 
             var userId = Guid.Parse(user.Id);
@@ -34,7 +36,7 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
                 .Where(cr => cr.UserId == userId)
                 .ToListAsync();
 
-            var viewModel = new CaseWorkerPageV2ViewModel
+            var viewModel = new UserPageViewModel
             {
                 CaseRecords = caseRecords
             };

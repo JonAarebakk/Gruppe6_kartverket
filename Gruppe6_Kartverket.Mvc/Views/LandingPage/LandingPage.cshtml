@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="~/css/landingPage.css" /> <!-- Link to combined CSS file -->
 }
 
-<div class="landing-page">
+<div class="landing-page @(identityUser != null ? "logged-in" : "logged-out")">
     <div class="landingPage-wrapper">
         <div class="cards-container">
             <div class="card">
@@ -35,12 +35,12 @@
                     <a href="@Url.Action("MapPage", "MapPage")" class="card-button">Gå til kartet</a>
                 }
             </div>
-                
+            @if(identityUser == null){
             <div class="card">
                 <h2>Logg inn</h2>
                 <p>Logg inn for å få tilgang til dine kartdata.</p>
                 <a href="@Url.Action("LogIn", "Account")" class="card-button">Logg inn</a>
-            </div>
+            </div>}
 
 
             @if (user != null && user.UserType == "Ad")
@@ -56,7 +56,7 @@
                 <div class="card">
                     <h2>Mine Cases</h2>
                     <p>Sjekk og forandre på dine eksisterende cases</p>
-                    <a href="@Url.Action("UserPage", "UserPage")" class="card-button">Go to User Page</a>
+                    <a href="@Url.Action("UserPage", "UserPage")" class="card-button">Gå til inboks</a>
                 </div>
             }
             else
@@ -70,6 +70,6 @@
         </div>
     </div>
     <div>
-        <a href="@Url.Action("LinkPage", "LandingPage")" class="card-button">A page with links to all views</a>
+        <a href="@Url.Action("LinkPage", "LandingPage")" class="card-button">En side med alle linkene til alle "views"</a>
     </div>
 </div>

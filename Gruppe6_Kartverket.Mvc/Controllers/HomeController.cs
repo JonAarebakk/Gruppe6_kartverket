@@ -12,8 +12,7 @@ public class HomeController : Controller
     private readonly ILogger<HomeController> _logger;
     private readonly UserManager<IdentityUser> _userManager;
 
-    // private static List<MapData> mapDataList = new List<MapData>();
-
+    // Constructor that injects the logger and UserManager for managing user data
     public HomeController(
         ILogger<HomeController> logger,
         UserManager<IdentityUser> userManager)
@@ -22,40 +21,25 @@ public class HomeController : Controller
         _userManager = userManager;
     }
 
-    
-   
+    // Action method that returns the landing page view with a model containing a message
     public IActionResult Index()
     {
         var model = new HomeViewModel();
-        model.Message = "It's scuffed, but it works";
-        return View("LandingPage", model);
+        model.Message = "It's scuffed, but it works"; // Setting a test message
+        return View("LandingPage", model); // Passes the model to the "LandingPage" view
     }
-    // Var no rart med mapdata
-/*
-    [HttpPost]
-    public IActionResult Index(HomeViewModel model)
-    {
-        if (!ModelState.IsValid)
-            return View("Index", model);
 
-        if (model.Hidden != null)
-        {
-            var mapData = JsonSerializer.Deserialize<MapData>(model.Hidden, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-            mapDataList.Add(mapData);
-        }
-        model.Message = model.NewMessage;
-        model.NewMessage = null;
-        return View("Index", model);
-    }
-*/
+    // Privacy page action that returns the privacy view (no additional logic)
     public IActionResult Privacy()
     {
-        return View();
+        return View(); // Displays the privacy page
     }
 
+    // Error handling action that returns the error view with request information
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
+        // Returns an error view with the current request identifier for error tracking
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }

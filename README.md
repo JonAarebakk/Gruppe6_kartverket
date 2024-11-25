@@ -1,115 +1,128 @@
 # Gruppe6_kartverket 🚀
-
 ## Gruppe6_Kartverket (GitHub Repository Root)
 
+## Dummy Credentials for login
+
+### For Caseworker:
+email: [caseworkertest@email.com] passord: [passord]
+
+### For Bruker:
+email: [brukertest@email.com] passord: [passord]
+
+
+
 <pre>
-├── Root
-│   ├── Gruppe6_Kartverket.sln
-│
+├── Gruppe6_Kartverket.sln
+
 ├── Controllers
+│   ├── AccountController.cs
+│   ├── CaseInfoController.cs
+│   ├── CaseWorkerController.cs
 │   ├── HomeController.cs
-│   ├── UserController.cs
-│   ├── MapController.cs
-│
+│   ├── LandingPageController.cs
+│   ├── MapPageController.cs
+│   ├── SettingsController.cs
+│   ├── UserPageController.cs
+
 ├── Data
-│   ├── AppDbContext.cs
-│
+│   ├── ApplicationDbContext.cs
+
 ├── Migrations
-│   ├── 20231010123456_InitialCreate.cs
-│   ├── 20231010123456_InitialCreate.Designer.cs
-│   ├── AppDbContextModelSnapshot.cs
-│
+│   ├── 2024112311521_InitialCreate.cs
+│   ├── 2024112311521_InitialCreate.Designer.cs
+│   ├── 2024112313045_AddUserTypes.cs
+│   ├── 2024112313045_AddUserTypes.Designer.cs
+│   ├── ApplicationDbContextModelSnapshot.cs
+
 ├── Models
-│   ├── UserModel.cs
-│   ├── CaseModel.cs
-│   ├── MapModel.cs
-│   ├── ErrorViewModel.cs
-│
+│   ├── Database
+│   │   ├── CaseLocation.cs
+│   │   ├── CaseRecord.cs
+│   │   ├── User.cs
+│   │   ├── UserInfo.cs
+│   │   ├── UserTypes.cs
+│   ├── Identity
+│   │   ├── ApplicationUser.cs
+│   ├── ViewModels
+│       ├── CaseDetailsViewModel.cs
+│       ├── CaseRegistrationModel.cs
+│       ├── CaseWorkerPageV2ViewModel.cs
+│       ├── ErrorViewModel.cs
+│       ├── HomeViewModel.cs
+│       ├── LoginModel.cs
+│       ├── RegistrationFormModel.cs
+│       ├── SettingsModel.cs
+│       ├── UserPageViewModel.cs
+
 ├── Services
-│   ├── UserService.cs
+│   ├── AccountService.cs
 │   ├── CaseService.cs
 │   ├── MapService.cs
-│
+│   ├── UserService.cs
+
 ├── Views
+│   ├── Account
+│   │   ├── Login.cshtml
+│   │   ├── Register.cshtml
+│   │   ├── RegistrationSuccess.cshtml
+│   ├── CaseInfo
+│   │   ├── CaseInfo.cshtml
+│   ├── CaseWorker
+│   │   ├── _caseRecordsTable.cshtml
+│   │   ├── CaseDetails.cshtml
+│   │   ├── CaseWorkerPageV2.cshtml
 │   ├── Home
 │   │   ├── Index.cshtml
-│   │
-│   ├── User
-│   │   ├── Profile.cshtml
-│   │   ├── Settings.cshtml
-│   │
-│   ├── Map
+│   │   ├── LeafletMapPage.cshtml
+│   │   ├── Privacy.cshtml
+│   ├── LandingPage
+│   │   ├── LandingPage.cshtml
+│   │   ├── LinkPage.cshtml
+│   ├── MapPage
 │   │   ├── MapPage.cshtml
-│   │
+│   ├── Settings
+│   │   ├── Settings.cshtml
 │   ├── Shared
 │   │   ├── _Layout.cshtml
 │   │   ├── _ValidationScriptsPartial.cshtml
-│
+│   ├── UserPage
+│       ├── UserPage.cshtml
+│       ├── _ViewImports.cshtml
+│       ├── _ViewStart.cshtml
+
 ├── wwwroot
 │   ├── css
+│   │   ├── caseInfoPage.css
+│   │   ├── caseWorkerPage.css
+│   │   ├── CaseWorkerPage-V2.css
+│   │   ├── landingPage.css
+│   │   ├── login.css
+│   │   ├── mapPage.css
+│   │   ├── Registrering.css
 │   │   ├── site.css
 │   │   ├── userPage.css
+│   ├── fonts
+│   │   ├── Mulish
+│   ├── icons
+│   │   ├── settings.png
+│   │   ├── user.png
+│   ├── images
+│   │   ├── kartverket-bakgrunnsbilder
+│   │   │   ├── landscape.jpg
+│   │   │   ├── lofoten.jpg
+│   │   │   ├── mountains.jpg
+│   │   │   ├── norge.jpg
+│   │   │   ├── norway.jpg
+│   │   ├── logo.svg
 │   ├── js
 │   │   ├── site.js
 │   │   ├── userPage.js
-│   ├── images
-│   │   ├── logo.png
-│
+│   ├── favicon.ico
+
 ├── appsettings.json
+├── appsettings.Development.json
 ├── Program.cs
 ├── Startup.cs
+
 </pre>
-
-This code block follows the MVC (Model-View-Controller) architectural pattern. This pattern separates the application into three main components, providing a modular and easily maintainable structure.
-
-
-* **Model**
-  Includes data models such as the `AppDbContext` class and other related classes. Database operations and user authorization processes are handled in this layer.
-
-  ## Models
-
-  ```
-  │   ├── **UserModel.cs**
-  │   ├── **CaseModel.cs**
-  │   ├── **MapModel.cs**
-  │   ├── **ErrorViewModel.cs**
-  ```
-
-* **View**
-  Includes elements related to the user interface, such as Razor pages in the `Views` folder and static files (CSS, JavaScript, etc.) in the `wwwroot` folder.
-
-  ## Views
-
-  ```
-  │   ├── **Home**
-  │   │   ├── **Index.cshtml**
-  │   ├── **User**
-  │   │   ├── **Profile.cshtml**
-  │   │   ├── **Settings.cshtml**
-  │   │   ├── **UserPage.cshtml**
-  │   ├── **Map**
-  │   │   ├── **MapPage.cshtml**
-  │   ├── **Shared**
-  │   │   ├── **_Layout.cshtml**
-  │   │   ├── **_ValidationScriptsPartial.cshtml**
-  ```
-
-* **Controller**
-  Controller classes like `HomeController` receive HTTP requests, initiate processes, and redirect to the appropriate view to display results.
-
-  ## Controllers
-
-  ```
-  │   ├── **HomeController.cs**
-  │   ├── **UserController.cs**
-  │   ├── **MapController.cs**
-  ```
-## Docker Compse Configuration 
-* appsettings.json 
-
-## Resterende 
-
-* Hvordan applikasjonen kjøres (kjøring på Docker, kobling mot database, osv)
-* Komponenter av applikasjonen (MVC, repo, klasser, osv)
-* Funksjonaliteter i applikasjonen (det som applikasjonen gjør)
 

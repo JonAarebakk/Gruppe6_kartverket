@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
+    <UserSecretsId>bf63db9e-c52b-44b8-99d4-cba499919e84</UserSecretsId>
     <ImplicitUsings>enable</ImplicitUsings>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
@@ -10,16 +11,17 @@
   </PropertyGroup>
 
   <ItemGroup>    
-	<PackageReference Include="Microsoft.AspNetCore.DataProtection" Version="9.0.0" />    
-	<PackageReference Include="Microsoft.AspNetCore.DataProtection.Abstractions" Version="9.0.0" />    
+	<PackageReference Include="Microsoft.AspNetCore.DataProtection" Version="8.0.10" />    
+	<PackageReference Include="Microsoft.AspNetCore.DataProtection.Abstractions" Version="8.0.10" />    
 	<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.10" />    
 	<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.10" />    
-	<PackageReference Include="Microsoft.AspNetCore.Metadata" Version="9.0.0" />    
+	<PackageReference Include="Microsoft.AspNetCore.Metadata" Version="8.0.10" />    
 	<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />    
 	<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
 	  <PrivateAssets>all</PrivateAssets>
  	 <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	</PackageReference>    
+	<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.10" />    
 	<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.10">
   <PrivateAssets>all</PrivateAssets>
   <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -36,6 +38,6 @@
     <Folder Include="keys\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
-
+    
 
 </Project>

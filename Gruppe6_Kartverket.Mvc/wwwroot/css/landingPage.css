@@ -2,11 +2,23 @@
 .landing-page {
     text-align: center;
     padding: 2rem;
+    opacity: 0.9;
+}
+
+.landing-page.logged-in {
+    background-image: url("../images/kartverket-bakgrunssbilder/Norge.jpg"); /* Path to the background image */
+    background-size: cover; /* Ensure the image covers the entire background */
+    background-position: center; /* Center the background image */
+}
+
+.landing-page.logged-out {
     background-image: url("../images/kartverket-bakgrunssbilder/norway.jpg"); /* Path to the background image */
     background-size: cover; /* Ensure the image covers the entire background */
     background-position: center; /* Center the background image */
     opacity: 0.9;
 }
+
+
 
 /* Wrapper for centering content on the page */
 .landingPage-wrapper {
