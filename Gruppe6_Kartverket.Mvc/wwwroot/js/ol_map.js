@@ -1,199 +1,107 @@
 ﻿//Sets the attribution to non-collapsible
-const attribution = new ol.control.Attribution({
-    collapsible: false,
-});
+document.addEventListener("DOMContentLoaded", function () {
 
-//The source for the map
-const raster = new ol.layer.Tile({
-    source: new ol.source.OSM(), //OpenStreetMap gives ESPG:3857 projection by default
-});
+    const attribution = new ol.control.Attribution({
+        collapsible: false,
+    });
 
-//Array with all the cords from the drawn objects
-let drawCoords = [];
+    //The source for the map
+    const raster = new ol.layer.Tile({
+        source: new ol.source.OSM(), //OpenStreetMap gives ESPG:3857 projection by default
+    });
 
-//The source for the vector layer that will be drawn on the map
-const source = new ol.source.Vector();
-const vector = new ol.layer.Vector({
-    source: source,
-    style: {
-        'fill-color': 'rgba(255, 255, 255, 0.2)', // White with 20% opacity
-        'stroke-color': '#ffcc33',  // (255,204,51) Sunglow
-        'stroke-width': 2,
-        'circle-radius': 7,
-        'circle-fill-color': '#ffcc33',  // (255,204,51) Sunglow
-    },
-});
+    var geoJsonString = document.getElementById("CaseLocationGeoJSON").innerText;
+    var geoJsonObject = JSON.parse(geoJsonString);
 
+    console.log(geoJsonObject);
 
-featureCollection.on("change", function () {
-    console.log("This was the featureCollection");
-    console.log(featureCollection.getLength());
-});
+    var features = new ol.format.GeoJSON().readFeatures(geoJsonObject, {
+        dataProjection: 'EPSG:4326',
+        featureProjection: 'EPSG:3857'
+    });
+
+    //The source for the vector layer that will be drawn on the map
+    const vectorSource = new ol.source.Vector({
+        features: features,
+    });
 
 
-source.on("change", function () {
-    var features = source.getFeatures();
-    console.log(features);
-});
-
-
-var featureCount = 0;
-
-source.on("addfeature", function (evt) {
-    featureCount = featureCount + 1;
-    var feature = evt.feature;
-    feature.setId(featureCount);
-    var geometry = feature.getGeometry();
-    var coords = geometry.getCoordinates();
-    var geometrytype = geometry.getType();
-    var featureId = feature.getId();
-    //console.log(geometry);
-   // console.log(coords);
-   // console.log(geometrytype);
-    console.log(featureId);
-    //console.log(source.getFeaturesCollection());
     
-    if (featureCount >= 3) {
-        removeFeatureById(1);
-        //console.log(source.getFeaturesCollection());
-    }
-    
-}); 
-
-function removeFeatureById(id) {
-    if (source.getFeatureById(id) != null) {
-        //var feature = source.getFeatureById(id);
-        source.removeFeature(source.getFeatureById(id));
-    }
-}
+    const vector = new ol.layer.Vector({
+        source: vectorSource,
+        style: {
+            'fill-color': 'rgba(255, 255, 255, 0.2)', // White with 20% opacity
+            'stroke-color': '#5090ff',
+            'stroke-width': 2,
+        },
+    });
 
 
-//The map object
-const map = new ol.Map({
-    layers: [raster, vector],
-    target: 'map',
-    view: new ol.View({
-        projection: 'EPSG:3857', // Makes the map tilt a bit in north and south  ***NB! LOOK AT THAT*** 4326 or 3857
-        constrainResolution: true,
-        center: [890043.0200981781, 7998368.2036484955],  //[8.002189, 58.163703], // [lon, lat] Starts over Kristiansand (Maybe fetch from user?)
-        zoom: 10,
-    }),
-});
+    function getCenterCoordinates() {
+        var coords = geoJsonObject.geometry.coordinates;
+        var featureType = geoJsonObject.geometry.type;
 
-/*
-
-//Makes the vector layer editable
-const modify = new ol.interaction.Modify({ source: source });
-map.addInteraction(modify);
-*/
-
-let draw, snap; // global so we can remove it later
-const typeSelect = document.getElementById('type');
-
-var ExampleSelect = {
-    init: function () {
-        this.select = new ol.interaction.Select();
-        map.addInteraction(this.select);
-        this.select.setActive(true);
-        this.select.on("select", selected);
-    }
-};
-ExampleSelect.init();
-
-function selected(e) {
-    console.log("select", e);
-    // prevent draw event from triggering, but that does not work
-    // because these are different triggers
-    e.stopPropagation();
-}
-
-
-//Function to add interactions to the map
-function addInteractions() {
-    const value = typeSelect.value;
-    if (value !== 'None') {
-        draw = new ol.interaction.Draw({
-            source: source,
-            type: typeSelect.value,
-            features: featureCollection,
-        });
-        draw.on('drawend', function (evt) {
-            var feature = evt.feature;
-            var coords = feature.getGeometry().getCoordinates();
-            var transformedCoords = ol.proj.transform(coords, 'EPSG:3857', 'EPSG:4326'); // method to transform coordinates from EPSG:3857 to EPSG:4326 ***NB! Circle will crash this because it doesn't store coordinates the same way***
-            let geoJsonGeometry = { type: typeSelect.value, coordinates: coords };
-            drawCoords.push(geoJsonGeometry);
-            //console.log(drawCoords);
-            //console.log(transformedCoords);
-        });
-        map.addInteraction(draw);
-        snap = new ol.interaction.Snap({ source: source });
-        map.addInteraction(snap);
-    }
-};
-
-//Event listener for the typeSelect dropdown
-typeSelect.onchange = function () {
-    map.removeInteraction(draw);
-    map.removeInteraction(snap);
-    addInteractions();
-};
-
-addInteractions();
-
-//Configures the buttons to change the type of interaction
-/* 
-* NB! Maybe change the buttosns to integrated controlls in the map via
-* https://openlayers.org/en/latest/examples/custom-controls.html
-* Will make the map view cleaner, but the current solutions works for now
-*/
-document.querySelectorAll('.map-button').forEach(button => {
-    button.addEventListener('click', function () {
-        var selectValue = this.dataset.select;
-        if (typeSelect.value == selectValue) {
-            selectValue = "None";
+        if (featureType == "Point") {
+            coords = ol.proj.transform(coords, 'EPSG:4326', 'EPSG:3857');
+        } else if (featureType == "LineString") {
+            for (let i = 0; i < coords.length; i++) {
+                coords[i] = ol.proj.transform(coords[i], 'EPSG:4326', 'EPSG:3857');
+            }
+        } else if (featureType == "Polygon") {
+            for (let i = 0; i < coords.length; i++) {
+                for (let j = 0; j < coords[i].length; j++) {
+                    coords[i][j] = ol.proj.transform(coords[i][j], 'EPSG:4326', 'EPSG:3857');
+                }
+            }
         }
-        typeSelect.value = selectValue;
-
-        const event = new Event('change', { bubbles: true });
-        typeSelect.dispatchEvent(event);
-    });
-});
 
 
-
-document.querySelectorAll('.delete-feature').forEach(button => {
-    button.addEventListener('click', function () {
-        console.log("deleted features");
-        source.removeFeatures(source.getFeatures());
-    });
-});
-
-//Old submit function for the form found in ~/Views/Home/OldIndex.cshtml
-export function submitForm() {
-    var responseObject = {
-        point: [],
-        linestring: [],
-        polygon: []
+        var startingCoords = getCenterOfFeature(coords);
+        return startingCoords;
     };
 
-    var figures = drawCoords;
-    figures.forEach((x) => {
-        if (x.type === 'Point') {
-            responseObject.point.push(x.coordinates);
+
+
+    function getCenterOfFeature(coords) {
+        let totalLon = 0;
+        let totalLat = 0;
+        let count = 0;
+
+        function calculateCenter(coordinates) {
+            if (Array.isArray(coordinates[0])) {
+                for (let i = 0; i < coordinates.length; i++) {
+                    calculateCenter(coordinates[i]);
+                }
+            } else {
+                totalLon += coordinates[0];
+                totalLat += coordinates[1];
+                count++;
+            }
         }
-        if (x.type === 'LineString') {
-            responseObject.linestring.push(x.coordinates);
-        }
-        if (x.type === 'Polygon') {
-            responseObject.polygon.push(x.coordinates);
-        }
+
+        calculateCenter(coords);
+
+        const centerLon = totalLon / count;
+        const centerLat = totalLat / count;
+
+        return [centerLon, centerLat];
+    }
+
+
+    var mapCenter = getCenterCoordinates();
+    
+    //Initializes the map
+    const map = new ol.Map({
+        layers: [raster, vector],
+        target: 'map-container',
+        view: new ol.View({
+            projection: 'EPSG:3857', // Projects EPSG:3857 to match the OpenStreetMap tiles
+            constrainResolution: true, // Set whether the view should allow intermediary zoom levels.
+            center: mapCenter,  //[8.002189, 58.163703], // [lon, lat] Starts over Kristiansand (Maybe fetch from user?)
+            zoom: 9,   // Initial zoom level
+        }),
     });
 
-    var jsonValue = JSON.stringify(responseObject);
-    console.log(jsonValue);
+    console.log(vectorSource.getFeatures());
 
- //  document.getElementById("hiddenField").value = jsonValue;
- //  document.getElementById("mapInputForm").submit();  //Crashes because the mapInputForm and the MapData in HomeController do not match
-}
-
+});
