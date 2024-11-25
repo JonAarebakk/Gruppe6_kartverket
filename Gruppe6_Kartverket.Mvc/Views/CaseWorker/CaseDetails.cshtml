@@ -16,11 +16,11 @@
             <a class="no-style-link" style="" href="@Url.Action("CaseWorkerPageV2", "CaseWorker")">
                 <div class="kategorier-flex-items" id="Kategorier-flex-items1">Inbox</div>
             </a>
-            <div class="kategorier-flex-items" id="Kategorier-flex-items2">Sent</div>
-            <div class="kategorier-flex-items" id="Kategorier-flex-items3">Drafts</div>
-            <div class="kategorier-flex-items" id="Kategorier-flex-items4">Spam</div>
-            <div class="kategorier-flex-items" id="Kategorier-flex-items5">Trash</div>
-            <div class="kategorier-flex-items" id="Kategorier-flex-items6">Important</div>
+            <div class="kategorier-flex-items" id="Kategorier-flex-items2">Eksempel</div>
+            <div class="kategorier-flex-items" id="Kategorier-flex-items3">Esempel</div>
+            <div class="kategorier-flex-items" id="Kategorier-flex-items4">Eksempel</div>
+            <div class="kategorier-flex-items" id="Kategorier-flex-items5">Eksempel</div>
+            <div class="kategorier-flex-items" id="Kategorier-flex-items6">Eksempel</div>
         </div>
     </div>
 
@@ -73,9 +73,14 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>LocationId</th>
-                                <td style="max-width: 100%;">@Model.LocationId</td>
+                                <th>Municipality</th>
+                                <td style="max-width: 100%;">@Model.Municipality</td>
+                             </tr>
+                            <tr>
+                                <th>County</th>
+                                <td style="max-width: 100%;">@Model.County</td>
                             </tr>
+                            <tr>
                             <tr>
                                 <th>CaseLocation</th>
                                 <td style="max-width: 100%;">@Model.GeoJSON</td>
@@ -97,6 +102,7 @@
         </div>
     </div>
 </div>
+
 
 @section Scripts {
     <script>

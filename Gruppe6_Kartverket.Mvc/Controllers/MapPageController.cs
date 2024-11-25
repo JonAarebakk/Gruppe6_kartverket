@@ -1,5 +1,4 @@
 using Gruppe6_Kartverket.Mvc.Data;
-using Gruppe6_Kartverket.Mvc.Models;
 using Gruppe6_Kartverket.Mvc.Models.Database;
 //using Gruppe6_Kartverket.Mvc.Models.Services;
 using Gruppe6_Kartverket.Mvc.Models.ViewModels;
@@ -15,11 +14,14 @@ public class MapPageController : Controller
 {
     private readonly UserManager<IdentityUser> _userManager;
     private readonly ApplicationDbContext _dbContext;
+    private readonly IKartverketApiService _kartverketApiService;
 
-    public MapPageController(UserManager<IdentityUser> userManager, ApplicationDbContext dbContext)
+
+    public MapPageController(UserManager<IdentityUser> userManager, ApplicationDbContext dbContext, IKartverketApiService kartverketApiService)
     {
         _userManager = userManager;
         _dbContext = dbContext;
+        _kartverketApiService = kartverketApiService;
     }
 
     // Displays the map page view with footer hidden if authenticated
@@ -62,18 +64,22 @@ public class MapPageController : Controller
         else
         {
             var identityUser = await _userManager.GetUserAsync(User);
+            
 
             if (identityUser != null)
             {
                 // Generate a new Location ID and add CaseLocation and CaseRecord to the database
                 var newLocationId = (_dbContext.CaseLocations.Max(cl => (int?)cl.LocationId) ?? 0) + 1;
 
+                var kartverkApiInfo = new KartverkApiInfo();
+                kartverkApiInfo = await _kartverketApiService.GetMunicipalityAndCountyNameAsync(model.CenterLongitude, model.CenterLatitude);
+
                 var caseLocation = new CaseLocation
                 {
                     LocationId = newLocationId,
                     GeoJSON = model.GeoJson,
-                    Municipality = "", // Placeholder, could be fetched via an API
-                    County = "" // Placeholder, could be fetched via an API
+                    Municipality = kartverkApiInfo.Kommunenavn ?? "", 
+                    County = kartverkApiInfo.Fylkesnavn ?? "" 
                 };
 
                 var userId = Guid.Parse(identityUser.Id);
