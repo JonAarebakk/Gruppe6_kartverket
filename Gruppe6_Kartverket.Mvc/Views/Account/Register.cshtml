@@ -82,17 +82,6 @@ ViewData["Title"] = "Registrer bruker";
                             <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                         </div>
                     </p>
-                    <p>
-                    <div>
-                        <label asp-for="UserType">User Type:</label>
-                        <select asp-for="UserType">
-                            <option value="Us">Normal User</option>
-                            <option value="Ad">Admin User</option>
-                        </select>
-                    </div>
-                    </p>
-                    
-
                     <button type="submit" class="btn btn-primary">Create User</button>
 
                 </form>
