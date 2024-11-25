@@ -92,12 +92,7 @@
     align-items: center;
     justify-content: center;
     padding: 1rem;
-    background-image: url("../images/kartverket-bakgrunssbilder/norway.jpg"); /* Path to the background image */
-    background-size: cover; /* Ensure the image covers the entire background */
-    background-position: center; /* Center the background image */
-    opacity: 0.9;
-    /*padding-top: 60px;*/
-    /*background-color: #D0ECD6; /* Set the background color to green */
+    
 }
 
 .RFcontainer {

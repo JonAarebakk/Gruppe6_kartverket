@@ -88,6 +88,8 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
                 CaseDescription = caseRecord.CaseDescription,
                 CaseStatus = caseRecord.CaseStatus,
                 LocationId = caseRecord.LocationId,
+                Municipality = caseRecord.CaseLocation.Municipality,
+                County = caseRecord.CaseLocation.County,
                 GeoJSON = caseRecord.CaseLocation.GeoJSON, // Includes the GeoJSON data from the location
                 CaseLocation = caseRecord.CaseLocation, // Includes location data
                 User = caseRecord.User // Includes user data

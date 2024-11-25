@@ -28,6 +28,8 @@ ViewData["Title"] = "Logg inn";
         <button type="submit" class="btn btn-primary" style="margin-top: 10px">Login</button>
         </form>
         <a href="#" class="reset-link">Glemt passord?</a>
+        <a asp-action="Register" asp-controller="Account" class="reset-link">Lag ny bruker</a>
+
         @if (!ViewData.ModelState.IsValid)
         {
             <div class="alert alert-danger">
