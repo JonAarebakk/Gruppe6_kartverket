@@ -41,7 +41,7 @@ public class MapPageController : Controller
     // Handles the form submission to register a new case
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> MapPage(CaseRegistrationModel model, IFormFile file)
+    public async Task<IActionResult> MapPage(CaseRegistrationModel model)
     {
         ViewBag.HideFooter = true;
 
@@ -74,6 +74,8 @@ public class MapPageController : Controller
                 var kartverkApiInfo = new KartverkApiInfo();
                 kartverkApiInfo = await _kartverketApiService.GetMunicipalityAndCountyNameAsync(model.CenterLongitude, model.CenterLatitude);
 
+                Console.WriteLine(kartverkApiInfo.Kommunenavn + " " + kartverkApiInfo.Fylkesnavn);
+
                 var caseLocation = new CaseLocation
                 {
                     LocationId = newLocationId,
@@ -95,15 +97,6 @@ public class MapPageController : Controller
                     User = _dbContext.Users.FirstOrDefault(u => u.UserId == userId)
                 };
 
-                if (file != null && file.Length > 0)
-                {
-                    var filePath = Path.Combine("wwwroot/uploads", file.FileName);
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await file.CopyToAsync(stream);
-                    }
-                    // Save the file path or name to the database if needed
-                }
 
                 _dbContext.CaseRecords.Add(caseRecord);
                 _dbContext.CaseLocations.Add(caseLocation);
