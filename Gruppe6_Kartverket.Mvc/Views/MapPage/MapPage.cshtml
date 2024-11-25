@@ -1,4 +1,4 @@
-@model Gruppe6_Kartverket.Mvc.Models.CaseRegistrationModel
+@model Gruppe6_Kartverket.Mvc.Models.ViewModels.CaseRegistrationModel
 
 @{
     ViewData["Title"] = "Map Page";
@@ -56,8 +56,8 @@
             </div>
             </p>
             <input asp-for="GeoJson" type="hidden" id="geoJsonInput"/>
-            <input asp-for="CenterLongitude" type="hidden" id="centerOfFeature"/>
-            <input asp-for="CenterLatitude" type="hidden" id="centerLatitude"/>
+            <input asp-for="CenterLongitude" type="hidden" id="centerLongitudeInput"/>
+            <input asp-for="CenterLatitude" type="hidden" id="centerLatitudeInput"/>
         </form>
         
         <div class="submit-cancel-wrapper">

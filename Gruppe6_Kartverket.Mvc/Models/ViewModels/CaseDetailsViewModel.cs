@@ -12,6 +12,9 @@ namespace Gruppe6_Kartverket.Mvc.Models.ViewModels
         public int? LocationId { get; set; }
         
         public string GeoJSON { get; set; }
+
+        public string Municipality { get; set; }
+        public string County { get; set; }
         public CaseLocation CaseLocation { get; set; }
         public User User { get; set; }
     }

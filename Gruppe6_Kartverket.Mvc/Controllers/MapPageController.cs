@@ -1,5 +1,4 @@
 using Gruppe6_Kartverket.Mvc.Data;
-using Gruppe6_Kartverket.Mvc.Models;
 using Gruppe6_Kartverket.Mvc.Models.Database;
 using Gruppe6_Kartverket.Mvc.Models.Services;
 using Gruppe6_Kartverket.Mvc.Models.ViewModels;
@@ -16,12 +15,14 @@ public class MapPageController : Controller
 {
     private readonly UserManager<IdentityUser> _userManager;
     private readonly ApplicationDbContext _dbContext;
+    private readonly IKartverketApiService _kartverketApiService;
 
 
-    public MapPageController(UserManager<IdentityUser> userManager, ApplicationDbContext dbContext)
+    public MapPageController(UserManager<IdentityUser> userManager, ApplicationDbContext dbContext, IKartverketApiService kartverketApiService)
     {
         _userManager = userManager;
         _dbContext = dbContext;
+        _kartverketApiService = kartverketApiService;
     }
 
     [HttpGet]
@@ -62,18 +63,21 @@ public class MapPageController : Controller
         else
         {
             var identityUser = await _userManager.GetUserAsync(User);
+            
 
             if (identityUser != null)
             {
                 var newLocationId = (_dbContext.CaseLocations.Max(cl => (int?)cl.LocationId) ?? 0) + 1;
 
+                var kartverkApiInfo = new KartverkApiInfo();
+                kartverkApiInfo = await _kartverketApiService.GetMunicipalityAndCountyNameAsync(model.CenterLongitude, model.CenterLatitude);
+
                 var caseLocation = new CaseLocation
                 {
                     LocationId = newLocationId, // Set the increment from the database
                     GeoJSON = model.GeoJson,
-                        //"{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.4194,37.7749]},\"properties\":{\"name\":\"San Francisco\",\"type\":\"City\"}},{\"type\":\"Feature\",\"geometry\":{\"type\":\"LineString\",\"coordinates\":[[-122.4194,37.7749],[-118.2437,34.0522],[-74.0060,40.7128]]},\"properties\":{\"name\":\"Route 1\",\"description\":\"A route connecting SF, LA, and NYC\"}},{\"type\":\"Feature\",\"geometry\":{\"type\":\"Polygon\",\"coordinates\":[[[-123.0,37.0],[-123.0,38.0],[-122.0,38.0],[-122.0,37.0],[-123.0,37.0]]]},\"properties\":{\"name\":\"Area A\",\"description\":\"A polygonal area\"}}]}",
-                    Municipality = "", // Get via kartverket API
-                    County = "" // Get via kartverket API
+                    Municipality = kartverkApiInfo.Kommunenavn ?? "", 
+                    County = kartverkApiInfo.Fylkesnavn ?? "" 
                 };
 
                 var userId = Guid.Parse(identityUser.Id);
