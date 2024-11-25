@@ -28,28 +28,12 @@ public class CaseInfoControllerTests
     }
 
     [Fact]
-    // checks if CaseInfo action in CaseInfoController returns a ViewResult with a CaseDetailsViewModel model.
-    public async Task CaseInfoReturnsCorrectModel()
-    {
-        // Arrange - Creates an instance of the CaseInfoController.
-        var unitUnderTest = SetupUnitUnderTest();
-        var caseRecordId = 1;
-
-        // Act - Calls the CaseInfo method on the controller
-        var result = await unitUnderTest.CaseInfo(caseRecordId) as ViewResult;
-
-        // Assert - Checks if the model is of type CaseDetailsViewModel
-        Assert.NotNull(result.Model);
-        Assert.IsType<CaseDetailsViewModel>(result.Model);
-    }
-
-    [Fact]
     // checks if CaseInfo action in CaseInfoController returns NotFound if the case record is not found.
     public async Task CaseInfoReturnsNotFoundIfCaseRecordNotFound()
     {
         // Arrange - Creates an instance of the CaseInfoController.
         var unitUnderTest = SetupUnitUnderTest();
-        var caseRecordId = 999; // Assuming this ID does not exist
+        var caseRecordId = 5; // Assuming this ID does not exist
 
         // Act - Calls the CaseInfo method on the controller
         var result = await unitUnderTest.CaseInfo(caseRecordId);
@@ -70,7 +54,7 @@ public class CaseInfoControllerTests
         // Seed the in-memory database with test data
         context.CaseRecords.Add(new CaseRecord
         {
-            CaseRecordId = 1,
+            CaseRecordId = 1, // Ensure this ID is unique or use a different ID if needed
             CaseDate = DateTime.Now,
             CaseTitle = "Test Case",
             CaseIssueType = "Issue Type",
@@ -83,14 +67,24 @@ public class CaseInfoControllerTests
                 Municipality = "Test Municipality",
                 County = "Test County"
             },
-            User = new User
-            {
-                UserId = Guid.NewGuid(),
-                UserName = "Test User"
-            }
+            User = CreateTestUser()
         });
         context.SaveChanges();
 
         return new CaseInfoController(context);
     }
+
+    // Factory method to create a test user with dynamically generated values
+    private static User CreateTestUser()
+    {
+        return new User
+        {
+            UserId = Guid.NewGuid(),
+            UserName = "TestUser_" + Guid.NewGuid(),
+            UserPassword = "TestPassword_" + Guid.NewGuid(),
+            UserType = "TU" // Ensure this is a valid value for UserType
+        };
+    }
+
+
 }

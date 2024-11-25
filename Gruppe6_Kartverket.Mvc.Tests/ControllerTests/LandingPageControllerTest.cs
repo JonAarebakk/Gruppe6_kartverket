@@ -62,8 +62,7 @@ public class LandingPageControllerTests
     // SetupUnitUnderTest: Creates and returns an instance of the LandingPageController.
     private static LandingPageController SetupUnitUnderTest()
     {
-        var fakeLogger = Substitute.For<ILogger<LandingPageController>>();
-        var unitUnderTest = new LandingPageController(fakeLogger)
+        var unitUnderTest = new LandingPageController
         {
             ControllerContext = new ControllerContext
             {
