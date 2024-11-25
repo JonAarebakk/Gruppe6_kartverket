@@ -1,4 +1,19 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.EntityFrameworkCore
+@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<IdentityUser> SignInManager
+@inject Gruppe6_Kartverket.Mvc.Data.ApplicationDbContext _dbContext
+
+@{
+    ViewBag.Title = "Landing Page";
+
+    var identityUser = await UserManager.GetUserAsync(User);
+    var user = identityUser != null ? await _dbContext.Users.FirstOrDefaultAsync(u => u.UserId == Guid.Parse(identityUser.Id)) : null;
+
+
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -55,14 +70,23 @@
             @if (User.Identity.IsAuthenticated)
             {
                 <div class="HeaderTopLinks">
-                <form asp-action="Logout" asp-controller="Account" method="post" class="form-inline">
-                    @Html.AntiForgeryToken()
-                    <button type="submit" class="btn btn-outline-secondary ms-3">Logg ut</button>
-                </form>
-            </div>
-                <a href="@Url.Action("UserPage", "UserPage")" class="user-icon-btn">
-                    <img src="~/icons/user.png" alt="userIcon"/>
-                </a>
+                    <form asp-action="Logout" asp-controller="Account" method="post" class="form-inline">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-outline-secondary ms-3">Logg ut</button>
+                    </form>
+                </div>
+                if (user != null && user.UserType == "Us")
+                {
+                    <a href="@Url.Action("UserPage", "UserPage")" class="user-icon-btn">
+                        <img src="~/icons/user.png" alt="userIcon"/>
+                    </a>
+                } 
+                else if (user != null && user.UserType == "Ad")
+                {
+                    <a href="@Url.Action("CaseWorkerPageV2", "CaseWorker")" class="user-icon-btn">
+                        <img src="~/icons/user.png" alt="userIcon"/>
+                    </a>
+                }
             }
             else
             {
@@ -71,7 +95,7 @@
                 </div>
                 <div class="HeaderTopLinks">
                     <a href="@Url.Action("Register", "Account")" class="btn btn-outline-secondary ms-3">Register</a>
-                    </div>
+                </div>
             }
             <!-- Settings Icon -->
             <a href="@Url.Action("Settings", "Settings")" class="settings-container">
@@ -121,6 +145,7 @@
                 </div>
             </footer>
         }
+                
 
 
 <!-- JavaScript-filer -->
@@ -130,5 +155,5 @@
 <script src="~/lib/ol/dist/ol.js"></script>
 
 @await RenderSectionAsync("Scripts", required: false)
-</body>
-</html>
+                </body>
+                    </html>
