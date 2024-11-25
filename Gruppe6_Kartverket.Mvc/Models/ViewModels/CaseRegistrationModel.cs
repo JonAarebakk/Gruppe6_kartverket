@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Gruppe6_Kartverket.Mvc.Models
+namespace Gruppe6_Kartverket.Mvc.Models.ViewModels
 {
     public class CaseRegistrationModel
     {
