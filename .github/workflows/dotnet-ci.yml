@@ -36,7 +36,7 @@
 # For a complete CI/CD sample to get started with GitHub Action workflows for Desktop Applications,
 # refer to https://github.com/microsoft/github-actions-for-desktop-apps
 
-name: .NET Core Desktop
+name: .NET
 
 on:
   push:
@@ -46,37 +46,18 @@ on:
 
 jobs:
   build:
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-        configuration: [Debug, Release]
 
-    runs-on: ${{ matrix.os }}
-
-    env:
-      Solution_Name: Gruppe6_Kartverket.sln
-      Test_Project_Path: Gruppe6_Kartverket.Mvc.Tests/Gruppe6_Kartverket.Mvc.Tests.csproj
+    runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-
-    - name: Install .NET Core
+    - uses: actions/checkout@v4
+    - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
-
-    - name: Setup MSBuild.exe (Windows only)
-      if: runner.os == 'Windows'
-      uses: microsoft/setup-msbuild@v2
-
-    - name: Restore the application
-      run: dotnet restore ${{ env.Solution_Name }}
-
-    - name: Build the application
-      run: dotnet build ${{ env.Solution_Name }} --configuration ${{ matrix.configuration }}
-
-    - name: Execute unit tests
-      run: dotnet test ${{ env.Test_Project_Path }} --configuration ${{ matrix.configuration }}
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
