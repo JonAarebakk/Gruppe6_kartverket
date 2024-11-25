@@ -14,7 +14,7 @@
         <div class="map" id="map"></div>
         <div class="control-button-bar">
             <div class="new-case" id="new-case">
-                <button class="btn" id="new-case-button">New Case</button>
+                <button class="btn" id="new-case-button">Ny sak</button>
             </div>
             <div class="map-button-group" id="map-button-group">
                 <button class="map-button" data-select="Point">Punkt</button>
@@ -26,7 +26,7 @@
         </div>
     </div>
     <div class="case-input-wrapper" id="case-input-wrapper">
-        <form asp-controller="MapPage" asp-action="MapPage" id="CaseForm" method="post">
+        <form asp-controller="MapPage" asp-action="MapPage" id="CaseForm" method="post" enctype="multipart/form-data">
             <p>
             <div>
                 <label asp-for="CaseTitle">Tittel på case:</label>
@@ -55,16 +55,21 @@
                 <span asp-validation-for="Beskrivelse" class="text-danger"></span>
             </div>
             </p>
+            <p>
+            <div>
+                <label for="file">Vedlegg:</label>
+                <input type="file" name="file" />
+            </div>
+            </p>
             <input asp-for="GeoJson" type="hidden" id="geoJsonInput"/>
             <input asp-for="CenterLongitude" type="hidden" id="centerOfFeature"/>
             <input asp-for="CenterLatitude" type="hidden" id="centerLatitude"/>
         </form>
-        
         <div class="submit-cancel-wrapper">
             <button class="cancel-case-button" id="cancel-case-button">Avbryt</button>
 
             <!-- Gray the button out intill we are able to submit -->
-            <button class="submit-case">Submit</button>
+            <button class="submit-case">Send inn</button>
         </div>
     </div>
 </div>
@@ -101,7 +106,7 @@
     </div>
 
     <div class="popup" id="submit-case-popup">
-        <h2>Submit?</h2>
+        <h2>Send inn?</h2>
         <p>Ønsker du å sende inn saken?</p>
         <button class="submit-case-confirmation">Send inn</button>
         <button class="popup-close">Tilbake</button>
@@ -129,9 +134,9 @@
     @if (ViewBag.ShowSubmittedPopup == true)
     {
         <div class="popup" id="case-submitted">
-            <h2>Case submitted</h2>
-            <p>"Case submitted text" <br />"Info fra innsendingen"</p>
-            <button class="popup-close">Close</button>
+            <h2>Sak innsendt</h2>
+            <p>"Sak innsendt tekst" <br />"Info fra innsendingen"</p>
+            <button class="popup-close">Lukk</button>
         </div>
         <script>
             document.addEventListener("DOMContentLoaded", function () {

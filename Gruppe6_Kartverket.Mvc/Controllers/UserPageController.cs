@@ -36,7 +36,7 @@ namespace Gruppe6_Kartverket.Mvc.Controllers
                 .Where(cr => cr.UserId == userId)
                 .ToListAsync();
 
-            var viewModel = new CaseWorkerPageV2ViewModel
+            var viewModel = new UserPageViewModel
             {
                 CaseRecords = caseRecords
             };
