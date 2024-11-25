@@ -2,7 +2,7 @@
 @model Gruppe6_Kartverket.Mvc.Models.ViewModels.CaseWorkerPageV2ViewModel
 
 @{
-    Layout = "~/Views/Shared/_CaseWorkerLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "CaseWorkerPage-V2";
 }
 
@@ -57,11 +57,12 @@
                 data: { filter: filterValue },
                 success: function (result) {
                     $('#caseRecordsTable').html(result);
+                    attachRowClickEvent(); // Reattach event listeners
                 }
             });
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
+        function attachRowClickEvent() {
             const rows = document.querySelectorAll('.expandable');
 
             rows.forEach(row => {
@@ -70,6 +71,10 @@
                     window.location.href = `/CaseWorker/CaseDetails?caseRecordId=${caseRecordId}`;
                 });
             });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            attachRowClickEvent(); // Initial attachment of event listeners
         });
     </script>
 }

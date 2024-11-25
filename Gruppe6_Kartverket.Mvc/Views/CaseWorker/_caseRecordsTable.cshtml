@@ -22,7 +22,7 @@ else
         <tbody>
         @foreach (var caseRecord in Model.CaseRecords)
         {
-            <tr class="expandable">
+            <tr class="expandable" data-case-record-id="@caseRecord.CaseRecordId">
                 <td>@caseRecord.CaseRecordId</td>
                 <td>@caseRecord.CaseDate</td>
                 <td>@caseRecord.CaseTitle</td>
