@@ -26,9 +26,7 @@ const vector = new ol.layer.Vector({
     style: {
         'fill-color': 'rgba(255, 255, 255, 0.2)', // White with 20% opacity
         'stroke-color': '#ffcc33',  // (255,204,51) Sunglow
-        'stroke-width': 2,
-        'circle-radius': 7,
-        'circle-fill-color': '#ffcc33',  // (255,204,51) Sunglow
+        'stroke-width': 2
     },
 });
 
@@ -40,7 +38,7 @@ const map = new ol.Map({
         projection: 'EPSG:3857', // Projects EPSG:3857 to match the OpenStreetMap tiles
         constrainResolution: true, // Set whether the view should allow intermediary zoom levels.
         center: [890043.0200981781, 7998368.2036484955],  //[8.002189, 58.163703], // [lon, lat] Starts over Kristiansand (Maybe fetch from user?)
-        zoom: 10,   // Initial zoom level
+        zoom: 8,   // Initial zoom level
     }),
 });
 
@@ -218,8 +216,8 @@ function featureToGeoJson() {
                 type: 'Feature',
                 properties: {},
                 geometry: {
-                    coordinates: coords,
-                    type: featureType
+                    type: featureType,
+                    coordinates: coords
                 }
             }
             var geoJsonString = JSON.stringify(geoJsonFeature);
