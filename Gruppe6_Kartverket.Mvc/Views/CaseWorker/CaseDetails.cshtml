@@ -1,7 +1,7 @@
 @model Gruppe6_Kartverket.Mvc.Models.ViewModels.CaseDetailsViewModel
 
 @{
-    Layout = "~/Views/Shared/_CaseWorkerLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "CaseWorkerPage-V2";
 }
 
@@ -81,7 +81,6 @@
                                 <td style="max-width: 100%;">@Model.County</td>
                             </tr>
                             <tr>
-                            <tr>
                                 <th>CaseLocation</th>
                                 <td style="max-width: 100%;">@Model.GeoJSON</td>
                             </tr>
@@ -96,9 +95,7 @@
         </div>
         <div class="case-info-map">
             <h3>Map Placeholder</h3>
-            <div id="map-container" style="width: 100%; height: 400px; background-color: #eaeaea; display: flex; align-items: center; justify-content: center;">
-                <p>Map will be displayed here</p>
-            </div>
+            <div id="map-container" style="width: 100%; height: 400px; background-color: #eaeaea; display: flex; align-items: center; justify-content: center;"></div>
         </div>
     </div>
 </div>
@@ -118,5 +115,53 @@
             document.getElementById("caseStatus").value = status;
             document.getElementById("updateStatusForm").submit();
         }
+    </script>
+    <script type="module">
+        //Sets the attribution to non-collapsible
+        document.addEventListener("DOMContentLoaded", function () {
+        
+        const attribution = new ol.control.Attribution({
+            collapsible: false,
+        });
+
+        //The source for the map
+        const raster = new ol.layer.Tile({
+            source: new ol.source.OSM(), //OpenStreetMap gives ESPG:3857 projection by default
+        });
+
+        var geoJsonString = "@Model.GeoJSON";
+        console.log(geoJsonString);
+        var geoJsonObject = JSON.parse(geoJsonString);
+
+        //The source for the vector layer that will be drawn on the map
+        const vectorSource = new ol.source.Vector({
+            features: new ol.format.GeoJson().readFeatures(geoJsonObject),
+        });
+
+        const vector = new ol.layer.Vector({
+            source: vectorSource,
+            style: {
+                'fill-color': 'rgba(255, 255, 255, 0.2)', // White with 20% opacity
+                'stroke-color': '#ffcc33',  // (255,204,51) Sunglow
+                'stroke-width': 2,
+                'circle-radius': 7,
+                'circle-fill-color': '#ffcc33',  // (255,204,51) Sunglow
+            },
+        });
+
+        //Initializes the map
+        const map = new ol.Map({
+            layers: [raster, vector],
+            target: 'map-container',
+            view: new ol.View({
+                projection: 'EPSG:3857', // Projects EPSG:3857 to match the OpenStreetMap tiles
+                constrainResolution: true, // Set whether the view should allow intermediary zoom levels.
+                center: [890043.0200981781, 7998368.2036484955],  //[8.002189, 58.163703], // [lon, lat] Starts over Kristiansand (Maybe fetch from user?)
+                zoom: 10,   // Initial zoom level
+            }),
+        });
+
+
+        });
     </script>
 }
