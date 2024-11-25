@@ -74,6 +74,8 @@ public class MapPageController : Controller
                 var kartverkApiInfo = new KartverkApiInfo();
                 kartverkApiInfo = await _kartverketApiService.GetMunicipalityAndCountyNameAsync(model.CenterLongitude, model.CenterLatitude);
 
+                Console.WriteLine(kartverkApiInfo.Kommunenavn + " " + kartverkApiInfo.Fylkesnavn);
+
                 var caseLocation = new CaseLocation
                 {
                     LocationId = newLocationId,
