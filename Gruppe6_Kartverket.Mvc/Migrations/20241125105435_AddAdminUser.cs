@@ -12,6 +12,7 @@ namespace Gruppe6_Kartverket.Mvc.Migrations
         {
             var userId = Guid.NewGuid().ToString();
             var registrationDate = DateTime.UtcNow;
+            
             var passwordHasher = new PasswordHasher<IdentityUser>();
             var dummyUser = new IdentityUser();
             var passwordHash = passwordHasher.HashPassword(dummyUser, "Admin123");
