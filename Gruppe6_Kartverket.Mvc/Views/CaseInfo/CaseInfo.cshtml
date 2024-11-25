@@ -34,11 +34,13 @@ ViewData["Title"] = "CaseInfo";
             <label>Beskrivelse:</label>
             <p>@Model.CaseDescription</p>
         </div>
-        <div class="map-box">
-            <label>Kart:</label>
+            
+            <div class="map-box" id="map-box">
         </div>
     </div>
 </div>
+<div hidden id="CaseLocationGeoJSON">@Model.GeoJSON</div>
+
 
 @section Scripts
 {
@@ -56,5 +58,6 @@ ViewData["Title"] = "CaseInfo";
             });
         });
     </script>
+    <script type="module" src="~/js/caseInfo.js"></script>
 }
 
