@@ -12,6 +12,11 @@ public class SettingsController : Controller // Manages settings-related actions
         return View(model); // Returns the settings view with the model.
     }
 
+    public IActionResult ContactUs()
+    {
+        return View();
+    }
+
     [HttpPost]
     public IActionResult Save(SettingsModel model) // Handles saving settings.
     {
