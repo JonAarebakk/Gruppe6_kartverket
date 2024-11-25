@@ -1,8 +1,8 @@
 using Gruppe6_Kartverket.Mvc.Data;
 using Gruppe6_Kartverket.Mvc.Models.Database;
-//using Gruppe6_Kartverket.Mvc.Models.Services;
+using Gruppe6_Kartverket.Mvc.Models.Services;
 using Gruppe6_Kartverket.Mvc.Models.ViewModels;
-//using Gruppe6_Kartverket.Mvc.Services;
+using Gruppe6_Kartverket.Mvc.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
