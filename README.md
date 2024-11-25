@@ -117,9 +117,3 @@
 
 </pre>
 
-## Resterende 
-
-* Hvordan applikasjonen kjøres (kjøring på Docker, kobling mot database, osv)
-* Komponenter av applikasjonen (MVC, repo, klasser, osv)
-* Funksjonaliteter i applikasjonen (det som applikasjonen gjør)
-
