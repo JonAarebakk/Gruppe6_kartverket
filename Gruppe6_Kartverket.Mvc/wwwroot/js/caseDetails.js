@@ -13,6 +13,8 @@ document.addEventListener("DOMContentLoaded", function () {
     var geoJsonString = document.getElementById("CaseLocationGeoJSON").innerText;
     var geoJsonObject = JSON.parse(geoJsonString);
 
+    console.log(geoJsonObject);
+
     var features = new ol.format.GeoJSON().readFeatures(geoJsonObject, {
         dataProjection: 'EPSG:4326',
         featureProjection: 'EPSG:3857'
@@ -24,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    
+
     const vector = new ol.layer.Vector({
         source: vectorSource,
         style: {
@@ -87,7 +89,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     var mapCenter = getCenterCoordinates();
-    
+
     //Initializes the map
     const map = new ol.Map({
         layers: [raster, vector],
@@ -99,4 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
             zoom: 9,   // Initial zoom level
         }),
     });
+
+    console.log(vectorSource.getFeatures());
+
 });
