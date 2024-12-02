@@ -1,10 +1,7 @@
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using NSubstitute;
-using Xunit;
 using Gruppe6_Kartverket.Mvc.Controllers;
 using Gruppe6_Kartverket.Mvc.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 public class LandingPageControllerTests
 {
@@ -72,3 +69,4 @@ public class LandingPageControllerTests
         return unitUnderTest;
     }
 }
+

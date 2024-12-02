@@ -1,19 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using NSubstitute;
-using System;
-using System.Threading.Tasks;
-using Xunit;
+﻿
+
 using Gruppe6_Kartverket.Mvc.Controllers;
 using Gruppe6_Kartverket.Mvc.Data;
 using Gruppe6_Kartverket.Mvc.Models.Database;
-using Gruppe6_Kartverket.Mvc.Models.ViewModels;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using NSubstitute;
 
 public class CaseInfoControllerTests
 {
     [Fact]
     // checks if CaseInfo action in CaseInfoController returns a ViewResult.
-    public async Task CaseInfoReturnsCorrectView()
+    public async Task CaseInfo_WhenValidId_ReturnsCorrectView()
     {
         // Arrange - Creates an instance of the CaseInfoController.
         var unitUnderTest = SetupUnitUnderTest();
@@ -27,7 +25,8 @@ public class CaseInfoControllerTests
         Assert.IsType<ViewResult>(result);
     }
 
-    // SetupUnitUnderTest: Creates and returns an instance of the CaseInfoController with a mocked ApplicationDbContext.
+    // SetupUnitUnderTest: Creates and returns an instance of the
+    // CaseInfoController with a mocked ApplicationDbContext.
     private static CaseInfoController SetupUnitUnderTest()
     {
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
@@ -59,7 +58,7 @@ public class CaseInfoControllerTests
         return new CaseInfoController(context);
     }
 
-    // Factory method to create a test user with dynamically generated values
+    // Method to create a test user with dynamically generated values
     private static User CreateTestUser()
     {
         return new User

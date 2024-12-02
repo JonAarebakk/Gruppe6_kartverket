@@ -28,10 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Gruppe6_Kartverket.Mvc\Gruppe6_Kartverket.Mvc.csproj" />
   </ItemGroup>
 

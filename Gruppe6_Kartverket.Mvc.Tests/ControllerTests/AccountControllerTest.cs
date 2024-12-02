@@ -1,14 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using Gruppe6_Kartverket.Mvc.Controllers;
+using Gruppe6_Kartverket.Mvc.Data;
+using Gruppe6_Kartverket.Mvc.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using NSubstitute;
-using Xunit;
-using Gruppe6_Kartverket.Mvc.Controllers;
-using Gruppe6_Kartverket.Mvc.Models;
-using Gruppe6_Kartverket.Mvc.Models.Database;
-using Gruppe6_Kartverket.Mvc.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Http;
+using NSubstitute;
 
 namespace Gruppe6_Kartverket.Mvc.Tests.ControllerTests
 {
@@ -41,6 +38,7 @@ namespace Gruppe6_Kartverket.Mvc.Tests.ControllerTests
 
             // Assert - Check that the result is a RedirectToActionResult
             // and that it redirects to the LandingPage action
+            await _signInManager.Received(1).SignOutAsync();
             var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
             Assert.Equal("LandingPage", redirectToActionResult.ActionName);
             Assert.Equal("LandingPage", redirectToActionResult.ControllerName);
@@ -93,6 +91,37 @@ namespace Gruppe6_Kartverket.Mvc.Tests.ControllerTests
             // and that the model is passed back to the view
             var viewResult = Assert.IsType<ViewResult>(result);
             Assert.IsType<RegistrationFormModel>(viewResult.Model);
+        }
+    }
+
+    public class UpdatedAccountControllerTests
+    {
+        [Fact]
+        public async Task LogOut_WhenCalled_ShouldRedirectToLandingPage()
+        {
+            // Arrange
+            var unitUnderTest = SetupUnitUnderTest();
+
+            // Act
+            var result = await unitUnderTest.LogOut() as RedirectToActionResult;
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal("LandingPage", result.ActionName);
+            Assert.Equal("LandingPage", result.ControllerName);
+        }
+
+        private static AccountController SetupUnitUnderTest()
+        {
+            var fakeUserStore = Substitute.For<IUserStore<IdentityUser>>();
+            var fakeUserManager = Substitute.For<UserManager<IdentityUser>>(fakeUserStore, null, null, null, null, null, null, null, null);
+            var fakeHttpContextAccessor = Substitute.For<IHttpContextAccessor>();
+            var fakeUserClaimsPrincipalFactory = Substitute.For<IUserClaimsPrincipalFactory<IdentityUser>>();
+            var fakeSignInManager = Substitute.For<SignInManager<IdentityUser>>(fakeUserManager, fakeHttpContextAccessor, fakeUserClaimsPrincipalFactory, null, null, null, null);
+            var fakeDbContext = Substitute.For<ApplicationDbContext>(new DbContextOptions<ApplicationDbContext>());
+
+            var newUnitUnderTest = new AccountController(fakeUserManager, fakeSignInManager, fakeDbContext);
+            return newUnitUnderTest;
         }
     }
 }
