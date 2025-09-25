@@ -126,3 +126,5 @@ email: [brukertest@email.com] passord: [passord]
 
 </pre>
 
+## Link til Wiki
+https://github.com/JonAarebakk/Gruppe6_kartverket/wiki
